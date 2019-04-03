@@ -44,6 +44,4 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         }
         mPresenter.start();
     }
-
-
 }

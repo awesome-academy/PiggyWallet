@@ -29,6 +29,7 @@ public class WalletRepository implements WalletDataSource {
     public static void destroyInstance() {
         sInstance = null;
     }
+
     @Override
     public void getInitialWallets(@NonNull final GetWalletCallback callback) {
         if (mCachedWallets != null) { // if data is in cache, return immediately w/ that
@@ -49,9 +50,13 @@ public class WalletRepository implements WalletDataSource {
         });
     }
 
+    @Override
+    public void addWallet(Wallet wallet) {
+    }
+
     private void refreshCache(List<Wallet> wallets) {
         if (mCachedWallets == null) {
-            mCachedWallets = new ArrayList<>();
+            mCachedWallets = new ArrayList<>(wallets);
             return;
         }
         mCachedWallets.clear();

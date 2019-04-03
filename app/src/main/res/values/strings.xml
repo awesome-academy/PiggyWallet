@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PiggyWallet</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="demo">Dummy String</string>
+    <string name="bot_nav_home">Home</string>
+    <string name="bot_nav_settings">Settings</string>
 </resources>

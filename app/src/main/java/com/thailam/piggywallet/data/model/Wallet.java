@@ -8,7 +8,7 @@ import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 
 public class Wallet implements Parcelable {
 
-    private static final Parcelable.Creator<Wallet> CREATOR = new Creator<Wallet>() {
+    public static final Parcelable.Creator<Wallet> CREATOR = new Creator<Wallet>() {
         @Override
         public Wallet createFromParcel(Parcel source) {
             return new Wallet(source);
