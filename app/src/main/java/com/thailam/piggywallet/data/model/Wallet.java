@@ -1,8 +1,9 @@
 package com.thailam.piggywallet.data.model;
 
 import java.util.Date;
+import java.io.Serializable;
 
-public class Wallet {
+public class Wallet implements Serializable {
     private int mId;
     private String mTitle;
     private String mSubtitle;
