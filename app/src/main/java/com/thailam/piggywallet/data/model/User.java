@@ -1,15 +1,13 @@
 package com.thailam.piggywallet.data.model;
 
-import java.util.Date;
-
 public class User {
     private int mId;
     private String mEmail;
     private String mPassword;
-    private Date mCreatedAt;
-    private Date mUpdatedAt;
+    private long mCreatedAt;
+    private long mUpdatedAt;
 
-    public User(int id, String email, String password, Date createdAt, Date updatedAt) {
+    public User(int id, String email, String password, long createdAt, long updatedAt) {
         mId = id;
         mEmail = email;
         mPassword = password;
@@ -41,19 +39,19 @@ public class User {
         mPassword = password;
     }
 
-    public Date getCreatedAt() {
+    public long getCreatedAt() {
         return mCreatedAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(long createdAt) {
         mCreatedAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public long getUpdatedAt() {
         return mUpdatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(long updatedAt) {
         mUpdatedAt = updatedAt;
     }
 }
