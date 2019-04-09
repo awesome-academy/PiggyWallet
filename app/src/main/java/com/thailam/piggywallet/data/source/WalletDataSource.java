@@ -13,6 +13,7 @@ import java.util.List;
 public interface WalletDataSource {
 
     interface GetWalletCallback extends OnDataLoadedCallback<List<Wallet>> {
+
     }
 
     void getInitialWallets(@NonNull GetWalletCallback callback);

@@ -1,5 +1,6 @@
 package com.thailam.piggywallet.ui.splash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,9 @@ import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
 import com.thailam.piggywallet.ui.wallet.WalletActivity;
+import com.thailam.piggywallet.util.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SplashActivity extends AppCompatActivity implements SplashContract.View {
@@ -27,13 +30,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
 
     @Override
     public void changeScreen(List<Wallet> wallets) {
-        Intent intent = new Intent(this, WalletActivity.class);
-        if (wallets != null) {
-            for (Wallet wallet : wallets) {
-                String tag = "wallets" + wallet.getId();
-                intent.putExtra(tag, wallet);
-            }
-        }
+        Intent intent = getWalletIntent(getApplicationContext(), wallets);
         startActivity(intent);
         finish();
     }
@@ -41,8 +38,19 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
     @Override
     public void initPresenter() {
         if (mPresenter == null) {
-            mPresenter = new SplashPresenter(this, WalletRepository.getInstance(WalletLocalDataSource.getInstance(getApplicationContext())));
+            WalletLocalDataSource source = WalletLocalDataSource.getInstance(getApplicationContext());
+            WalletRepository repo = WalletRepository.getInstance(source);
+            mPresenter = new SplashPresenter(this, repo);
         }
         mPresenter.start();
+    }
+
+    private static Intent getWalletIntent(Context context, List<Wallet> wallets) {
+        Intent intent = new Intent(context, WalletActivity.class);
+        if (wallets != null) {
+            ArrayList<Wallet> list = new ArrayList<>(wallets);
+            intent.putParcelableArrayListExtra(Constants.EXTRA_WALLETS, list);
+        }
+        return intent;
     }
 }
