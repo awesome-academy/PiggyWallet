@@ -1,17 +1,34 @@
 package com.thailam.piggywallet.data.model;
 
-import java.util.Date;
+import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Wallet {
+import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
+
+public class Wallet implements Parcelable {
+
+    private static final Parcelable.Creator<Wallet> CREATOR = new Creator<Wallet>() {
+        @Override
+        public Wallet createFromParcel(Parcel source) {
+            return new Wallet(source);
+        }
+
+        @Override
+        public Wallet[] newArray(int size) {
+            return new Wallet[0];
+        }
+    };
+
     private int mId;
     private String mTitle;
     private String mSubtitle;
     private String mIconUrl;
     private double mAmount;
-    private Date mCreatedAt;
-    private Date mUpdatedAt;
+    private long mCreatedAt;
+    private long mUpdatedAt;
 
-    private Wallet(WalletBuilder builder) {
+    private Wallet(Builder builder) {
         mId = builder.mId;
         mTitle = builder.mTitle;
         mSubtitle = builder.mSubtitle;
@@ -19,6 +36,16 @@ public class Wallet {
         mAmount = builder.mAmount;
         mCreatedAt = builder.mCreatedAt;
         mUpdatedAt = builder.mUpdatedAt;
+    }
+
+    public Wallet(Parcel source) {
+        mId = source.readInt();
+        mTitle = source.readString();
+        mSubtitle = source.readString();
+        mIconUrl = source.readString();
+        mAmount = source.readDouble();
+        mCreatedAt = source.readLong();
+        mUpdatedAt = source.readLong();
     }
 
     public int getId() {
@@ -61,62 +88,101 @@ public class Wallet {
         mAmount = amount;
     }
 
-    public Date getCreatedAt() {
+    public long getCreatedAt() {
         return mCreatedAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(long createdAt) {
         mCreatedAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public long getUpdatedAt() {
         return mUpdatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(long updatedAt) {
         mUpdatedAt = updatedAt;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mTitle);
+        dest.writeString(mSubtitle);
+        dest.writeString(mIconUrl);
+        dest.writeDouble(mAmount);
+        dest.writeLong(mCreatedAt);
+        dest.writeLong(mUpdatedAt);
+    }
+
     //Builder class
-    public static class WalletBuilder {
+    public static class Builder {
         private int mId;
         private String mTitle;
         private String mSubtitle;
         private String mIconUrl;
         private double mAmount;
-        private Date mCreatedAt;
-        private Date mUpdatedAt;
+        private long mCreatedAt;
+        private long mUpdatedAt;
 
-        public WalletBuilder(int id) {
-            mId = id;
+        public Builder() {
+            // required empty constructor
         }
 
-        public WalletBuilder setTitle(String title) {
+        public Builder(Cursor cursor) {
+            int indexId = cursor.getColumnIndex(WalletEntry.ID);
+            int indexTitle = cursor.getColumnIndex(WalletEntry.TITLE);
+            int indexSubtitle = cursor.getColumnIndex(WalletEntry.SUBTITLE);
+            int indexAmount = cursor.getColumnIndex(WalletEntry.AMOUNT);
+            int indexIconUrl = cursor.getColumnIndex(WalletEntry.ICON);
+            int indexCreatedAt = cursor.getColumnIndex(WalletEntry.CREATED_AT);
+            int indexUpdatedAt = cursor.getColumnIndex(WalletEntry.UPDATED_AT);
+            // get data from column index
+            mId = cursor.getInt(indexId);
+            mTitle = cursor.getString(indexTitle);
+            mSubtitle = cursor.getString(indexSubtitle);
+            mIconUrl = cursor.getString(indexIconUrl);
+            mAmount = cursor.getDouble(indexAmount);
+            mCreatedAt = cursor.getLong(indexCreatedAt);
+            mUpdatedAt = cursor.getLong(indexUpdatedAt);
+        }
+
+        public Builder setId(int id) {
+            mId = id;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
             mTitle = title;
             return this;
         }
 
-        public WalletBuilder setSubtitle(String subtitle) {
+        public Builder setSubtitle(String subtitle) {
             mSubtitle = subtitle;
             return this;
         }
 
-        public WalletBuilder setIconUrl(String iconUrl) {
+        public Builder setIconUrl(String iconUrl) {
             mIconUrl = iconUrl;
             return this;
         }
 
-        public WalletBuilder setAmount(double amount) {
+        public Builder setAmount(double amount) {
             mAmount = amount;
             return this;
         }
 
-        public WalletBuilder setCreatedAt(Date createdAt) {
+        public Builder setCreatedAt(long createdAt) {
             mCreatedAt = createdAt;
             return this;
         }
 
-        public WalletBuilder setUpdatedAt(Date updatedAt) {
+        public Builder setUpdatedAt(long updatedAt) {
             mUpdatedAt = updatedAt;
             return this;
         }

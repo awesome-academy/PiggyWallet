@@ -1,15 +1,13 @@
 package com.thailam.piggywallet.data.model;
 
-import java.util.Date;
-
 public class Transaction {
     private int mId;
     private String mNote;
     private double mAmount;
     private int mCategoryId;
-    private Date mDate;
+    private long mDate;
 
-    public Transaction(int id, String note, double amount, int categoryId, Date date) {
+    public Transaction(int id, String note, double amount, int categoryId, long date) {
         mId = id;
         mNote = note;
         mAmount = amount;
@@ -49,11 +47,11 @@ public class Transaction {
         mCategoryId = categoryId;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return mDate;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         mDate = date;
     }
 }
