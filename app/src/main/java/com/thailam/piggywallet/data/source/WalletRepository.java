@@ -51,7 +51,9 @@ public class WalletRepository implements WalletDataSource {
     }
 
     @Override
-    public void addWallet(Wallet wallet) {
+    public boolean addWallet(Wallet wallet) {
+        // TODO: implement at add wallet task
+        return false;
     }
 
     private void refreshCache(List<Wallet> wallets) {

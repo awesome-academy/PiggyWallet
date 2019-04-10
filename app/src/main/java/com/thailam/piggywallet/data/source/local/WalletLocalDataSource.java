@@ -58,6 +58,8 @@ public class WalletLocalDataSource implements WalletDataSource {
     }
 
     @Override
-    public void addWallet(Wallet wallet) {
+    public boolean addWallet(Wallet wallet) {
+        // TODO: implement at task add walet
+        return false;
     }
 }

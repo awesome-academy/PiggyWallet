@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WalletFragment extends Fragment implements WalletContract.View {
-    public static String FRAG_TAG = "WalletFragment";
+    public static final String TAG = "Wallet_Fragment";
 
     private WalletContract.Presenter mPresenter;
 

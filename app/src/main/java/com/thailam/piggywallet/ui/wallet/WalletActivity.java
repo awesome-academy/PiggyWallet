@@ -38,11 +38,10 @@ public class WalletActivity extends AppCompatActivity {
             int itemId = menuItem.getItemId();
             switch (itemId) {
                 case R.id.nav_home:
-                    String fragTag = Constants.FRAG_TAG_WALLET;
                     mFragmentTransaction = getSupportFragmentManager().beginTransaction();
                     mFragmentTransaction.replace(R.id.content_container,
                             WalletFragment.newInstance(),
-                            fragTag);
+                            WalletFragment.TAG);
                     mFragmentTransaction.commit();
                     break;
                 case R.id.nav_settings:
@@ -71,12 +70,11 @@ public class WalletActivity extends AppCompatActivity {
 
     private void addFirstFragment() {
         if (findViewById(R.id.content_container) != null) {
-            String fragTag = WalletFragment.FRAG_TAG;
             // set up allFragment as the first fragment to appear on activity
             mFragmentTransaction = getSupportFragmentManager().beginTransaction();
             mFragmentTransaction.add(R.id.content_container,
                     WalletFragment.newInstance(),
-                    fragTag);
+                    WalletFragment.TAG);
             mFragmentTransaction.commit();
         }
     }

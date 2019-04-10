@@ -16,5 +16,5 @@ public interface WalletDataSource {
 
     void getInitialWallets(@NonNull GetWalletCallback callback);
 
-    void addWallet(Wallet wallet);
+    boolean addWallet(Wallet wallet);
 }
