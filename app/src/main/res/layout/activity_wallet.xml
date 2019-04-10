@@ -4,72 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.wallet.WalletActivity">
+    tools:context="com.thailam.piggywallet.ui.wallet.WalletActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_top"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_toolbar" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/content_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title.Inverse"
-            android:text="@string/app_name" />
+    <include layout="@layout/app_bottom_nav" />
 
-        <android.support.v7.widget.SearchView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="start|center_vertical"
-            app:searchIcon="@drawable/ic_add_white_24dp" />
-
-    </android.support.v7.widget.Toolbar>
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <android.support.design.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_app_bar"
-            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:fabAlignmentMode="center">
-
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/bottom_nav_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:itemIconTint="@drawable/item_color"
-                app:itemTextColor="@drawable/item_color"
-                app:menu="@menu/bottom_app_menu">
-
-            </android.support.design.widget.BottomNavigationView>
-        </android.support.design.bottomappbar.BottomAppBar>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_white_24dp"
-            app:layout_anchor="@id/bottom_app_bar" />
-    </android.support.design.widget.CoordinatorLayout>
 </android.support.constraint.ConstraintLayout>

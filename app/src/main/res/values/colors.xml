@@ -3,4 +3,7 @@
     <color name="color_primary">#05A729</color>
     <color name="color_primary_dark">#00574B</color>
     <color name="color_secondary">#FFB300</color>
+    <color name="color_positive_balance">#06FF00</color>
+    <color name="color_negative_balance">#FF0000</color>
+    <color name="color_screen_bg">#CFCDCD</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.thailam.piggywallet.ui.splash;
+package com.thailam.piggywallet.ui.wallet;
 
 import android.support.annotation.NonNull;
 
@@ -7,14 +7,14 @@ import com.thailam.piggywallet.data.source.WalletDataSource;
 
 import java.util.List;
 
-public class SplashPresenter implements SplashContract.Presenter,
+public class WalletPresenter implements WalletContract.Presenter,
         WalletDataSource.GetWalletCallback {
     @NonNull
-    private final SplashContract.View mView;
+    private WalletContract.View mView;
     @NonNull
     private WalletDataSource mWalletRepository;
 
-    public SplashPresenter(@NonNull SplashContract.View view,
+    public WalletPresenter(@NonNull WalletContract.View view,
                            @NonNull WalletDataSource walletRepository) {
         mView = view;
         mWalletRepository = walletRepository;
@@ -22,21 +22,31 @@ public class SplashPresenter implements SplashContract.Presenter,
 
     @Override
     public void start() {
-        loadWalletsData();
     }
 
     @Override
-    public void loadWalletsData() {
+    public void getWallets() {
+        mView.toggleIsRefreshing();
         mWalletRepository.getInitialWallets(this);
     }
 
     @Override
+    public void handleFirstSwipeRefresh() {
+        if (getCachedWallets().size() == 0) getWallets();
+    }
+
+    @Override
+    public List<Wallet> getCachedWallets() {
+        return mWalletRepository.getCachedWallets();
+    }
+
+    @Override
     public void onDataLoaded(List<Wallet> wallets) {
-        mView.openWalletDetail();
+        mView.updateWallets(wallets);
+        mView.toggleIsRefreshing();
     }
 
     @Override
     public void onDataNotAvailable(Exception e) {
-        // TODO: handle exception here
     }
 }
