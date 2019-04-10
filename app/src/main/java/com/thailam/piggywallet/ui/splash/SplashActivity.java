@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
 
     @Override
     public void changeScreen(List<Wallet> wallets) {
-        Intent intent = getWalletIntent(getApplicationContext(), wallets);
+        Intent intent = WalletActivity.getWalletIntent(getApplicationContext(), wallets);
         startActivity(intent);
         finish();
     }
@@ -45,12 +45,5 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         mPresenter.start();
     }
 
-    private static Intent getWalletIntent(Context context, List<Wallet> wallets) {
-        Intent intent = new Intent(context, WalletActivity.class);
-        if (wallets != null) {
-            ArrayList<Wallet> list = new ArrayList<>(wallets);
-            intent.putParcelableArrayListExtra(Constants.EXTRA_WALLETS, list);
-        }
-        return intent;
-    }
+
 }
