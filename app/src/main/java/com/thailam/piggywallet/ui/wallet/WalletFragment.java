@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
@@ -58,6 +59,7 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         initAdapter();
         initSwipeRefresh();
         initRecyclerView();
+        initSearchView();
     }
 
     @Override
@@ -124,5 +126,20 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mWalletAdapter);   // set guide adapter to view
+    }
+
+    private void initSearchView() {
+        ((WalletActivity)getActivity()).getSearchView().setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String input) {
+                mPresenter.searchWallets(input);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
     }
 }

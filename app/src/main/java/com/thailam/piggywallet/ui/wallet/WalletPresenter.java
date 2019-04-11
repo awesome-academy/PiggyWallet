@@ -31,6 +31,12 @@ public class WalletPresenter implements WalletContract.Presenter,
     }
 
     @Override
+    public void searchWallets(String input) {
+        mView.toggleIsRefreshing();
+        mWalletRepository.getSearchedWallets(input,this);
+    }
+
+    @Override
     public void handleFirstSwipeRefresh() {
         if (getCachedWallets().size() == 0) getWallets();
     }

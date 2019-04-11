@@ -16,6 +16,8 @@ public interface WalletContract {
     interface Presenter extends BasePresenter {
         void getWallets();
 
+        void searchWallets(String input);
+
         void handleFirstSwipeRefresh();
 
         List<Wallet> getCachedWallets();

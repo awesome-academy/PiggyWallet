@@ -15,8 +15,8 @@
 
     <android.support.v7.widget.SearchView
         android:id="@+id/search_view_wallet"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="start|center_vertical"
-        app:searchIcon="@drawable/ic_add_white_24dp" />
+        app:searchIcon="@drawable/ic_search_white_24dp" />
 </android.support.v7.widget.Toolbar>
