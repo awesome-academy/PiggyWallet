@@ -11,4 +11,12 @@
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
+    <style name="MyCardTitleTheme" >
+        <item name="android:layout_marginStart" >@dimen/dp_16</item>
+        <item name="android:layout_marginTop" >@dimen/dp_8</item>
+        <item name="android:text" >@string/demo</item>
+        <item name="android:textColor" >@color/color_title</item>
+        <item name="android:textSize" >@dimen/card_title_height</item>
+        <item name="android:textStyle" >bold</item>
+    </style>
 </resources>

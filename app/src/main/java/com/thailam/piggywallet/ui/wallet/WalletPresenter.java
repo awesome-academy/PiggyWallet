@@ -9,13 +9,14 @@ import java.util.List;
 
 public class WalletPresenter implements WalletContract.Presenter,
         WalletDataSource.GetWalletCallback {
+    private static final String NO_DATA_ERR = "No wallets found";
     @NonNull
     private WalletContract.View mView;
     @NonNull
     private WalletDataSource mWalletRepository;
 
-    public WalletPresenter(@NonNull WalletContract.View view,
-                           @NonNull WalletDataSource walletRepository) {
+    WalletPresenter(@NonNull WalletContract.View view,
+                    @NonNull WalletDataSource walletRepository) {
         mView = view;
         mWalletRepository = walletRepository;
     }
@@ -38,7 +39,7 @@ public class WalletPresenter implements WalletContract.Presenter,
 
     @Override
     public void handleFirstSwipeRefresh() {
-        if (getCachedWallets().size() == 0) getWallets();
+        if (getCachedWallets() == null || getCachedWallets().size() == 0) getWallets();
     }
 
     @Override
@@ -54,5 +55,9 @@ public class WalletPresenter implements WalletContract.Presenter,
 
     @Override
     public void onDataNotAvailable(Exception e) {
+        String errMsg = (e == null) ? NO_DATA_ERR : e.getMessage();
+        mView.showErrorMessage(errMsg);
+        mView.updateWallets(null);
+        mView.toggleIsRefreshing();
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -12,10 +13,10 @@ import android.support.v7.widget.Toolbar;
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.ui.addwallet.AddWalletActivity;
 
-public class WalletActivity extends AppCompatActivity {
+public class WalletActivity extends AppCompatActivity implements WalletFragment.OnFragmentInteractionListener {
 
-    private FragmentTransaction mFragmentTransaction;
     private SearchView mSearchView;
+    private FragmentTransaction mFragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,19 @@ public class WalletActivity extends AppCompatActivity {
         initSearchView();
     }
 
-    public SearchView getSearchView() {
-        return mSearchView;
+    @Override
+    public void onBackPressed() {
+        if (mSearchView.isIconified()) {
+            super.onBackPressed();
+        } else {
+            closeSearchView();
+            refreshWallets();
+        }
+    }
+
+    @Override
+    public void onStopFragment() {
+        closeSearchView();
     }
 
     private void initBottomNav() {
@@ -39,6 +51,8 @@ public class WalletActivity extends AppCompatActivity {
             int itemId = menuItem.getItemId();
             switch (itemId) {
                 case R.id.nav_home:
+                    Fragment f = getSupportFragmentManager().findFragmentByTag(WalletFragment.TAG);
+                    if (f instanceof WalletFragment) break; // if fragment existed -> break;
                     mFragmentTransaction = getSupportFragmentManager().beginTransaction();
                     mFragmentTransaction.replace(R.id.content_container,
                             WalletFragment.newInstance(),
@@ -46,7 +60,7 @@ public class WalletActivity extends AppCompatActivity {
                     mFragmentTransaction.commit();
                     break;
                 case R.id.nav_settings:
-                    // TODO: add fragment transaction when do settings screen task
+                    // TODO: implement later
                     break;
                 default:
                     break;
@@ -84,7 +98,12 @@ public class WalletActivity extends AppCompatActivity {
         mSearchView = findViewById(R.id.search_view_wallet);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String inputStr) {
+                mSearchView.clearFocus();
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(WalletFragment.TAG);
+                if (fragment instanceof WalletFragment) {
+                    ((WalletFragment) fragment).getPresenter().searchWallets(inputStr);
+                }
                 return false;
             }
 
@@ -93,5 +112,22 @@ public class WalletActivity extends AppCompatActivity {
                 return false;
             }
         });
+        mSearchView.setOnCloseListener(() -> {
+            refreshWallets();
+            return false;
+        });
+    }
+
+    private void refreshWallets() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(WalletFragment.TAG);
+        if (fragment instanceof WalletFragment) {
+            ((WalletFragment) fragment).getPresenter().getWallets();
+        }
+    }
+
+    private void closeSearchView() {
+        mSearchView.clearFocus();
+        mSearchView.setQuery("", false);
+        mSearchView.setIconified(true);
     }
 }

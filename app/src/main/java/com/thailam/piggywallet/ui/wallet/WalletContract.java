@@ -11,6 +11,8 @@ public interface WalletContract {
         void toggleIsRefreshing();
 
         void updateWallets(List<Wallet> wallets);
+
+        void showErrorMessage(String msg);
     }
 
     interface Presenter extends BasePresenter {

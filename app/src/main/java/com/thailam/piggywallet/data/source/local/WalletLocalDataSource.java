@@ -43,7 +43,8 @@ public class WalletLocalDataSource implements WalletDataSource {
     public void getInitialWallets(@NonNull final GetWalletCallback callback) {
         LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
             SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
-            Cursor cursor = db.query(true, WalletEntry.TBL_NAME_WALLET, null,
+            Cursor cursor = db.query(
+                    true, WalletEntry.TBL_NAME_WALLET, null,
                     null, null, null,
                     null, null, QUERY_LIMIT);
             return getWallets(db, cursor);

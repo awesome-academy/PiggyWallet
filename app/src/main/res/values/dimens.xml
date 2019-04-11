@@ -4,4 +4,7 @@
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_16">16dp</dimen>
     <dimen name="dimen_card_height">184dp</dimen>
+    <dimen name="card_title_height">18sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="dimen_bot_nav_height">40dp</dimen>
 </resources>

@@ -44,7 +44,7 @@ public class WalletRepository implements WalletDataSource {
             }
             @Override
             public void onDataNotAvailable(Exception e) {
-                // TODO: implement later
+                callback.onDataNotAvailable(e);
             }
         });
     }

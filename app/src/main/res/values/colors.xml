@@ -6,4 +6,5 @@
     <color name="color_positive_balance">#06FF00</color>
     <color name="color_negative_balance">#FF0000</color>
     <color name="color_screen_bg">#CFCDCD</color>
+    <color name="color_title">#505050</color>
 </resources>
