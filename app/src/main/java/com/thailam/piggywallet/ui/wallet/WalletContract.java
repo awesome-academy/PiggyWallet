@@ -1,12 +1,23 @@
 package com.thailam.piggywallet.ui.wallet;
 
+import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.ui.base.BasePresenter;
 import com.thailam.piggywallet.ui.base.BaseView;
 
+import java.util.List;
+
 public interface WalletContract {
     interface View extends BaseView {
+        void toggleIsRefreshing();
+
+        void updateWallets(List<Wallet> wallets);
     }
 
     interface Presenter extends BasePresenter {
+        void getWallets();
+
+        void handleFirstSwipeRefresh();
+
+        List<Wallet> getCachedWallets();
     }
 }

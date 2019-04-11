@@ -7,13 +7,15 @@ import com.thailam.piggywallet.data.source.WalletDataSource;
 
 import java.util.List;
 
-public class SplashPresenter implements SplashContract.Presenter, WalletDataSource.GetWalletCallback {
+public class SplashPresenter implements SplashContract.Presenter,
+        WalletDataSource.GetWalletCallback {
     @NonNull
     private final SplashContract.View mView;
     @NonNull
     private WalletDataSource mWalletRepository;
 
-    public SplashPresenter(@NonNull SplashContract.View view, @NonNull WalletDataSource walletRepository) {
+    public SplashPresenter(@NonNull SplashContract.View view,
+                           @NonNull WalletDataSource walletRepository) {
         mView = view;
         mWalletRepository = walletRepository;
     }
@@ -30,7 +32,7 @@ public class SplashPresenter implements SplashContract.Presenter, WalletDataSour
 
     @Override
     public void onDataLoaded(List<Wallet> wallets) {
-        mView.changeScreen(wallets);
+        mView.openWalletDetail();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.thailam.piggywallet.ui.wallet;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -10,12 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.thailam.piggywallet.R;
-import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.ui.addwallet.AddWalletActivity;
-import com.thailam.piggywallet.util.Constants;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class WalletActivity extends AppCompatActivity {
 
@@ -77,14 +71,5 @@ public class WalletActivity extends AppCompatActivity {
                     WalletFragment.TAG);
             mFragmentTransaction.commit();
         }
-    }
-
-    public static Intent getWalletIntent(Context context, List<Wallet> wallets) {
-        Intent intent = new Intent(context, WalletActivity.class);
-        if (wallets != null) {
-            ArrayList<Wallet> list = new ArrayList<>(wallets);
-            intent.putParcelableArrayListExtra(Constants.EXTRA_WALLETS, list);
-        }
-        return intent;
     }
 }

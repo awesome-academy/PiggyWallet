@@ -62,4 +62,9 @@ public class WalletLocalDataSource implements WalletDataSource {
         // TODO: implement at task add walet
         return false;
     }
+
+    @Override
+    public List<Wallet> getCachedWallets() {
+        return null;
+    }
 }

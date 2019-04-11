@@ -42,7 +42,6 @@ public class WalletRepository implements WalletDataSource {
                 refreshCache(wallets);
                 callback.onDataLoaded(mCachedWallets);
             }
-
             @Override
             public void onDataNotAvailable(Exception e) {
                 // TODO: implement later
@@ -54,6 +53,11 @@ public class WalletRepository implements WalletDataSource {
     public boolean addWallet(Wallet wallet) {
         // TODO: implement at add wallet task
         return false;
+    }
+
+    @Override
+    public List<Wallet> getCachedWallets() {
+        return mCachedWallets;
     }
 
     private void refreshCache(List<Wallet> wallets) {
