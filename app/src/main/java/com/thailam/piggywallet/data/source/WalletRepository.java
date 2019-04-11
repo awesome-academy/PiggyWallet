@@ -51,15 +51,7 @@ public class WalletRepository implements WalletDataSource {
 
     @Override
     public void getSearchedWallets(String input, @NonNull GetWalletCallback callback) {
-        mWalletLocalDataSource.getSearchedWallets(input, new GetWalletCallback() {
-            @Override
-            public void onDataLoaded(List<Wallet> result) {
-                callback.onDataLoaded(result);
-            }
-
-            @Override
-            public void onDataNotAvailable(Exception e) { }
-        });
+        mWalletLocalDataSource.getSearchedWallets(input, callback);
     }
 
     @Override

@@ -82,5 +82,17 @@ public class WalletActivity extends AppCompatActivity {
 
     private void initSearchView() {
         mSearchView = findViewById(R.id.search_view_wallet);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
     }
 }

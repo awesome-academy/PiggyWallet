@@ -42,7 +42,7 @@ public class WalletLocalDataSource implements WalletDataSource {
     @Override
     public void getInitialWallets(@NonNull final GetWalletCallback callback) {
         LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
-            return queryGetWallets(
+            return setCursorQuery(
                     true, WalletEntry.TBL_NAME_WALLET, null,
                     null, null, null,
                     null, null, QUERY_LIMIT);
@@ -51,10 +51,10 @@ public class WalletLocalDataSource implements WalletDataSource {
     }
 
     @Override
-    public void getSearchedWallets(String input, @NonNull GetWalletCallback callback) {
+    public void getSearchedWallets(String input, @NonNull final GetWalletCallback callback) {
         LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
             String selectionArgs[] = new String[]{"%" + input + "%"};
-            return queryGetWallets(true, WalletEntry.TBL_NAME_WALLET, null,
+            return setCursorQuery(true, WalletEntry.TBL_NAME_WALLET, null,
                     QUERY_SEARCH_WALLETS_LIKE, selectionArgs, null,
                     null, null, null);
         }, callback);
@@ -72,21 +72,21 @@ public class WalletLocalDataSource implements WalletDataSource {
         return null;
     }
 
-    private List<Wallet> queryGetWallets(boolean distinct, String table, String[] columns,
-                                         String selection, String[] selectionArgs, String groupBy,
-                                         String having, String orderBy, String limit) {
+    private List<Wallet> setCursorQuery(boolean distinct, String table, String[] columns,
+                                        String selection, String[] selectionArgs, String groupBy,
+                                        String having, String orderBy, String limit) {
         SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
-        List<Wallet> walletsList = new ArrayList<>();
         Cursor cursor = db.query(distinct, table, columns, selection, selectionArgs,
                 groupBy, having, orderBy, limit);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) { // check if there are any left
-            Wallet wallet = new Wallet.Builder(cursor).build();
-            walletsList.add(wallet);
-            cursor.moveToNext();
+        if (cursor.getCount() == 0) {
+            return null;
+        }
+        List<Wallet> wallets = new ArrayList<>();
+        while (cursor.moveToNext()) { // check if there are any left
+            wallets.add(new Wallet.Builder(cursor).build());
         }
         cursor.close();
         db.close();
-        return walletsList;
+        return wallets;
     }
 }
