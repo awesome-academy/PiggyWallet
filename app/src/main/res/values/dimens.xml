@@ -16,4 +16,5 @@
     <dimen name="dp_32">32dp</dimen>
     <dimen name="button_add_transaction_height">70dp</dimen>
     <dimen name="dp_24">24dp</dimen>
+    <dimen name="category_card_height">80dp</dimen>
 </resources>

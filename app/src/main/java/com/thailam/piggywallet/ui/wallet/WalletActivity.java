@@ -1,6 +1,5 @@
 package com.thailam.piggywallet.ui.wallet;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -11,8 +10,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 
 import com.thailam.piggywallet.R;
-import com.thailam.piggywallet.ui.addwallet.AddWalletActivity;
-import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
 
 public class WalletActivity extends AppCompatActivity implements WalletFragment.OnFragmentInteractionListener {
 
