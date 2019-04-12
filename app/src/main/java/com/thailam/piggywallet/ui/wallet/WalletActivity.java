@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.ui.addwallet.AddWalletActivity;
+import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
 
 public class WalletActivity extends AppCompatActivity implements WalletFragment.OnFragmentInteractionListener {
 
@@ -36,7 +37,6 @@ public class WalletActivity extends AppCompatActivity implements WalletFragment.
             super.onBackPressed();
         } else {
             closeSearchView();
-            refreshWallets();
         }
     }
 

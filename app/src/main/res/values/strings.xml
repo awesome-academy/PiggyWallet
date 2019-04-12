@@ -4,4 +4,10 @@
     <string name="demo">Dummy String</string>
     <string name="bot_nav_home">Home</string>
     <string name="bot_nav_settings">Settings</string>
+    <string name="wallet_detail_detail">Transaction histories</string>
+    <string name="wallet_detail_overview_balance">Balance</string>
+    <string name="wallet_detail_overview_inflow">Inflow</string>
+    <string name="wallet_detail_overview_outflow">Outflow</string>
+    <string name="card_overview_button">See Statistics</string>
+    <string name="demo_number">92K</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.thailam.piggywallet.ui.wallet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
 import com.thailam.piggywallet.ui.adapter.WalletAdapter;
+import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
 
 import java.util.List;
 import java.util.Objects;
@@ -130,7 +132,8 @@ public class WalletFragment extends Fragment implements WalletContract.View,
 
     private void initAdapter() {
         mWalletAdapter = new WalletAdapter(walletId -> {
-            // TODO: implement add to go to detail in wallet detail later task
+            Intent intent = WalletDetailActivity.getWalletIdIntent(getContext(), walletId);
+            startActivity(intent);
         });
         List<Wallet> wallets = mPresenter.getCachedWallets();
         if (wallets != null) {

@@ -27,7 +27,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.wallet_card, parent, false);
+                .inflate(R.layout.card_wallet_item, parent, false);
         return new ViewHolder(parent.getContext(), itemView, mListener);
     }
 
