@@ -42,10 +42,11 @@ public class WalletLocalDataSource implements WalletDataSource {
     @Override
     public void getInitialWallets(@NonNull final GetWalletCallback callback) {
         LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
-            return setCursorQuery(
-                    true, WalletEntry.TBL_NAME_WALLET, null,
+            SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
+            Cursor cursor = db.query(true, WalletEntry.TBL_NAME_WALLET, null,
                     null, null, null,
                     null, null, QUERY_LIMIT);
+            return getWallets(db, cursor);
         }, callback);
         task.execute();
     }
@@ -54,9 +55,11 @@ public class WalletLocalDataSource implements WalletDataSource {
     public void getSearchedWallets(String input, @NonNull final GetWalletCallback callback) {
         LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
             String selectionArgs[] = new String[]{"%" + input + "%"};
-            return setCursorQuery(true, WalletEntry.TBL_NAME_WALLET, null,
+            SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
+            Cursor cursor = db.query(true, WalletEntry.TBL_NAME_WALLET, null,
                     QUERY_SEARCH_WALLETS_LIKE, selectionArgs, null,
                     null, null, null);
+            return getWallets(db, cursor);
         }, callback);
         task.execute();
     }
@@ -72,12 +75,7 @@ public class WalletLocalDataSource implements WalletDataSource {
         return null;
     }
 
-    private List<Wallet> setCursorQuery(boolean distinct, String table, String[] columns,
-                                        String selection, String[] selectionArgs, String groupBy,
-                                        String having, String orderBy, String limit) {
-        SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
-        Cursor cursor = db.query(distinct, table, columns, selection, selectionArgs,
-                groupBy, having, orderBy, limit);
+    private List<Wallet> getWallets(SQLiteDatabase db, Cursor cursor) {
         if (cursor.getCount() == 0) {
             return null;
         }
