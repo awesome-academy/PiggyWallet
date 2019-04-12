@@ -50,6 +50,11 @@ public class WalletRepository implements WalletDataSource {
     }
 
     @Override
+    public void getSearchedWallets(String input, @NonNull GetWalletCallback callback) {
+        mWalletLocalDataSource.getSearchedWallets(input, callback);
+    }
+
+    @Override
     public boolean addWallet(Wallet wallet) {
         // TODO: implement at add wallet task
         return false;

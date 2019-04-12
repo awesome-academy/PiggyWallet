@@ -16,6 +16,8 @@ public interface WalletDataSource {
 
     void getInitialWallets(@NonNull GetWalletCallback callback);
 
+    void getSearchedWallets(String input, @NonNull GetWalletCallback callback);
+
     boolean addWallet(Wallet wallet);
 
     List<Wallet> getCachedWallets();

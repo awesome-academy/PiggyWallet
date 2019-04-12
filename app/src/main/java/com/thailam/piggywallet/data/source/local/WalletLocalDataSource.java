@@ -18,6 +18,7 @@ public class WalletLocalDataSource implements WalletDataSource {
     private static WalletLocalDataSource sInstance;
     private static AppDatabaseHelper mAppDatabaseHelper;
     private static final String QUERY_LIMIT = "5";
+    private static final String QUERY_SEARCH_WALLETS_LIKE = WalletEntry.TITLE + " LIKE ? ";
 
     private WalletLocalDataSource(Context context) {
         mAppDatabaseHelper = new AppDatabaseHelper(context);
@@ -42,17 +43,23 @@ public class WalletLocalDataSource implements WalletDataSource {
     public void getInitialWallets(@NonNull final GetWalletCallback callback) {
         LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
             SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
-            List<Wallet> wallets = new ArrayList<>();
-            Cursor cursor = db.query(WalletEntry.TBL_NAME_WALLET, null, null, null, null, null, null, QUERY_LIMIT);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) { // check if there are any left
-                Wallet wallet = new Wallet.Builder(cursor).build();
-                wallets.add(wallet);
-                cursor.moveToNext();
-            }
-            cursor.close();
-            db.close();
-            return wallets;
+            Cursor cursor = db.query(true, WalletEntry.TBL_NAME_WALLET, null,
+                    null, null, null,
+                    null, null, QUERY_LIMIT);
+            return getWallets(db, cursor);
+        }, callback);
+        task.execute();
+    }
+
+    @Override
+    public void getSearchedWallets(String input, @NonNull final GetWalletCallback callback) {
+        LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
+            String selectionArgs[] = new String[]{"%" + input + "%"};
+            SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
+            Cursor cursor = db.query(true, WalletEntry.TBL_NAME_WALLET, null,
+                    QUERY_SEARCH_WALLETS_LIKE, selectionArgs, null,
+                    null, null, null);
+            return getWallets(db, cursor);
         }, callback);
         task.execute();
     }
@@ -66,5 +73,18 @@ public class WalletLocalDataSource implements WalletDataSource {
     @Override
     public List<Wallet> getCachedWallets() {
         return null;
+    }
+
+    private List<Wallet> getWallets(SQLiteDatabase db, Cursor cursor) {
+        if (cursor.getCount() == 0) {
+            return null;
+        }
+        List<Wallet> wallets = new ArrayList<>();
+        while (cursor.moveToNext()) { // check if there are any left
+            wallets.add(new Wallet.Builder(cursor).build());
+        }
+        cursor.close();
+        db.close();
+        return wallets;
     }
 }
