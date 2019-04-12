@@ -14,8 +14,8 @@ public class SplashPresenter implements SplashContract.Presenter,
     @NonNull
     private WalletDataSource mWalletRepository;
 
-    public SplashPresenter(@NonNull SplashContract.View view,
-                           @NonNull WalletDataSource walletRepository) {
+    SplashPresenter(@NonNull SplashContract.View view,
+                    @NonNull WalletDataSource walletRepository) {
         mView = view;
         mWalletRepository = walletRepository;
     }
@@ -37,6 +37,7 @@ public class SplashPresenter implements SplashContract.Presenter,
 
     @Override
     public void onDataNotAvailable(Exception e) {
-        // TODO: handle exception here
+        mView.openWalletDetail();
+        // TODO: log error -> console/file
     }
 }

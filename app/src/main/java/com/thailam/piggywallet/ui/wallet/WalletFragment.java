@@ -1,5 +1,6 @@
 package com.thailam.piggywallet.ui.wallet;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
@@ -30,6 +32,8 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     private WalletAdapter mWalletAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
+    private OnFragmentInteractionListener mListener;
+
     public WalletFragment() {
         // Required empty public constructor
     }
@@ -42,6 +46,17 @@ public class WalletFragment extends Fragment implements WalletContract.View,
      */
     public static WalletFragment newInstance() {
         return new WalletFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -58,6 +73,20 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         initAdapter();
         initSwipeRefresh();
         initRecyclerView();
+    }
+
+    @Override
+    public void onStop() {
+        if (mListener != null) {
+            mListener.onStopFragment();
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
@@ -90,6 +119,15 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         mWalletAdapter.setWallets(wallets);
     }
 
+    @Override
+    public void showErrorMessage(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public WalletContract.Presenter getPresenter() {
+        return mPresenter;
+    }
+
     private void initAdapter() {
         mWalletAdapter = new WalletAdapter(walletId -> {
             // TODO: implement add to go to detail in wallet detail later task
@@ -107,11 +145,11 @@ public class WalletFragment extends Fragment implements WalletContract.View,
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-        /**
-         * Showing Swipe Refresh animation on activity create
-         * As animation won't start on onCreate, post runnable is used
-         *
-         * set refreshing = true and load all the guides again
+        /*
+          Showing Swipe Refresh animation on activity create
+          As animation won't start on onCreate, post runnable is used
+
+          set refreshing = true and load all the guides again
          */
         mSwipeRefreshLayout.post(() -> { // load first time
             mPresenter.handleFirstSwipeRefresh();
@@ -124,5 +162,9 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mWalletAdapter);   // set guide adapter to view
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onStopFragment();
     }
 }
