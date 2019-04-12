@@ -78,7 +78,10 @@ public class WalletActivity extends AppCompatActivity implements WalletFragment.
     private void initFab() {
         FloatingActionButton fab = findViewById(R.id.fab_add);
         fab.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddWalletActivity.class);
+//            Intent intent = new Intent(this, AddWalletActivity.class);
+//            startActivity(intent);
+              //TODO: change later
+            Intent intent = new Intent(this, WalletDetailActivity.class);
             startActivity(intent);
         });
     }

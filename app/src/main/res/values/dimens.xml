@@ -12,4 +12,8 @@
     <dimen name="card_overview_height">110dp</dimen>
     <dimen name="collapsing_toolbar_height">200dp</dimen>
     <dimen name="wallet_transactions_margin_top">70dp</dimen>
+    <dimen name="dimen_icon_add_transaction">30dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="button_add_transaction_height">70dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
 </resources>
