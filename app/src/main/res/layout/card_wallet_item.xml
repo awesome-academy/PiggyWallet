@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_card_height"
+    android:layout_height="@dimen/card_wallet_height"
     android:layout_margin="@dimen/dp_8"
     app:cardCornerRadius="@dimen/dp_8">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_card_height"
+        android:layout_height="@dimen/card_wallet_height"
         android:background="@android:color/white">
 
         <TextView

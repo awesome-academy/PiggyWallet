@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="dp_1">1dp</dimen>
     <dimen name="dp_4">4dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_16">16dp</dimen>
-    <dimen name="dimen_card_height">184dp</dimen>
-    <dimen name="card_title_height">18sp</dimen>
     <dimen name="sp_16">16sp</dimen>
-    <dimen name="dimen_bot_nav_height">40dp</dimen>
+    <dimen name="sp_32">32sp</dimen>
+    <dimen name="card_wallet_title_height">18sp</dimen>
+    <dimen name="card_wallet_height">184dp</dimen>
+    <dimen name="bottom_nav_height">40dp</dimen>
+    <dimen name="card_overview_height">110dp</dimen>
+    <dimen name="collapsing_toolbar_height">200dp</dimen>
+    <dimen name="wallet_transactions_margin_top">70dp</dimen>
 </resources>

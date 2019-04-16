@@ -16,6 +16,6 @@
             android:id="@+id/recycler_wallet_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/wallet_card" />
+            tools:listitem="@layout/card_wallet_item" />
     </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

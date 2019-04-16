@@ -39,9 +39,10 @@ public class WalletRepository implements WalletDataSource {
         mWalletLocalDataSource.getInitialWallets(new GetWalletCallback() {
             @Override
             public void onDataLoaded(List<Wallet> wallets) {
-                refreshCache(wallets);
+                refreshWalletsCache(wallets);
                 callback.onDataLoaded(mCachedWallets);
             }
+
             @Override
             public void onDataNotAvailable(Exception e) {
                 callback.onDataNotAvailable(e);
@@ -65,12 +66,12 @@ public class WalletRepository implements WalletDataSource {
         return mCachedWallets;
     }
 
-    private void refreshCache(List<Wallet> wallets) {
+    private void refreshWalletsCache(List<Wallet> wallets) {
         if (mCachedWallets == null) {
             mCachedWallets = new ArrayList<>(wallets);
             return;
         }
         mCachedWallets.clear();
-        mCachedWallets = wallets;
+        mCachedWallets.addAll(wallets);
     }
 }
