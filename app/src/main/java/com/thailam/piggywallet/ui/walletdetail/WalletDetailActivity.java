@@ -7,9 +7,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.thailam.piggywallet.R;
-import com.thailam.piggywallet.util.Constants;
 
 public class WalletDetailActivity extends AppCompatActivity {
+    private static final String EXTRA_WALLET_ID = "com.thailam.piggywallet.extras.EXTRA_WALLET_ID";
+
+    public static Intent getIntent(Context context, int walletId) {
+        Intent intent = new Intent(context, WalletDetailActivity.class);
+        intent.putExtra(EXTRA_WALLET_ID, walletId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +35,5 @@ public class WalletDetailActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> {
             onBackPressed();
         });
-    }
-
-    public static Intent getWalletIdIntent(Context context, int walletId) {
-        Intent intent = new Intent(context, WalletDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_WALLET_ID, walletId);
-        return intent;
     }
 }
