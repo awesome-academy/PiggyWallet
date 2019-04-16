@@ -23,7 +23,6 @@ public class WalletActivity extends AppCompatActivity implements WalletFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
-        //
         initBottomNav();
         initToolbar();
         initFab();
@@ -78,8 +77,6 @@ public class WalletActivity extends AppCompatActivity implements WalletFragment.
     private void initFab() {
         FloatingActionButton fab = findViewById(R.id.fab_add);
         fab.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddWalletActivity.class);
-            startActivity(intent);
         });
     }
 

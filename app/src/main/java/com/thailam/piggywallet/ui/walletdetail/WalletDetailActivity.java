@@ -2,11 +2,13 @@ package com.thailam.piggywallet.ui.walletdetail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.thailam.piggywallet.R;
+import com.thailam.piggywallet.ui.addtransaction.AddTransactionActivity;
 
 public class WalletDetailActivity extends AppCompatActivity {
     private static final String EXTRA_WALLET_ID = "com.thailam.piggywallet.extras.EXTRA_WALLET_ID";
@@ -23,6 +25,7 @@ public class WalletDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wallet_detail);
         //
         initToolbar();
+        initFab();
     }
 
     private void initToolbar() {
@@ -34,6 +37,13 @@ public class WalletDetailActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> {
             onBackPressed();
+        });
+    }
+
+    private void initFab() {
+        FloatingActionButton fab = findViewById(R.id.fab_add_transaction);
+        fab.setOnClickListener(v -> {
+            startActivity(AddTransactionActivity.getIntent(getApplicationContext()));
         });
     }
 }
