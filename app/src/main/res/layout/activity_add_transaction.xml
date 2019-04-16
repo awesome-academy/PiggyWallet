@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:text="@string/save"
+        android:text="@string/action_save"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_add_transaction"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_add_transaction"

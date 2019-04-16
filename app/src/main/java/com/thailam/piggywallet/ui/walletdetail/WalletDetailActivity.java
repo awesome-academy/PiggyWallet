@@ -43,8 +43,7 @@ public class WalletDetailActivity extends AppCompatActivity {
     private void initFab() {
         FloatingActionButton fab = findViewById(R.id.fab_add_transaction);
         fab.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddTransactionActivity.class);
-            startActivity(intent);
+            startActivity(AddTransactionActivity.getIntent(getApplicationContext()));
         });
     }
 }

@@ -10,7 +10,7 @@
     <string name="wallet_detail_overview_outflow">Outflow</string>
     <string name="card_overview_button">See Statistics</string>
     <string name="demo_number">92K</string>
-    <string name="save">Save</string>
+    <string name="action_save">Save</string>
     <string name="amount">$ 0</string>
     <string name="add_note">Add Note</string>
     <string name="add_date">Today</string>
