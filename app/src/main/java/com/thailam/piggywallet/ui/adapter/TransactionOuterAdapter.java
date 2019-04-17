@@ -49,7 +49,13 @@ public class TransactionOuterAdapter extends RecyclerView.Adapter<TransactionOut
     }
 
     public void setTransactionParents(List<Transaction> transactions) {
-        mTransactionParents.add(new TransactionParent(transactions));
+        if (transactions == null) return;
+        long commonDate = transactions.get(0).getDate(); // get first since all date will be common
+        for (Transaction transaction : transactions) {
+            if (commonDate != transaction.getDate())
+                return; // if not all date are similar then return;
+        }
+        mTransactionParents.add(new TransactionParent(transactions, commonDate));
         notifyDataSetChanged();
     }
 

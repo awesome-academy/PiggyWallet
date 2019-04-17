@@ -1,5 +1,7 @@
 package com.thailam.piggywallet.util;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,8 +11,7 @@ import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.FORMAT_ABBREV_RELATIVE;
 
 public class DateFormatUtils {
-    private static final SimpleDateFormat TIME_FORMATTER = new SimpleDateFormat("HH:mm aa",
-            Locale.US);
+    private static final SimpleDateFormat TIME_FORMATTER = new SimpleDateFormat("dd-MM-yyyy");
     private static final String FORMAT_D_M_Y = "%d-%d-%d";
 
     public static long getLongFromDate(int year, int month, int dayOfMonth) throws ParseException {
