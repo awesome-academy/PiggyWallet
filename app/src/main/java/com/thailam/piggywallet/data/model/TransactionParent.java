@@ -3,7 +3,6 @@ package com.thailam.piggywallet.data.model;
 import java.util.List;
 
 public class TransactionParent {
-
     private List<Transaction> mTransactions;
     private long mDate;
 

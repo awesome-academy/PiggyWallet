@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 
 public class TransactionLocalDataSource implements TransactionDataSource {
@@ -27,8 +28,9 @@ public class TransactionLocalDataSource implements TransactionDataSource {
     }
 
     @Override
-    public void saveTransaction(Transaction transaction, @NonNull TransactionCallback callback) {
-        mDatabaseDAO.saveTransaction(transaction, callback);
+    public void saveTransaction(Wallet wallet, Transaction transaction,
+                                @NonNull TransactionCallback callback) {
+        mDatabaseDAO.saveTransaction(wallet, transaction, callback);
     }
 
     @Override

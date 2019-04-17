@@ -94,8 +94,7 @@ public class Transaction {
         private int mWalletId;
 
 
-        public Builder(int id) {
-            mId = id;
+        public Builder() {
         }
 
         public Builder setNote(String note) {

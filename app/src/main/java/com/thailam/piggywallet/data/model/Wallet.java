@@ -25,6 +25,8 @@ public class Wallet implements Parcelable {
     private String mSubtitle;
     private String mIconUrl;
     private double mAmount;
+    private double mInflow;
+    private double mOutflow;
     private long mCreatedAt;
     private long mUpdatedAt;
 
@@ -34,6 +36,8 @@ public class Wallet implements Parcelable {
         mSubtitle = builder.mSubtitle;
         mIconUrl = builder.mIconUrl;
         mAmount = builder.mAmount;
+        mInflow = builder.mInflow;
+        mOutflow = builder.mOutflow;
         mCreatedAt = builder.mCreatedAt;
         mUpdatedAt = builder.mUpdatedAt;
     }
@@ -88,6 +92,22 @@ public class Wallet implements Parcelable {
         mAmount = amount;
     }
 
+    public double getInflow() {
+        return mInflow;
+    }
+
+    public void setInflow(double inflow) {
+        mInflow = inflow;
+    }
+
+    public double getOutflow() {
+        return mOutflow;
+    }
+
+    public void setOutflow(double outflow) {
+        mOutflow = outflow;
+    }
+
     public long getCreatedAt() {
         return mCreatedAt;
     }
@@ -116,6 +136,8 @@ public class Wallet implements Parcelable {
         dest.writeString(mSubtitle);
         dest.writeString(mIconUrl);
         dest.writeDouble(mAmount);
+        dest.writeDouble(mInflow);
+        dest.writeDouble(mOutflow);
         dest.writeLong(mCreatedAt);
         dest.writeLong(mUpdatedAt);
     }
@@ -127,6 +149,8 @@ public class Wallet implements Parcelable {
         private String mSubtitle;
         private String mIconUrl;
         private double mAmount;
+        private double mInflow;
+        private double mOutflow;
         private long mCreatedAt;
         private long mUpdatedAt;
 
@@ -139,17 +163,21 @@ public class Wallet implements Parcelable {
             int indexTitle = cursor.getColumnIndex(WalletEntry.TITLE);
             int indexSubtitle = cursor.getColumnIndex(WalletEntry.SUBTITLE);
             int indexAmount = cursor.getColumnIndex(WalletEntry.AMOUNT);
+            int indexInflow = cursor.getColumnIndex(WalletEntry.INFLOW);
+            int indexOutflow = cursor.getColumnIndex(WalletEntry.OUTFLOW);
             int indexIconUrl = cursor.getColumnIndex(WalletEntry.ICON);
             int indexCreatedAt = cursor.getColumnIndex(WalletEntry.CREATED_AT);
             int indexUpdatedAt = cursor.getColumnIndex(WalletEntry.UPDATED_AT);
             // get data from column index
-            mId = cursor.getInt(indexId);
-            mTitle = cursor.getString(indexTitle);
-            mSubtitle = cursor.getString(indexSubtitle);
-            mIconUrl = cursor.getString(indexIconUrl);
-            mAmount = cursor.getDouble(indexAmount);
-            mCreatedAt = cursor.getLong(indexCreatedAt);
-            mUpdatedAt = cursor.getLong(indexUpdatedAt);
+            if (indexId != -1) mId = cursor.getInt(indexId);
+            if (indexTitle != -1) mTitle = cursor.getString(indexTitle);
+            if (indexId != -1) mSubtitle = cursor.getString(indexSubtitle);
+            if (indexSubtitle != -1) mIconUrl = cursor.getString(indexIconUrl);
+            if (indexAmount != -1) mAmount = cursor.getDouble(indexAmount);
+            if (indexInflow != -1) mInflow = cursor.getDouble(indexInflow);
+            if (indexOutflow != -1) mOutflow = cursor.getDouble(indexOutflow);
+            if (indexCreatedAt != -1) mCreatedAt = cursor.getLong(indexCreatedAt);
+            if (indexUpdatedAt != -1) mUpdatedAt = cursor.getLong(indexUpdatedAt);
         }
 
         public Builder setId(int id) {
@@ -177,6 +205,16 @@ public class Wallet implements Parcelable {
             return this;
         }
 
+        public Builder setInflow(double inflow) {
+            mInflow = inflow;
+            return this;
+        }
+
+        public Builder setOutflow(double outflow) {
+            mOutflow = outflow;
+            return this;
+        }
+
         public Builder setCreatedAt(long createdAt) {
             mCreatedAt = createdAt;
             return this;
@@ -187,7 +225,6 @@ public class Wallet implements Parcelable {
             return this;
         }
 
-        // main build
         public Wallet build() {
             return new Wallet(this);
         }

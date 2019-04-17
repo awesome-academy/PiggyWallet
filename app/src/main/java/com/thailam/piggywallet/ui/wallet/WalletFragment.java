@@ -131,8 +131,8 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     }
 
     private void initAdapter() {
-        mWalletAdapter = new WalletAdapter(walletId -> {
-            Intent intent = WalletDetailActivity.getIntent(getContext(), walletId);
+        mWalletAdapter = new WalletAdapter(wallet -> {
+            Intent intent = WalletDetailActivity.getIntent(getContext(), wallet);
             startActivity(intent);
         });
         List<Wallet> wallets = mPresenter.getCachedWallets();

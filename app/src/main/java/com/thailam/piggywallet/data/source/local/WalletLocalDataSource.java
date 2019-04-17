@@ -47,7 +47,12 @@ public class WalletLocalDataSource implements WalletDataSource {
                     true, WalletEntry.TBL_NAME_WALLET, null,
                     null, null, null,
                     null, null, QUERY_LIMIT);
-            return getWallets(db, cursor);
+            try {
+                return getWallets(db, cursor);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }, callback);
         task.execute();
     }
@@ -55,12 +60,17 @@ public class WalletLocalDataSource implements WalletDataSource {
     @Override
     public void getSearchedWallets(String input, @NonNull final GetWalletCallback callback) {
         LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
-            String selectionArgs[] = new String[]{"%" + input + "%"};
+            String[] selectionArgs = new String[]{"%" + input + "%"};
             SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
             Cursor cursor = db.query(true, WalletEntry.TBL_NAME_WALLET, null,
                     QUERY_SEARCH_WALLETS_LIKE, selectionArgs, null,
                     null, null, null);
-            return getWallets(db, cursor);
+            try {
+                return getWallets(db, cursor);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }, callback);
         task.execute();
     }

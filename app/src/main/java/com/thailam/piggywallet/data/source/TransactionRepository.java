@@ -3,6 +3,7 @@ package com.thailam.piggywallet.data.source;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.Wallet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,8 @@ public class TransactionRepository implements TransactionDataSource {
     }
 
     @Override
-    public void saveTransaction(Transaction transaction, @NonNull TransactionCallback callback) {
-        mTransactionLocalDataSource.saveTransaction(transaction, callback);
+    public void saveTransaction(Wallet wallet, Transaction transaction, @NonNull TransactionCallback callback) {
+        mTransactionLocalDataSource.saveTransaction(wallet, transaction, callback);
     }
 
     @Override

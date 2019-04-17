@@ -9,6 +9,8 @@ public interface WalletEntry {
     String TITLE = "title";
     String SUBTITLE = "subtitle";
     String AMOUNT = "amount";
+    String INFLOW = "inflow";
+    String OUTFLOW = "outflow";
     String ICON = "icon_url";
     String CREATED_AT = "created_at";
     String UPDATED_AT = "updated_at";

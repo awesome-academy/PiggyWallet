@@ -14,18 +14,20 @@ import android.widget.Toast;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Category;
+import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
 import com.thailam.piggywallet.ui.category.CategoryDialog;
 import com.thailam.piggywallet.util.Constants;
-import com.thailam.piggywallet.util.DateFormatUtils;
+import com.thailam.piggywallet.util.TypeFormatUtils;
 
 import java.text.ParseException;
 import java.util.Calendar;
 
 public class TransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
-        View.OnClickListener, CategoryDialog.OnCategoryChosen, TransactionContract.View {
+        View.OnClickListener, TransactionContract.View {
+    private static final String EXTRA_WALLET = "com.thailam.piggywallet.extras.EXTRA_WALLET";
 
     private TransactionContract.Presenter mPresenter;
     private DatePickerDialog mDatePickerDialog;
@@ -34,15 +36,19 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     private EditText mEditTextAmount;
     private Button mBtnChooseCategory, mBtnChooseDate;
     private long mDate;
+    private Wallet mWallet;
 
-    public static Intent getIntent(Context context) {
-        return new Intent(context, TransactionActivity.class);
+    public static Intent getIntent(Context context, Wallet wallet) {
+        Intent intent = new Intent(context, TransactionActivity.class);
+        intent.putExtra(EXTRA_WALLET, wallet);
+        return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
+        getWalletIdIntent();
         initPresenter();
         initToolbar();
         initViews();
@@ -53,18 +59,12 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String errMsg = getResources().getString(R.string.add_transaction_choose_date_fail);
         try {
-            mDate = DateFormatUtils.getLongFromDate(year, month, dayOfMonth);
-            mBtnChooseDate.setText(DateFormatUtils.getDateFromLong(mDate));
+            mDate = TypeFormatUtils.getLongFromDate(year, month, dayOfMonth);
+            mBtnChooseDate.setText(TypeFormatUtils.getDateFromLong(mDate));
         } catch (ParseException e) {
             Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onGetCategory(Category category) {
-        mCategory = category;
-        mBtnChooseCategory.setText(mCategory.getName());
     }
 
     @Override
@@ -106,7 +106,11 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         int id = v.getId();
         switch (id) {
             case R.id.button_add_transaction_category:
-                CustomDialog dialog = new CustomDialog(this);
+                CategoryDialog dialog = new CategoryDialog(this);
+                dialog.setCategoryDialogResult(category -> {
+                    mCategory = category;
+                    mBtnChooseCategory.setText(mCategory.getName());
+                });
                 dialog.show();
                 break;
             case R.id.button_add_transaction_date:
@@ -115,6 +119,15 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
             case R.id.button_add_transaction_save:
                 handleSaveTransaction();
                 break;
+        }
+    }
+
+    private void getWalletIdIntent() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getExtras() != null) {
+                mWallet = intent.getExtras().getParcelable(EXTRA_WALLET);
+            }
         }
     }
 
@@ -144,9 +157,8 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     }
 
     private void handleSaveTransaction() {
-        mCategory = new Category(1, "String", System.currentTimeMillis(), System.currentTimeMillis());
         String note = mEditTextNote.getText().toString();
         String amount = mEditTextAmount.getText().toString();
-        mPresenter.saveTransaction(note, amount, mCategory, mDate);
+        mPresenter.saveTransaction(mWallet, note, amount, mCategory, mDate);
     }
 }

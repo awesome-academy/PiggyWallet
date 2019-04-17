@@ -2,26 +2,24 @@ package com.thailam.piggywallet.data.source.base;
 
 import android.os.AsyncTask;
 
-import java.sql.SQLException;
-
 public class LocalAsyncTask<P, T> extends AsyncTask<P, Void, T> {
     private OnDataLoadedCallback<T> mCallback;
     private DataHandler<P, T> mHandler;
-    private SQLException mSQLException;
+    private Exception mException;
 
     public LocalAsyncTask(DataHandler<P, T> handler,
                           OnDataLoadedCallback<T> callback) {
         mHandler = handler;
         mCallback = callback;
-        mSQLException = null;
+        mException = null;
     }
 
     @Override
     protected T doInBackground(P... params) {
         try {
             return mHandler.execute(params);
-        } catch (SQLException e) {
-            mSQLException = e;
+        } catch (Exception e) {
+            mException = e;
             e.printStackTrace();
             return null;
         }
@@ -30,13 +28,13 @@ public class LocalAsyncTask<P, T> extends AsyncTask<P, Void, T> {
     @Override
     protected void onPostExecute(T result) {
         if (result == null) {
-            mCallback.onDataNotAvailable(mSQLException);
+            mCallback.onDataNotAvailable(mException);
         } else {
             mCallback.onDataLoaded(result);
         }
     }
 
     public interface DataHandler<P, T> {
-        T execute(P[] params) throws SQLException;
+        T execute(P[] params) throws Exception;
     }
 }
