@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
+import android.view.View;
 import android.widget.DatePicker;
 
 import com.thailam.piggywallet.R;
@@ -14,7 +14,7 @@ import com.thailam.piggywallet.R;
 import java.util.Calendar;
 
 public class AddTransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
-        AddTransactionContract.View {
+        AddTransactionContract.View, View.OnClickListener{
     private DatePickerDialog mDatePickerDialog;
 
     public static Intent getIntent(Context context) {
@@ -27,12 +27,28 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
         setContentView(R.layout.activity_add_transaction);
         initToolbar();
         initDatePicker();
-        initViews();
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         // TODO: handle on date pick
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.button_add_transaction_category:
+                CustomDialog dialog = new CustomDialog(this);
+                dialog.show();
+                break;
+            case R.id.button_add_transaction_date:
+                mDatePickerDialog.show();
+                break;
+            case R.id.button_add_transaction_save:
+                // TODO: save data from dialog to db
+                break;
+        }
     }
 
     private void initToolbar() {
@@ -46,23 +62,7 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
         mDatePickerDialog = new DatePickerDialog(this, AddTransactionActivity.this,
                 year, month, dayOfMonth);
-    }
-
-    private void initViews() {
-        Button btnChooseCategory = findViewById(R.id.button_add_transaction_category);
-        btnChooseCategory.setOnClickListener(v -> {
-            CustomDialog dialog = new CustomDialog(this);
-            dialog.show();
-        });
-        findViewById(R.id.button_add_transaction_date).setOnClickListener(v -> {
-            mDatePickerDialog.show();
-        });
-        findViewById(R.id.button_add_transaction_save).setOnClickListener(v -> {
-            // TODO: save data from dialog to db
-        });
-
     }
 }

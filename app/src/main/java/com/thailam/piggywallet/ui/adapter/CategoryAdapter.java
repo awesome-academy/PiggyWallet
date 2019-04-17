@@ -37,12 +37,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return (mCategories == null) ? 0 : mCategories.size();
+        return mCategories == null ? 0 : mCategories.size();
     }
 
     public void setCategories(List<Category> categories) {
-        mCategories.clear();
-        mCategories.addAll(categories);
+        mCategories = categories;
         notifyDataSetChanged();
     }
 
@@ -51,6 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         private TextView mTxtViewTitle;
         private ImageView mImageViewIcon;
         private OnItemClickListener mListener;
+        private Category mCategory;
 
         private ViewHolder(Context context, View itemView, OnItemClickListener listener) {
             super(itemView);
@@ -63,15 +63,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            mListener.onItemClick();
+            mListener.onItemClick(mCategory);
         }
 
-        private void bindView(final Category category) {
+        private void bindView(Category category) {
+            mCategory = category;
             mTxtViewTitle.setText(category.getName());
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick();
+        void onItemClick(Category category);
     }
 }

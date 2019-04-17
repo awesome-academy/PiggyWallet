@@ -25,14 +25,6 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
-//        if (getWindow() != null) { // transparent background for the dialog
-//            getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//        }
-        ConstraintLayout constraintLayout = findViewById(R.id.dialog_container);
-        constraintLayout.setOnClickListener(v -> { // on click outside -> cancel
-            this.cancel();
-        });
-
         initAdapter();
         initRecyclerView();
     }
@@ -41,14 +33,17 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.layout.custom_dialog:
+                this.cancel();
+                break;
             default:
                 break;
         }
     }
 
     private void initAdapter() {
-        mCategoryAdapter = new CategoryAdapter(() -> {
-            // TODO: handle on click category
+        mCategoryAdapter = new CategoryAdapter(category -> {
+            // TODO: handle on click category in next task
         });
         // mCategoryAdapter.setCategories(categories);
     }
