@@ -15,4 +15,6 @@
     <string name="add_note">Add Note</string>
     <string name="add_date">Today</string>
     <string name="choose_category">Choose Category</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="add_transaction_food"><![CDATA[Food&Drinks]]></string>
 </resources>

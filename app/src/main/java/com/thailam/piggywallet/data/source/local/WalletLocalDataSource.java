@@ -3,7 +3,6 @@ package com.thailam.piggywallet.data.source.local;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
