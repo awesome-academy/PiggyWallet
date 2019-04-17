@@ -2,13 +2,13 @@ package com.thailam.piggywallet.data.source.base;
 
 import android.os.AsyncTask;
 
-public class LocalAsyncTask<P, T> extends AsyncTask<P, Void, T> {
+public class LocalAsyncTaskGet<P, T> extends AsyncTask<P, Void, T> {
 
     private OnDataLoadedCallback<T> mCallback;
     private DataHandler<P, T> mHandler;
 
-    public LocalAsyncTask(DataHandler<P, T> handler,
-                          OnDataLoadedCallback<T> callback) {
+    public LocalAsyncTaskGet(DataHandler<P, T> handler,
+                             OnDataLoadedCallback<T> callback) {
         mHandler = handler;
         mCallback = callback;
     }
@@ -25,5 +25,9 @@ public class LocalAsyncTask<P, T> extends AsyncTask<P, Void, T> {
         } else {
             mCallback.onDataLoaded(result);
         }
+    }
+
+    public interface DataHandler<P, T> {
+        T execute(P[] params);
     }
 }

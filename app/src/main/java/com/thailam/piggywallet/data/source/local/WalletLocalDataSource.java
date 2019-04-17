@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletDataSource;
-import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
+import com.thailam.piggywallet.data.source.base.LocalAsyncTaskGet;
 import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class WalletLocalDataSource implements WalletDataSource {
 
     @Override
     public void getInitialWallets(@NonNull final GetWalletCallback callback) {
-        LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
+        LocalAsyncTaskGet<Void, List<Wallet>> task = new LocalAsyncTaskGet<>(params -> {
             SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
             Cursor cursor = db.query(
                     true, WalletEntry.TBL_NAME_WALLET, null,
@@ -54,7 +54,7 @@ public class WalletLocalDataSource implements WalletDataSource {
 
     @Override
     public void getSearchedWallets(String input, @NonNull final GetWalletCallback callback) {
-        LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
+        LocalAsyncTaskGet<Void, List<Wallet>> task = new LocalAsyncTaskGet<>(params -> {
             String selectionArgs[] = new String[]{"%" + input + "%"};
             SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
             Cursor cursor = db.query(true, WalletEntry.TBL_NAME_WALLET, null,

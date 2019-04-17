@@ -24,7 +24,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.custom_dialog);
+        setContentView(R.layout.card_custom_dialog_category);
         initAdapter();
         initRecyclerView();
     }
@@ -33,7 +33,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.layout.custom_dialog:
+            case R.layout.card_custom_dialog_category:
                 this.cancel();
                 break;
             default:
