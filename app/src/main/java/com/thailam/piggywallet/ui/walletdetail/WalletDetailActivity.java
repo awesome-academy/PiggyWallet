@@ -3,13 +3,11 @@ package com.thailam.piggywallet.ui.walletdetail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Transaction;
@@ -20,7 +18,8 @@ import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
 
 import java.util.List;
 
-public class WalletDetailActivity extends AppCompatActivity implements WalletDetailContract.View {
+public class WalletDetailActivity extends AppCompatActivity implements WalletDetailContract.View,
+        View.OnClickListener {
     private static final String EXTRA_WALLET_ID = "com.thailam.piggywallet.extras.EXTRA_WALLET_ID";
     private int mWalletId;
 
@@ -39,8 +38,8 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
         setContentView(R.layout.activity_wallet_detail);
         getWalletIdExtra();
         initPresenter();
+        initViews();
         initToolbar();
-        initFab();
         initAdapter();
         initRecyclerView();
     }
@@ -74,6 +73,21 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
         findViewById(R.id.text_view_no_transaction).setVisibility(View.VISIBLE);
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fab_add_transaction:
+                startActivity(TransactionActivity.getIntent(getApplicationContext()));
+                break;
+            case R.id.button_overview_staticstic:
+                WalletDetailOverviewDialog dialog = new WalletDetailOverviewDialog(this,
+                        R.style.FullScreenDialogStyle);
+                dialog.show();
+                break;
+        }
+    }
+
     private void getWalletIdExtra() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -81,6 +95,11 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
                 mWalletId = intent.getExtras().getInt(EXTRA_WALLET_ID);
             }
         }
+    }
+
+    private void initViews() {
+        findViewById(R.id.fab_add_transaction).setOnClickListener(this);
+        findViewById(R.id.button_overview_staticstic).setOnClickListener(this);
     }
 
     private void initToolbar() {
@@ -91,13 +110,6 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-    }
-
-    private void initFab() {
-        FloatingActionButton fab = findViewById(R.id.fab_add_transaction);
-        fab.setOnClickListener(v -> {
-            startActivity(TransactionActivity.getIntent(getApplicationContext()));
-        });
     }
 
     private void initAdapter() {
