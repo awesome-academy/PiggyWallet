@@ -1,5 +1,9 @@
 package com.thailam.piggywallet.data.model;
 
+import android.database.Cursor;
+
+import com.thailam.piggywallet.data.source.local.entry.CategoryEntry;
+
 public class Category {
     private int mId;
     private String mName;
@@ -11,6 +15,18 @@ public class Category {
         mName = name;
         mCreatedAt = createdAt;
         mUpdatedAt = updatedAt;
+    }
+
+    public Category(Cursor cursor) {
+        int indexId = cursor.getColumnIndex(CategoryEntry.ID);
+        int indexName = cursor.getColumnIndex(CategoryEntry.NAME);
+        int indexCreatedAt = cursor.getColumnIndex(CategoryEntry.CREATED_AT);
+        int indexUpdatedAt = cursor.getColumnIndex(CategoryEntry.UPDATED_AT);
+        // get data from column index
+        mId = cursor.getInt(indexId);
+        mName = cursor.getString(indexName);
+        mCreatedAt = cursor.getLong(indexCreatedAt);
+        mUpdatedAt = cursor.getLong(indexUpdatedAt);
     }
 
     public int getId() {

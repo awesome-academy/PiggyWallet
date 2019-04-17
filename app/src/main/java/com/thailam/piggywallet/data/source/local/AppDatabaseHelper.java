@@ -14,6 +14,7 @@ import com.thailam.piggywallet.data.source.local.entry.WalletTransactionEntry;
  * Helper class to create database
  */
 public class AppDatabaseHelper extends SQLiteOpenHelper {
+    private static AppDatabaseHelper sInstance;
     private static final String CREATE_TBL_WALLETS = "CREATE TABLE " + WalletEntry.TBL_NAME_WALLET + "("
             + WalletEntry.ID + " INTEGER PRIMARY KEY , " + WalletEntry.TITLE + " TEXT,"
             + WalletEntry.SUBTITLE + " TEXT," + WalletEntry.AMOUNT + " DECIMAL,"
@@ -38,8 +39,23 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
     private static final String DROP_TBL_CATE = "DROP TABLE IF EXISTS " + CategoryEntry.TBL_NAME_CATE;
     private static final String DROP_TBL_WALLET_TRANS = "DROP TABLE IF EXISTS " + WalletTransactionEntry.TBL_NAME_WALLET_TRANS;
 
-    public AppDatabaseHelper(Context context) {
+    private AppDatabaseHelper(Context context) {
         super(context, DatabaseEntry.DB_NAME, null, DatabaseEntry.DB_VERSION);
+    }
+
+    static AppDatabaseHelper getInstance(Context context) {
+        if (sInstance == null) {
+            synchronized (AppDatabaseHelper.class) {
+                if (sInstance == null) {
+                    sInstance = new AppDatabaseHelper(context);
+                }
+            }
+        }
+        return sInstance;
+    }
+
+    static void destroyInstance() {
+        sInstance = null;
     }
 
     @Override

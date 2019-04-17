@@ -27,7 +27,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_custom_dialog_category, parent, false);
-        return new ViewHolder(parent.getContext(), itemView, mListener);
+        return new ViewHolder(itemView, mListener);
     }
 
     @Override
@@ -46,15 +46,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private Context mContext;
         private TextView mTxtViewTitle;
         private ImageView mImageViewIcon;
         private OnItemClickListener mListener;
         private Category mCategory;
 
-        private ViewHolder(Context context, View itemView, OnItemClickListener listener) {
+        private ViewHolder(View itemView, OnItemClickListener listener) {
             super(itemView);
-            mContext = context;
             mTxtViewTitle = itemView.findViewById(R.id.text_view_dialog_title);
             mImageViewIcon = itemView.findViewById(R.id.image_view_dialog_icon);
             mListener = listener;

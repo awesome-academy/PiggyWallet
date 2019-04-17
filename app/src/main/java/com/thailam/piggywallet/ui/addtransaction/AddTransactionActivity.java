@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.DatePicker;
 
 import com.thailam.piggywallet.R;
+import com.thailam.piggywallet.data.model.Category;
+import com.thailam.piggywallet.ui.category.CategoryDialog;
 
 import java.util.Calendar;
 
 public class AddTransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
-        AddTransactionContract.View, View.OnClickListener{
+        View.OnClickListener, CategoryDialog.OnCategoryChosen{
     private DatePickerDialog mDatePickerDialog;
 
     public static Intent getIntent(Context context) {
@@ -31,7 +33,11 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        // TODO: handle on date pick
+        // TODO: handle when add to db task
+    }
+
+    @Override
+    public void onGetCategory(Category category) {
     }
 
     @Override
