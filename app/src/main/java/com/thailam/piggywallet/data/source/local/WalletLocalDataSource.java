@@ -21,7 +21,7 @@ public class WalletLocalDataSource implements WalletDataSource {
     private static final String QUERY_SEARCH_WALLETS_LIKE = WalletEntry.TITLE + " LIKE ? ";
 
     private WalletLocalDataSource(Context context) {
-        mAppDatabaseHelper = new AppDatabaseHelper(context);
+        mAppDatabaseHelper = AppDatabaseHelper.getInstance(context);
     }
 
     public static WalletLocalDataSource getInstance(Context context) {

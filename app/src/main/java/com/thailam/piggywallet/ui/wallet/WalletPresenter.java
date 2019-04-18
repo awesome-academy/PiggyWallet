@@ -4,12 +4,12 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletDataSource;
+import com.thailam.piggywallet.util.Constants;
 
 import java.util.List;
 
 public class WalletPresenter implements WalletContract.Presenter,
         WalletDataSource.GetWalletCallback {
-    private static final String NO_DATA_ERR = "No wallets found";
     @NonNull
     private WalletContract.View mView;
     @NonNull
@@ -55,7 +55,7 @@ public class WalletPresenter implements WalletContract.Presenter,
 
     @Override
     public void onDataNotAvailable(Exception e) {
-        String errMsg = (e == null) ? NO_DATA_ERR : e.getMessage();
+        String errMsg = (e == null) ? Constants.NO_DATA_ERROR : e.getMessage();
         mView.showErrorMessage(errMsg);
         mView.updateWallets(null);
         mView.toggleIsRefreshing();
