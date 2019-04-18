@@ -3,5 +3,5 @@ package com.thailam.piggywallet.data.source.base;
 public interface OnSaveDataCallback {
     void onSaveDataSuccess();
 
-    void onSaveDataFail(Exception e);
+    void onSaveDataFail(String str);
 }

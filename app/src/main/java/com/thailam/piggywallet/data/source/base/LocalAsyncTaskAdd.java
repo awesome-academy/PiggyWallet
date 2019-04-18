@@ -2,32 +2,33 @@ package com.thailam.piggywallet.data.source.base;
 
 import android.os.AsyncTask;
 
-public class LocalAsyncTaskAdd<P> extends AsyncTask<P, Void, Exception> {
+public class LocalAsyncTaskAdd extends AsyncTask<Void, Void, String> {
 
     private OnSaveDataCallback mCallback;
-    private DataHandler<P> mHandler;
+    private DataHandler mHandler;
 
-    public LocalAsyncTaskAdd(DataHandler<P> handler,
+    public LocalAsyncTaskAdd(DataHandler handler,
                              OnSaveDataCallback callback) {
         mHandler = handler;
         mCallback = callback;
     }
 
     @Override
-    protected Exception doInBackground(P... params) {
-        return mHandler.execute(params);
+    protected String doInBackground(Void... voids) {
+        return mHandler.execute();
     }
 
     @Override
-    protected void onPostExecute(Exception e) {
-        if (e == null) {
+    protected void onPostExecute(String str) {
+        if (str == null) {
             mCallback.onSaveDataSuccess();
         } else {
-            mCallback.onSaveDataFail(e);
+            mCallback.onSaveDataFail(str);
         }
     }
 
-    public interface DataHandler<P> {
-        Exception execute(P[] params);
+
+    public interface DataHandler {
+        String execute();
     }
 }

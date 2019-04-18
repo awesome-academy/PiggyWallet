@@ -2,9 +2,9 @@ package com.thailam.piggywallet.data.source.local;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
@@ -34,22 +34,20 @@ public class TransactionLocalDataSource implements TransactionDataSource {
 
     @Override
     public void saveTransaction(Transaction transaction, @NonNull OnSaveDataCallback callback) {
-        LocalAsyncTaskAdd<Void> task = new LocalAsyncTaskAdd<>(params -> {
+        LocalAsyncTaskAdd task = new LocalAsyncTaskAdd(() -> {
             SQLiteDatabase db = mAppDatabaseHelper.getWritableDatabase();
-            db.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(TransactionEntry.AMOUNT, transaction.getAmount());
+            values.put(TransactionEntry.NOTE, transaction.getNote());
+            values.put(TransactionEntry.DATE, transaction.getDate());
+            values.put(TransactionEntry.FOR_CAT_ID, transaction.getCategoryId());
+            values.put(TransactionEntry.FOR_WALLET_ID, transaction.getWalletId());
             try {
-                ContentValues values = new ContentValues();
-                values.put(TransactionEntry.AMOUNT, transaction.getAmount());
-                values.put(TransactionEntry.NOTE, transaction.getNote());
-                values.put(TransactionEntry.DATE, transaction.getDate());
-                values.put(TransactionEntry.FOR_CAT_ID, transaction.getCategoryId());
                 db.insertOrThrow(TransactionEntry.TBL_NAME_TRANS, null, values);
-                db.setTransactionSuccessful();
+                db.close();
                 return null;
-            } catch (Exception e) {
-                return e;
-            } finally {
-                db.endTransaction();
+            } catch (SQLException e) {
+                return e.getMessage();
             }
         }, callback);
         task.execute();

@@ -19,11 +19,13 @@ import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
 import com.thailam.piggywallet.ui.category.CategoryDialog;
+import com.thailam.piggywallet.util.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddTransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
         View.OnClickListener, CategoryDialog.OnCategoryChosen, AddTransactionContract.View {
@@ -52,8 +54,8 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = dayOfMonth + "-" + month + "-" + year;
-        String errMsg = "Error choosing date";
+        String date = String.format(Locale.US, "%d-%d-%d", dayOfMonth, month, year);
+        String errMsg = getResources().getString(R.string.add_transaction_choose_date_fail);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-YY");
         try {
             Date d = format.parse(date);
@@ -82,13 +84,26 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
 
     @Override
     public void showSuccess() {
-        onBackPressed(); // move back to prev screen
-        Toast.makeText(this, "Added transaction", Toast.LENGTH_SHORT).show();
+        String msg = getResources().getString(R.string.add_transaction_success);
+        finish(); // move back to prev screen
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showError(String msg) {
-        Toast.makeText(this, "Err:" + msg, Toast.LENGTH_SHORT).show();
+    public void showError(String str) {
+        String errMsg = str == null ? Constants.UNKNOWN_ERROR : str;
+        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showErrorPrompt(String errCode) {
+        if (errCode.equals(Constants.ERR_CODE_MISSING_AMOUNT)) {
+            String errMsg = getResources().getString(R.string.add_transaction_missing_amount);
+            Toast.makeText(this,errMsg,Toast.LENGTH_SHORT).show();
+        } else if (errCode.equals(Constants.ERR_CODE_MISSING_CATEGORY)) {
+            String errMsg=getResources().getString(R.string.add_transaction_missing_category);
+            Toast.makeText(this,errMsg,Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -131,25 +146,6 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
     }
 
     private void handleSaveTransaction() {
-        if (!validateInputs()) return;
-        int defaultId = 0;
-        String note = mEditTextNote.getText().toString();
-        double amount = Double.valueOf(mEditTextAmount.getText().toString());
-        int categoryId = mCategory.getId();
-        long date = (mDate == 0) ? System.currentTimeMillis() : mDate;
-        Transaction transaction = new Transaction(defaultId, note, amount, categoryId, date);
-        mPresenter.saveTransaction(transaction);
-    }
-
-    private boolean validateInputs() {
-        if (mEditTextAmount.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please fill in amount", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (mCategory == null) {
-            Toast.makeText(this, "Please choose a category", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
+        mPresenter.saveTransaction(mEditTextNote, mEditTextAmount, mCategory, mDate);
     }
 }
