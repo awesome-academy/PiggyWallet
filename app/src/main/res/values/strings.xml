@@ -17,4 +17,8 @@
     <string name="choose_category">Choose Category</string>
     <string name="add_transaction">Add Transaction</string>
     <string name="add_transaction_food"><![CDATA[Food&Drinks]]></string>
+    <string name="add_transaction_choose_date_fail">Error choosing date</string>
+    <string name="add_transaction_success">Transaction Added</string>
+    <string name="add_transaction_missing_amount">Please fill in amount</string>
+    <string name="add_transaction_missing_category">Please choose a category</string>
 </resources>

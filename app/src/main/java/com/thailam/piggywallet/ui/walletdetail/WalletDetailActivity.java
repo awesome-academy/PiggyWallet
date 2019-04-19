@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.thailam.piggywallet.R;
-import com.thailam.piggywallet.ui.addtransaction.AddTransactionActivity;
+import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
 
 public class WalletDetailActivity extends AppCompatActivity {
     private static final String EXTRA_WALLET_ID = "com.thailam.piggywallet.extras.EXTRA_WALLET_ID";
@@ -40,7 +40,7 @@ public class WalletDetailActivity extends AppCompatActivity {
     private void initFab() {
         FloatingActionButton fab = findViewById(R.id.fab_add_transaction);
         fab.setOnClickListener(v -> {
-            startActivity(AddTransactionActivity.getIntent(getApplicationContext()));
+            startActivity(TransactionActivity.getIntent(getApplicationContext()));
         });
     }
 }

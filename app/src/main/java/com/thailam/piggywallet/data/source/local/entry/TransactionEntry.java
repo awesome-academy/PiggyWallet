@@ -8,5 +8,5 @@ public interface TransactionEntry {
     String AMOUNT = "amount";
     String DATE = "date";
     String FOR_CAT_ID = "category_id";
-
+    String FOR_WALLET_ID = "wallet_id";
 }

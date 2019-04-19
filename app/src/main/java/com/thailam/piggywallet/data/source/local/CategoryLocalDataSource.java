@@ -1,21 +1,16 @@
 package com.thailam.piggywallet.data.source.local;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.source.CategoryDataSource;
 import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
 import com.thailam.piggywallet.data.source.local.entry.CategoryEntry;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CategoryLocalDataSource implements CategoryDataSource {
