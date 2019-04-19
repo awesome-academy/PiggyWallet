@@ -11,7 +11,7 @@ public interface AddTransactionContract {
     interface View extends BaseView {
         void showSuccess();
 
-        void showError(String str);
+        void showError(Exception e);
 
         void showErrorPrompt(String errCode);
     }

@@ -1,18 +1,14 @@
 package com.thailam.piggywallet.ui.addtransaction;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
-import com.thailam.piggywallet.data.source.base.OnSaveDataCallback;
 import com.thailam.piggywallet.util.Constants;
 
-public class AddTransactionPresenter implements AddTransactionContract.Presenter, OnSaveDataCallback {
+public class AddTransactionPresenter implements AddTransactionContract.Presenter, TransactionDataSource.SaveTransactionCallback {
     @NonNull
     private AddTransactionContract.View mView;
     @NonNull
@@ -46,16 +42,6 @@ public class AddTransactionPresenter implements AddTransactionContract.Presenter
         mTransactionRepository.saveTransaction(transaction, this);
     }
 
-    @Override
-    public void onSaveDataSuccess() {
-        mView.showSuccess();
-    }
-
-    @Override
-    public void onSaveDataFail(String str) {
-        mView.showError(str);
-    }
-
     private boolean validateInputs(EditText editTextAmount, Category category) {
         if (editTextAmount.getText().toString().isEmpty()) {
             mView.showErrorPrompt(Constants.ERR_CODE_MISSING_AMOUNT);
@@ -66,5 +52,15 @@ public class AddTransactionPresenter implements AddTransactionContract.Presenter
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onDataLoaded(Long data) {
+        mView.showSuccess();
+    }
+
+    @Override
+    public void onDataNotAvailable(Exception e) {
+        mView.showError(e);
     }
 }

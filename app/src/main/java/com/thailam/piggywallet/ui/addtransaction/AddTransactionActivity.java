@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,6 +21,7 @@ import com.thailam.piggywallet.data.source.TransactionRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
 import com.thailam.piggywallet.ui.category.CategoryDialog;
 import com.thailam.piggywallet.util.Constants;
+import com.thailam.piggywallet.util.DateFormatUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,13 +56,10 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = String.format(Locale.US, "%d-%d-%d", dayOfMonth, month, year);
         String errMsg = getResources().getString(R.string.add_transaction_choose_date_fail);
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-YY");
         try {
-            Date d = format.parse(date);
-            mDate = d.getTime();
-            mBtnChooseDate.setText(date);
+            mDate = DateFormatUtils.getLongFromDate(year, month, dayOfMonth);
+            mBtnChooseDate.setText(DateFormatUtils.getDateFromLong(mDate));
         } catch (ParseException e) {
             Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -90,8 +89,8 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
     }
 
     @Override
-    public void showError(String str) {
-        String errMsg = str == null ? Constants.UNKNOWN_ERROR : str;
+    public void showError(Exception e) {
+        String errMsg = e == null ? Constants.UNKNOWN_ERROR : e.getMessage();
         Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -99,10 +98,10 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
     public void showErrorPrompt(String errCode) {
         if (errCode.equals(Constants.ERR_CODE_MISSING_AMOUNT)) {
             String errMsg = getResources().getString(R.string.add_transaction_missing_amount);
-            Toast.makeText(this,errMsg,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
         } else if (errCode.equals(Constants.ERR_CODE_MISSING_CATEGORY)) {
-            String errMsg=getResources().getString(R.string.add_transaction_missing_category);
-            Toast.makeText(this,errMsg,Toast.LENGTH_SHORT).show();
+            String errMsg = getResources().getString(R.string.add_transaction_missing_category);
+            Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
         }
     }
 

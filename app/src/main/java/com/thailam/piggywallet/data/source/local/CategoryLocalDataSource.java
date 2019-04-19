@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.source.CategoryDataSource;
-import com.thailam.piggywallet.data.source.base.LocalAsyncTaskGet;
+import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
 import com.thailam.piggywallet.data.source.local.entry.CategoryEntry;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class CategoryLocalDataSource implements CategoryDataSource {
 
     @Override
     public void getCategories(@NonNull GetCategoryCallback callback) {
-        LocalAsyncTaskGet<Void, List<Category>> task = new LocalAsyncTaskGet<>(params -> {
+        LocalAsyncTask<Void, List<Category>> task = new LocalAsyncTask<>(params -> {
             SQLiteDatabase db = mAppDatabaseHelper.getReadableDatabase();
             Cursor cursor = db.query(
                     true, CategoryEntry.TBL_NAME_CATE, null,
