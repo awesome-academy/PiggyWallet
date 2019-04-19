@@ -8,14 +8,14 @@ import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.util.Constants;
 
-public class AddTransactionPresenter implements AddTransactionContract.Presenter, TransactionDataSource.SaveTransactionCallback {
+public class TransactionPresenter implements TransactionContract.Presenter, TransactionDataSource.TransactionCallback {
     @NonNull
-    private AddTransactionContract.View mView;
+    private TransactionContract.View mView;
     @NonNull
     private TransactionDataSource mTransactionRepository;
 
-    AddTransactionPresenter(@NonNull AddTransactionContract.View view,
-                            @NonNull TransactionDataSource transactionRepository) {
+    TransactionPresenter(@NonNull TransactionContract.View view,
+                         @NonNull TransactionDataSource transactionRepository) {
         mView = view;
         mTransactionRepository = transactionRepository;
     }
@@ -25,11 +25,10 @@ public class AddTransactionPresenter implements AddTransactionContract.Presenter
     }
 
     @Override
-    public void saveTransaction(EditText editTextNote, EditText editTextAmount, Category category, long dateInput) {
-        if (!validateInputs(editTextAmount, category)) return;
+    public void saveTransaction(String note, String amountStr, Category category, long dateInput) {
+        if (!validateInputs(amountStr, category)) return;
         int defaultId = 0;
-        String note = editTextNote.getText().toString();
-        double amount = Double.valueOf(editTextAmount.getText().toString());
+        double amount = Double.valueOf(amountStr);
         int categoryId = category.getId();
         long date = dateInput == 0 ? System.currentTimeMillis() : dateInput;
         Transaction transaction = new Transaction.Builder(defaultId)
@@ -42,13 +41,13 @@ public class AddTransactionPresenter implements AddTransactionContract.Presenter
         mTransactionRepository.saveTransaction(transaction, this);
     }
 
-    private boolean validateInputs(EditText editTextAmount, Category category) {
-        if (editTextAmount.getText().toString().isEmpty()) {
-            mView.showErrorPrompt(Constants.ERR_CODE_MISSING_AMOUNT);
+    private boolean validateInputs(String amountStr, Category category) {
+        if (amountStr == null || amountStr.isEmpty()) {
+            mView.showMissingAmountError();
             return false;
         }
         if (category == null) {
-            mView.showErrorPrompt(Constants.ERR_CODE_MISSING_CATEGORY);
+            mView.showMissingCategoryError();
             return false;
         }
         return true;

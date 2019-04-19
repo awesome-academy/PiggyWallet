@@ -13,7 +13,7 @@ public class TransactionRepository implements TransactionDataSource {
     private TransactionDataSource mTransactionLocalDataSource;
     private List<Transaction> mCachedTransactions;
 
-    public TransactionRepository(@NonNull TransactionDataSource localDataSource) {
+    private TransactionRepository(@NonNull TransactionDataSource localDataSource) {
         mTransactionLocalDataSource = localDataSource;
     }
 
@@ -29,7 +29,7 @@ public class TransactionRepository implements TransactionDataSource {
     }
 
     @Override
-    public void saveTransaction(Transaction transaction, @NonNull SaveTransactionCallback callback) {
+    public void saveTransaction(Transaction transaction, @NonNull TransactionCallback callback) {
         mTransactionLocalDataSource.saveTransaction(transaction, callback);
     }
 

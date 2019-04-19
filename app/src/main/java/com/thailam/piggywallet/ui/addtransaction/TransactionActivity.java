@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Category;
-import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
@@ -24,15 +22,12 @@ import com.thailam.piggywallet.util.Constants;
 import com.thailam.piggywallet.util.DateFormatUtils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
-public class AddTransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
-        View.OnClickListener, CategoryDialog.OnCategoryChosen, AddTransactionContract.View {
+public class TransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
+        View.OnClickListener, CategoryDialog.OnCategoryChosen, TransactionContract.View {
 
-    private AddTransactionContract.Presenter mPresenter;
+    private TransactionContract.Presenter mPresenter;
     private DatePickerDialog mDatePickerDialog;
     private Category mCategory;
     private EditText mEditTextNote;
@@ -41,7 +36,7 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
     private long mDate;
 
     public static Intent getIntent(Context context) {
-        return new Intent(context, AddTransactionActivity.class);
+        return new Intent(context, TransactionActivity.class);
     }
 
     @Override
@@ -77,7 +72,7 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
         if (mPresenter == null) {
             TransactionDataSource source = TransactionLocalDataSource.getInstance(getApplicationContext());
             TransactionRepository repo = TransactionRepository.getInstance(source);
-            mPresenter = new AddTransactionPresenter(this, repo);
+            mPresenter = new TransactionPresenter(this, repo);
         }
     }
 
@@ -95,14 +90,15 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
     }
 
     @Override
-    public void showErrorPrompt(String errCode) {
-        if (errCode.equals(Constants.ERR_CODE_MISSING_AMOUNT)) {
-            String errMsg = getResources().getString(R.string.add_transaction_missing_amount);
-            Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
-        } else if (errCode.equals(Constants.ERR_CODE_MISSING_CATEGORY)) {
-            String errMsg = getResources().getString(R.string.add_transaction_missing_category);
-            Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
-        }
+    public void showMissingAmountError() {
+        String errMsg = getResources().getString(R.string.add_transaction_missing_amount);
+        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showMissingCategoryError() {
+        String errMsg = getResources().getString(R.string.add_transaction_missing_category);
+        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -133,7 +129,7 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        mDatePickerDialog = new DatePickerDialog(this, AddTransactionActivity.this,
+        mDatePickerDialog = new DatePickerDialog(this, TransactionActivity.this,
                 year, month, dayOfMonth);
     }
 
@@ -145,6 +141,8 @@ public class AddTransactionActivity extends AppCompatActivity implements DatePic
     }
 
     private void handleSaveTransaction() {
-        mPresenter.saveTransaction(mEditTextNote, mEditTextAmount, mCategory, mDate);
+        String note = mEditTextNote.getText().toString();
+        String amount = mEditTextAmount.getText().toString();
+        mPresenter.saveTransaction(note, amount, mCategory, mDate);
     }
 }

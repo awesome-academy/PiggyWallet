@@ -1,9 +1,14 @@
 package com.thailam.piggywallet.data.source.local;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
+import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.source.TransactionDataSource;
+import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
 import com.thailam.piggywallet.data.source.local.entry.CategoryEntry;
 import com.thailam.piggywallet.data.source.local.entry.DatabaseEntry;
 import com.thailam.piggywallet.data.source.local.entry.TransactionEntry;
@@ -12,7 +17,7 @@ import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 /**
  * Helper class to create database
  */
-public class AppDatabaseHelper extends SQLiteOpenHelper {
+public class AppDatabaseHelper extends SQLiteOpenHelper implements DatabaseDAO {
     private static AppDatabaseHelper sInstance;
     private static final String CREATE_TBL_WALLETS = "CREATE TABLE " + WalletEntry.TBL_NAME_WALLET + "("
             + WalletEntry.ID + " INTEGER PRIMARY KEY , " + WalletEntry.TITLE + " TEXT,"
@@ -76,5 +81,22 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TBL_CATE);
         // rebuild
         onCreate(db);
+    }
+
+    @Override
+    public void saveTransaction(Transaction transaction, @NonNull TransactionDataSource.TransactionCallback callback) {
+        LocalAsyncTask<Void, Long> task = new LocalAsyncTask<>(params -> {
+            SQLiteDatabase db = getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(TransactionEntry.AMOUNT, transaction.getAmount());
+            values.put(TransactionEntry.NOTE, transaction.getNote());
+            values.put(TransactionEntry.DATE, transaction.getDate());
+            values.put(TransactionEntry.FOR_CAT_ID, transaction.getCategoryId());
+            values.put(TransactionEntry.FOR_WALLET_ID, transaction.getWalletId());
+            long result = db.insertOrThrow(TransactionEntry.TBL_NAME_TRANS, null, values);
+            db.close();
+            return result;
+        }, callback);
+        task.execute();
     }
 }

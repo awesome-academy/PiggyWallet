@@ -7,16 +7,18 @@ import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.ui.base.BasePresenter;
 import com.thailam.piggywallet.ui.base.BaseView;
 
-public interface AddTransactionContract {
+public interface TransactionContract {
     interface View extends BaseView {
         void showSuccess();
 
         void showError(Exception e);
 
-        void showErrorPrompt(String errCode);
+        void showMissingAmountError();
+
+        void showMissingCategoryError();
     }
 
     interface Presenter extends BasePresenter {
-        void saveTransaction(EditText editTextNote, EditText editTextAmount, Category category, long date);
+        void saveTransaction(String note, String amountStr, Category category, long date);
     }
 }
