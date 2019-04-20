@@ -1,9 +1,6 @@
 package com.thailam.piggywallet.ui.addtransaction;
 
-import android.widget.EditText;
-
 import com.thailam.piggywallet.data.model.Category;
-import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.ui.base.BasePresenter;
 import com.thailam.piggywallet.ui.base.BaseView;
 

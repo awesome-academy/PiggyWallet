@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,7 +23,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.card_custom_dialog_category);
+        setContentView(R.layout.category_dialog);
         initAdapter();
         initRecyclerView();
     }
@@ -49,7 +48,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerView =findViewById(R.id.recycler_view_custom_dialog);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_custom_dialog);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
