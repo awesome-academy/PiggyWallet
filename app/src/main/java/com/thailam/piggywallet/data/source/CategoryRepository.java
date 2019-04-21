@@ -33,6 +33,7 @@ public class CategoryRepository implements CategoryDataSource {
     public void getCategories(@NonNull GetCategoryCallback callback) {
         if (mCachedCategories != null) {
             callback.onDataLoaded(mCachedCategories);
+            return;
         }
         mCategoryLocalDataSource.getCategories(new GetCategoryCallback() {
             @Override

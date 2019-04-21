@@ -2,6 +2,7 @@ package com.thailam.piggywallet.data.source.local;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
@@ -13,6 +14,9 @@ import com.thailam.piggywallet.data.source.local.entry.CategoryEntry;
 import com.thailam.piggywallet.data.source.local.entry.DatabaseEntry;
 import com.thailam.piggywallet.data.source.local.entry.TransactionEntry;
 import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Helper class to create database
@@ -29,10 +33,11 @@ public class AppDatabaseHelper extends SQLiteOpenHelper implements DatabaseDAO {
             + CategoryEntry.CREATED_AT + " INTEGER," + CategoryEntry.UPDATED_AT + " INTEGER " + ")";
     private static final String CREATE_TBL_TRANS = "CREATE TABLE " + TransactionEntry.TBL_NAME_TRANS + "("
             + TransactionEntry.ID + " INTEGER PRIMARY KEY , " + TransactionEntry.NOTE + " TEXT,"
-            + TransactionEntry.FOR_CAT_ID + " INTEGER," + TransactionEntry.AMOUNT + " DECIMAL,"
-            + TransactionEntry.DATE + " INTEGER,"
-            + " FOREIGN KEY (" + TransactionEntry.FOR_CAT_ID + ") REFERENCES " + CategoryEntry.TBL_NAME_CATE + "(" + CategoryEntry.ID + ") ON DELETE CASCADE, "
-            + " FOREIGN KEY (" + TransactionEntry.FOR_WALLET_ID + ") REFERENCES " + WalletEntry.TBL_NAME_WALLET + "(" + WalletEntry.ID + ") ON DELETE CASCADE "
+            + TransactionEntry.FOR_CAT_ID + " INTEGER," + TransactionEntry.FOR_WALLET_ID + " INTEGER, "
+            + TransactionEntry.AMOUNT + " DECIMAL, "
+            + TransactionEntry.DATE + " INTEGER, "
+            + "FOREIGN KEY (" + TransactionEntry.FOR_CAT_ID + ") REFERENCES " + CategoryEntry.TBL_NAME_CATE + "(" + CategoryEntry.ID + ") ON DELETE CASCADE, "
+            + "FOREIGN KEY (" + TransactionEntry.FOR_WALLET_ID + ") REFERENCES " + WalletEntry.TBL_NAME_WALLET + "(" + WalletEntry.ID + ") ON DELETE CASCADE "
             + ")";
     // Droping tables
     private static final String DROP_TBL_WALLET = "DROP TABLE IF EXISTS " + WalletEntry.TBL_NAME_WALLET;
@@ -96,6 +101,28 @@ public class AppDatabaseHelper extends SQLiteOpenHelper implements DatabaseDAO {
             long result = db.insertOrThrow(TransactionEntry.TBL_NAME_TRANS, null, values);
             db.close();
             return result;
+        }, callback);
+        task.execute();
+    }
+
+    @Override
+    public void getInitialTransactions(int walletId, @NonNull TransactionDataSource.GetTransactionCallback callback) {
+        LocalAsyncTask<Void, List<Transaction>> task = new LocalAsyncTask<>(params -> {
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor cursor = db.query(
+                    true, TransactionEntry.TBL_NAME_TRANS, null,
+                    null, null, null,
+                    null, null, null);
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            List<Transaction> transactions = new ArrayList<>();
+            while (cursor.moveToNext()) { // check if there are any left
+                transactions.add(new Transaction(cursor));
+            }
+            cursor.close();
+            db.close();
+            return transactions;
         }, callback);
         task.execute();
     }

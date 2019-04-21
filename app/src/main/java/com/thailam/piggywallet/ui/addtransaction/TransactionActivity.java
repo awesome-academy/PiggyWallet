@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -64,7 +65,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     @Override
     public void onGetCategory(Category category) {
         mCategory = category;
-        mBtnChooseCategory.setText(category.getName());
+        mBtnChooseCategory.setText(mCategory.getName());
     }
 
     @Override
@@ -138,9 +139,13 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         mEditTextNote = findViewById(R.id.edit_text_add_transaction_note);
         mBtnChooseCategory = findViewById(R.id.button_add_transaction_category);
         mBtnChooseDate = findViewById(R.id.button_add_transaction_date);
+        findViewById(R.id.button_add_transaction_category).setOnClickListener(this);
+        findViewById(R.id.button_add_transaction_date).setOnClickListener(this);
+        findViewById(R.id.button_add_transaction_save).setOnClickListener(this);
     }
 
     private void handleSaveTransaction() {
+        mCategory = new Category(1, "String", System.currentTimeMillis(), System.currentTimeMillis());
         String note = mEditTextNote.getText().toString();
         String amount = mEditTextAmount.getText().toString();
         mPresenter.saveTransaction(note, amount, mCategory, mDate);

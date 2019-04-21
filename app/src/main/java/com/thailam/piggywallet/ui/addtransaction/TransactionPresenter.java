@@ -1,12 +1,10 @@
 package com.thailam.piggywallet.ui.addtransaction;
 
 import android.support.annotation.NonNull;
-import android.widget.EditText;
 
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
-import com.thailam.piggywallet.util.Constants;
 
 public class TransactionPresenter implements TransactionContract.Presenter, TransactionDataSource.TransactionCallback {
     @NonNull

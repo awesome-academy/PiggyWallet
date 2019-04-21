@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import java.sql.SQLException;
 
 public class LocalAsyncTask<P, T> extends AsyncTask<P, Void, T> {
-
     private OnDataLoadedCallback<T> mCallback;
     private DataHandler<P, T> mHandler;
     private SQLException mSQLException;

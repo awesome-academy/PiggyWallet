@@ -38,7 +38,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return (mWallets == null) ? 0 : mWallets.size();
+        return mWallets == null ? 0 : mWallets.size();
     }
 
     public void setWallets(List<Wallet> wallets) {
