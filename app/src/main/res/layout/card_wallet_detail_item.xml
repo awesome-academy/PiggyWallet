@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_transaction_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_wallet_detail_item_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_transaction_day"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/demo"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_view_wallet_detail_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/card_view_transaction_header" />
+
+        <TextView
+            android:id="@+id/text_view_transaction_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:text="@string/demo"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_view_wallet_detail_inside"
+            app:layout_constraintStart_toEndOf="@+id/text_view_transaction_day"
+            app:layout_constraintTop_toTopOf="@+id/card_view_transaction_header" />
+
+        <TextView
+            android:id="@+id/text_view_transaction_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:text="@string/demo"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_view_wallet_detail_inside"
+            app:layout_constraintEnd_toEndOf="@+id/card_view_transaction_header"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/text_view_transaction_month"
+            app:layout_constraintTop_toTopOf="@+id/card_view_transaction_header" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_wallet_detail_inside"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_view_transaction_header" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

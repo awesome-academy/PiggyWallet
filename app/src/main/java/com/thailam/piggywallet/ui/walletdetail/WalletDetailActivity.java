@@ -5,13 +5,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.thailam.piggywallet.R;
+import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.source.TransactionRepository;
+import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
+import com.thailam.piggywallet.ui.adapter.TransactionOuterAdapter;
 import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
 
-public class WalletDetailActivity extends AppCompatActivity {
+import java.util.List;
+
+public class WalletDetailActivity extends AppCompatActivity implements WalletDetailContract.View {
     private static final String EXTRA_WALLET_ID = "com.thailam.piggywallet.extras.EXTRA_WALLET_ID";
+    private int mWalletId;
+
+    private WalletDetailContract.Presenter mPresenter;
+    private TransactionOuterAdapter mTransactionOuterAdapter;
 
     public static Intent getIntent(Context context, int walletId) {
         Intent intent = new Intent(context, WalletDetailActivity.class);
@@ -23,8 +37,50 @@ public class WalletDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_detail);
+        getWalletIdExtra();
+        initPresenter();
         initToolbar();
         initFab();
+        initAdapter();
+        initRecyclerView();
+    }
+
+    @Override
+    public void initPresenter() {
+        if (mPresenter == null) {
+            TransactionLocalDataSource source = TransactionLocalDataSource.getInstance(this);
+            TransactionRepository repo = TransactionRepository.getInstance(source);
+            mPresenter = new WalletDetailPresenter(this, repo);
+        }
+    }
+
+    @Override
+    public void showProgressBar() {
+        findViewById(R.id.progress_bar_wallet_detail).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        findViewById(R.id.progress_bar_wallet_detail).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void updateTransactions(List<Transaction> transactions) {
+        mTransactionOuterAdapter.setTransactionParents(transactions);
+    }
+
+    @Override
+    public void showNoTransactionData() {
+        findViewById(R.id.text_view_no_transaction).setVisibility(View.VISIBLE);
+    }
+
+    private void getWalletIdExtra() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getExtras() != null) {
+                mWalletId = intent.getExtras().getInt(EXTRA_WALLET_ID);
+            }
+        }
     }
 
     private void initToolbar() {
@@ -42,5 +98,20 @@ public class WalletDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(v -> {
             startActivity(TransactionActivity.getIntent(getApplicationContext()));
         });
+    }
+
+    private void initAdapter() {
+        mTransactionOuterAdapter = new TransactionOuterAdapter(this, transaction -> {
+            // TODO: implement later
+        });
+        mPresenter.getInitialTransactions(mWalletId);
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_wallet_detail);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mTransactionOuterAdapter);   // set guide adapter to view
     }
 }
