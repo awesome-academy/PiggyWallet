@@ -12,7 +12,7 @@
         android:id="@+id/include_card_view"
         layout="@layout/card_wallet_detail_overview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/card_overview_height"
+        android:layout_height="@dimen/dp_110"
         android:layout_marginLeft="@dimen/dp_16"
         android:layout_marginRight="@dimen/dp_16"
         app:layout_anchor="@id/image_view_feature_img"
@@ -28,7 +28,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/wallet_detail_transactions"
-            android:layout_marginTop="@dimen/wallet_transactions_margin_top"
+            android:layout_marginTop="@dimen/dp_70"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

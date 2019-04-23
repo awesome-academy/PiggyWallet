@@ -25,8 +25,8 @@
 
     <ImageButton
         android:id="@+id/button_wallet_overview_dialog"
-        android:layout_width="@dimen/button_round_size"
-        android:layout_height="@dimen/button_round_size"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
         android:background="@drawable/round_button"
         android:src="@drawable/ic_menu_white_24dp"
         app:layout_constraintBottom_toBottomOf="parent"

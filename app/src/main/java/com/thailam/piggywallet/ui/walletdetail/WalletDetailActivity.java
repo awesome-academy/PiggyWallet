@@ -73,17 +73,16 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
         findViewById(R.id.text_view_no_transaction).setVisibility(View.VISIBLE);
     }
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.fab_add_transaction:
                 startActivity(TransactionActivity.getIntent(getApplicationContext()));
                 break;
             case R.id.button_overview_staticstic:
-                WalletDetailOverviewDialog dialog = new WalletDetailOverviewDialog(this,
-                        R.style.FullScreenDialogStyle);
-                dialog.show();
+                WalletDetailDialogFragment dialog =
+                        WalletDetailDialogFragment.newInstance(R.style.FullScreenDialogStyle);
+                dialog.show(getSupportFragmentManager(), WalletDetailDialogFragment.TAG);
                 break;
         }
     }
