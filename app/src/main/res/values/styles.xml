@@ -16,7 +16,17 @@
         <item name="android:layout_marginTop" >@dimen/dp_8</item>
         <item name="android:text" >@string/demo</item>
         <item name="android:textColor" >@color/color_title</item>
-        <item name="android:textSize" >@dimen/card_wallet_title_height</item>
+        <item name="android:textSize" >@dimen/sp_18</item>
         <item name="android:textStyle" >bold</item>
+    </style>
+
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/color_primary_dark</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 </resources>

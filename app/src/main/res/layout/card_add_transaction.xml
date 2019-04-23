@@ -12,7 +12,7 @@
         <Button
             android:id="@+id/button_add_transaction_category"
             android:layout_width="0dp"
-            android:layout_height="@dimen/button_add_transaction_height"
+            android:layout_height="@dimen/dp_70"
             android:layout_marginStart="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginEnd="@dimen/dp_16"
@@ -27,7 +27,7 @@
         <Button
             android:id="@+id/button_add_transaction_date"
             android:layout_width="0dp"
-            android:layout_height="@dimen/button_add_transaction_height"
+            android:layout_height="@dimen/dp_70"
             android:layout_marginStart="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginEnd="@dimen/dp_16"
@@ -69,8 +69,8 @@
 
         <ImageView
             android:id="@+id/image_add_transaction_amount"
-            android:layout_width="@dimen/dimen_icon_add_transaction"
-            android:layout_height="@dimen/dimen_icon_add_transaction"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:layout_marginStart="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_16"
             android:contentDescription="@string/app_name"
@@ -80,8 +80,8 @@
 
         <ImageView
             android:id="@+id/image_add_transaction_note"
-            android:layout_width="@dimen/dimen_icon_add_transaction"
-            android:layout_height="@dimen/dimen_icon_add_transaction"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:layout_marginStart="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginBottom="@dimen/dp_16"
@@ -93,8 +93,8 @@
 
         <ImageView
             android:id="@+id/image_add_transaction_date"
-            android:layout_width="@dimen/dimen_icon_add_transaction"
-            android:layout_height="@dimen/dimen_icon_add_transaction"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:layout_marginStart="@dimen/dp_24"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_date_black_24dp"
@@ -104,8 +104,8 @@
 
         <ImageView
             android:id="@+id/image_add_transaction_date2"
-            android:layout_width="@dimen/dimen_icon_add_transaction"
-            android:layout_height="@dimen/dimen_icon_add_transaction"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:layout_marginStart="@dimen/dp_24"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_date_black_24dp"
