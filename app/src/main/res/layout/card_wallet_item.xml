@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_184"
-    android:layout_margin="@dimen/dp_8"
+    android:layout_height="@dimen/dp_92"
+    android:layout_marginStart="@dimen/dp_8"
+    android:layout_marginTop="@dimen/dp_8"
+    android:layout_marginEnd="@dimen/dp_8"
     app:cardCornerRadius="@dimen/dp_8">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_184"
+        android:layout_height="@dimen/dp_92"
         android:background="@android:color/white">
 
         <TextView
@@ -17,19 +19,18 @@
             style="@style/MyCardTitleTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="@dimen/dp_16"
+            app:layout_constraintStart_toEndOf="@+id/image_card_feature"
+            app:layout_constraintTop_toTopOf="@+id/image_card_feature" />
 
         <TextView
             android:id="@+id/text_card_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_16"
-            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
             android:text="@string/demo"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_card_title"
             app:layout_constraintTop_toBottomOf="@+id/text_card_title" />
 
         <TextView
@@ -45,14 +46,13 @@
 
         <ImageButton
             android:id="@+id/image_card_feature"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_8"
             android:contentDescription="@string/demo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_card_subtitle"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic[0]" />
 
     </android.support.constraint.ConstraintLayout>

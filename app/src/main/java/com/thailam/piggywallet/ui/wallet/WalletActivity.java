@@ -1,8 +1,6 @@
 package com.thailam.piggywallet.ui.wallet;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +10,12 @@ import android.support.v7.widget.Toolbar;
 import com.thailam.piggywallet.R;
 
 public class WalletActivity extends AppCompatActivity implements WalletFragment.OnFragmentInteractionListener {
-
     private SearchView mSearchView;
-    private FragmentTransaction mFragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
-        initBottomNav();
         initToolbar();
         initFab();
         addFirstFragment();
@@ -41,50 +36,25 @@ public class WalletActivity extends AppCompatActivity implements WalletFragment.
         closeSearchView();
     }
 
-    private void initBottomNav() {
-        BottomNavigationView nav = findViewById(R.id.bottom_nav_view);
-        nav.setOnNavigationItemSelectedListener(menuItem -> {
-            int itemId = menuItem.getItemId();
-            switch (itemId) {
-                case R.id.nav_home:
-                    Fragment f = getSupportFragmentManager().findFragmentByTag(WalletFragment.TAG);
-                    if (f instanceof WalletFragment) break; // if fragment existed -> break;
-                    mFragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    mFragmentTransaction.replace(R.id.content_container,
-                            WalletFragment.newInstance(),
-                            WalletFragment.TAG);
-                    mFragmentTransaction.commit();
-                    break;
-                case R.id.nav_settings:
-                    // TODO: implement later
-                    break;
-                default:
-                    break;
-            }
-            return true;
-        });
-    }
-
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar_top);
         setSupportActionBar(toolbar);
     }
 
-
     private void initFab() {
-        FloatingActionButton fab = findViewById(R.id.fab_add);
-        fab.setOnClickListener(v -> {
+        findViewById(R.id.fab_add).setOnClickListener(v -> {
+            // TODO: implement in add wallet task
         });
     }
 
     private void addFirstFragment() {
         if (findViewById(R.id.content_container) != null) {
             // set up allFragment as the first fragment to appear on activity
-            mFragmentTransaction = getSupportFragmentManager().beginTransaction();
-            mFragmentTransaction.add(R.id.content_container,
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.content_container,
                     WalletFragment.newInstance(),
                     WalletFragment.TAG);
-            mFragmentTransaction.commit();
+            fragmentTransaction.commit();
         }
     }
 

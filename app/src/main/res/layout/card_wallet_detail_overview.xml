@@ -30,7 +30,7 @@
             android:layout_marginStart="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginEnd="@dimen/dp_8"
-            android:text="@string/demo"
+            android:text="@string/overview"
             android:textSize="@dimen/sp_16"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline_button"

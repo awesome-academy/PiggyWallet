@@ -38,6 +38,6 @@ public class SplashPresenter implements SplashContract.Presenter,
     @Override
     public void onDataNotAvailable(Exception e) {
         mView.openWalletDetail();
-        // TODO: log error -> console/file
+        mView.showError(e);
     }
 }
