@@ -1,15 +1,17 @@
 package com.thailam.piggywallet.ui.category;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.source.CategoryDataSource;
+import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 import com.thailam.piggywallet.data.source.local.CategoryLocalDataSource;
 import com.thailam.piggywallet.util.Constants;
 
 import java.util.List;
 
-public class CategoryPresenter implements CategoryContract.Presenter, CategoryLocalDataSource.GetCategoryCallback {
+public class CategoryPresenter implements CategoryContract.Presenter, OnDataLoadedCallback<List<Category>> {
     @NonNull
     private CategoryContract.View mView;
     @NonNull
@@ -28,20 +30,19 @@ public class CategoryPresenter implements CategoryContract.Presenter, CategoryLo
 
     @Override
     public void getCategories() {
-        mView.toggleRefreshing();
+        mView.showProgressBar();
         mCategoryRepository.getCategories(this);
     }
 
     @Override
     public void onDataLoaded(List<Category> categories) {
-        mView.toggleRefreshing();
+        mView.hideProgressBar();
         mView.updateCategories(categories);
     }
 
     @Override
     public void onDataNotAvailable(Exception e) {
-        String msg = (e == null) ? Constants.NO_DATA_ERROR : e.getMessage();
-        mView.toggleRefreshing();
-        mView.showError(msg);
+        mView.hideProgressBar();
+        mView.showError(e);
     }
 }

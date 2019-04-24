@@ -15,6 +15,7 @@ import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.TransactionParent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TransactionOuterAdapter extends RecyclerView.Adapter<TransactionOuterAdapter.ViewHolder> {
@@ -51,6 +52,7 @@ public class TransactionOuterAdapter extends RecyclerView.Adapter<TransactionOut
     public void setTransactionParents(List<Transaction> transactions) {
         if (transactions == null) return;
         long commonDate = transactions.get(0).getDate(); // get first since all date will be common
+        Collections.reverse(transactions);
         mTransactionParents.add(new TransactionParent(transactions, commonDate));
         notifyDataSetChanged();
     }
@@ -61,7 +63,7 @@ public class TransactionOuterAdapter extends RecyclerView.Adapter<TransactionOut
 
         private ViewHolder(Context context, View itemView) {
             super(itemView);
-            mLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+            mLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             mRecyclerView = itemView.findViewById(R.id.recycler_view_wallet_detail_inside);
             if (mRecyclerView == null) return;
             mRecyclerView.setHasFixedSize(true);

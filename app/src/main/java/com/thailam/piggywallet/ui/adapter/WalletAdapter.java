@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
+import com.thailam.piggywallet.ui.walletdetail.SwipeDismissTouchListener;
 
 import java.util.List;
 
@@ -52,12 +53,10 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
         private TextView mTxtSubtitle;
         private TextView mTxtAmount;
         private ImageButton mImgBtnFeatureImg;
-        private Context mContext;
         private OnItemClickListener mListener;
 
         private ViewHolder(Context context, View itemView, OnItemClickListener listener) {
             super(itemView);
-            mContext = context;
             mListener = listener;
             mTxtTitle = itemView.findViewById(R.id.text_card_title);
             mTxtSubtitle = itemView.findViewById(R.id.text_card_subtitle);
@@ -79,17 +78,16 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
         }
 
         private void displayWalletAmount(double amount) {
-            if (amount >= 0) {
-                int colorId = mContext.getResources().getColor(R.color.color_positive_balance);
-                mTxtAmount.setTextColor(colorId);
-            } else {
-                int colorId = mContext.getResources().getColor(R.color.color_negative_balance);
-                mTxtAmount.setTextColor(colorId);
-            }
+            int colorId = amount >= 0 ? R.color.color_positive_balance : R.color.color_negative_balance;
+            mTxtAmount.setTextColor(itemView.getResources().getColor(colorId));
             mTxtAmount.setText(String.valueOf(amount));
         }
     }
 
+    /**
+     * The callback interface used by {@link com.thailam.piggywallet.ui.wallet.WalletFragment}
+     * to perform on item click in the wallet recycler view in wallet activity
+     */
     public interface OnItemClickListener {
         void onItemClick(Wallet wallet);
     }

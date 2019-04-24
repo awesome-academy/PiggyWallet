@@ -1,13 +1,15 @@
 package com.thailam.piggywallet.ui.addtransaction;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 
-public class TransactionPresenter implements TransactionContract.Presenter, TransactionDataSource.TransactionCallback {
+public class TransactionPresenter implements TransactionContract.Presenter,
+        TransactionDataSource.TransactionCallback {
     @NonNull
     private TransactionContract.View mView;
     @NonNull

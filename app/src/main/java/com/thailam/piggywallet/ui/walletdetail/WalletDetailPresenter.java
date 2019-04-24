@@ -21,7 +21,6 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
 
     @Override
     public void start() {
-
     }
 
     @Override

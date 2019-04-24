@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WalletRepository implements WalletDataSource {
-
     private static WalletRepository sInstance;
-
     private WalletDataSource mWalletLocalDataSource;
-
     private List<Wallet> mCachedWallets;
 
     private WalletRepository(@NonNull WalletDataSource localDataSource) {
