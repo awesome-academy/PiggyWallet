@@ -67,6 +67,7 @@ public class TransactionInnerAdapter extends RecyclerView.Adapter<TransactionInn
         private void bindData(Transaction transaction) {
             if (transaction == null) return;
             mTransaction = transaction;
+            mImageViewFeature.setImageDrawable(itemView.getResources().getDrawable(R.drawable.ic_circle_icons_money));
             displayWalletAmount(transaction.getAmount());
         }
 

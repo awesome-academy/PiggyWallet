@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.TransactionParent;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
@@ -43,7 +44,7 @@ public class TransactionLocalDataSource implements TransactionDataSource {
 
     @Override
     public void getInitialTransactions(int walletId, @NonNull GetTransactionCallback callback) {
-        LocalAsyncTask<Void, List<Transaction>> task = new LocalAsyncTask<>(params -> {
+        LocalAsyncTask<Void, List<TransactionParent>> task = new LocalAsyncTask<>(params -> {
             return mTransactionDAO.getInitialTransactions(walletId);
         }, callback);
         task.execute();

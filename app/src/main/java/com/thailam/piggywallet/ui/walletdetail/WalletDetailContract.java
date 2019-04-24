@@ -1,6 +1,6 @@
 package com.thailam.piggywallet.ui.walletdetail;
 
-import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.TransactionParent;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.ui.base.BasePresenter;
 import com.thailam.piggywallet.ui.base.BaseView;
@@ -13,7 +13,7 @@ public interface WalletDetailContract {
 
         void hideProgressBar();
 
-        void updateTransactions(List<Transaction> transactions);
+        void updateTransactions(List<TransactionParent> transactionParents);
 
         void showNoTransactionData();
 

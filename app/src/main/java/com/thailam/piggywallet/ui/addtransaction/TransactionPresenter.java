@@ -43,7 +43,7 @@ public class TransactionPresenter implements TransactionContract.Presenter,
     }
 
     private boolean validateInputs(String amountStr, Category category) {
-        if (amountStr == null || amountStr.isEmpty()) {
+        if (amountStr == null || amountStr.isEmpty() || Double.parseDouble(amountStr) == 0) {
             mView.showMissingAmountError();
             return false;
         }

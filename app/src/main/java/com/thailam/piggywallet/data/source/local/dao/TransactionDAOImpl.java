@@ -5,13 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.TransactionParent;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.local.AppDatabaseHelper;
 import com.thailam.piggywallet.data.source.local.entry.TransactionEntry;
 import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 import com.thailam.piggywallet.util.Constants;
+import com.thailam.piggywallet.util.TypeFormatUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TransactionDAOImpl extends AppDatabaseHelper implements TransactionDAO {
@@ -63,13 +66,13 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
     }
 
     @Override
-    public List<Transaction> getInitialTransactions(int walletId) {
+    public List<TransactionParent> getInitialTransactions(int walletId) {
         String whereClause = TransactionEntry.FOR_WALLET_ID + " = ? ";
         String[] whereArgs = new String[]{String.valueOf(walletId)};
         initReadDatabase();
         Cursor cursor = mDatabase.query(
                 true, TransactionEntry.TBL_NAME_TRANS, null,
-                whereClause, whereArgs, null,
+                whereClause, whereArgs, TransactionEntry.DATE,
                 null, null, null);
         if (cursor.getCount() == 0) {
             return null;
@@ -78,9 +81,34 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
         while (cursor.moveToNext()) { // check if there are any left
             transactions.add(new Transaction(cursor));
         }
+        List<TransactionParent> list = convertTransactionsToTransactionParents(transactions);
         cursor.close();
         closeDatabase();
-        return transactions;
+        return list;
+    }
+
+    private List<TransactionParent> convertTransactionsToTransactionParents(List<Transaction> transactions) {
+        List<Transaction> tempList = new ArrayList<>();
+        List<TransactionParent> transactionParents = new ArrayList<>();
+        for (int i = 0; i < transactions.size(); i++) {
+            Transaction transaction = transactions.get(i);
+            if (tempList.size() == 0) {
+                tempList.add(transaction);
+            } else {
+                String newDate = TypeFormatUtils.getDateFromLong(transaction.getDate());
+                String oldDate = TypeFormatUtils.getDateFromLong(transactions.get(i - 1).getDate());
+                if (newDate.equals(oldDate)) {
+                    tempList.add(transaction);
+                } else {
+                    transactionParents.add(new TransactionParent(tempList, tempList.get(0).getDate()));
+                    tempList = new ArrayList<>();
+                    tempList.add(transaction);
+                }
+            }
+        }
+        transactionParents.add(new TransactionParent(tempList, tempList.get(0).getDate()));
+        Collections.reverse(transactionParents);
+        return transactionParents;
     }
 
     private boolean updateWalletOnSaveTransaction(Wallet wallet, double amount) {
@@ -102,6 +130,6 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
         int rowAffected = mDatabase.update(WalletEntry.TBL_NAME_WALLET,
                 values, whereClause,
                 new String[]{String.valueOf(wallet.getId())});
-        return rowAffected == 0;
+        return rowAffected != 0;
     }
 }

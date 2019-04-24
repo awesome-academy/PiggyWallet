@@ -2,7 +2,6 @@ package com.thailam.piggywallet.ui.walletdetail;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.thailam.piggywallet.R;
-import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.TransactionParent;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
@@ -75,23 +75,22 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     @Override
     public void showProgressBar() {
         findViewById(R.id.progress_bar_wallet_detail).setVisibility(View.VISIBLE);
-        findViewById(R.id.image_view_no_transactions_wallet_detail).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressBar() {
         findViewById(R.id.progress_bar_wallet_detail).setVisibility(View.GONE);
-        findViewById(R.id.image_view_no_transactions_wallet_detail).setVisibility(View.GONE);
     }
 
     @Override
-    public void updateTransactions(List<Transaction> transactions) {
-        mTransactionOuterAdapter.setTransactionParents(transactions);
+    public void updateTransactions(List<TransactionParent> transactionParents) {
+        mTransactionOuterAdapter.setTransactionParents(transactionParents);
     }
 
     @Override
     public void showNoTransactionData() {
         findViewById(R.id.text_view_no_transaction).setVisibility(View.VISIBLE);
+        findViewById(R.id.image_view_no_transactions_wallet_detail).setVisibility(View.VISIBLE);
     }
 
     @Override

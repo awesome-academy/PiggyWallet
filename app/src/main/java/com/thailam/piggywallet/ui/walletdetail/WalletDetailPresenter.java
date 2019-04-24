@@ -2,7 +2,7 @@ package com.thailam.piggywallet.ui.walletdetail;
 
 import android.support.annotation.NonNull;
 
-import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.TransactionParent;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.WalletDataSource;
@@ -43,9 +43,9 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
     }
 
     @Override
-    public void onDataLoaded(List<Transaction> transactions) {
+    public void onDataLoaded(List<TransactionParent> transactionParents) {
         mView.hideProgressBar();
-        mView.updateTransactions(transactions);
+        mView.updateTransactions(transactionParents);
     }
 
     @Override
