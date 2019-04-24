@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 
 public class TransactionPresenter implements TransactionContract.Presenter, TransactionDataSource.TransactionCallback {
@@ -23,20 +24,21 @@ public class TransactionPresenter implements TransactionContract.Presenter, Tran
     }
 
     @Override
-    public void saveTransaction(String note, String amountStr, Category category, long dateInput) {
+    public void saveTransaction(Wallet wallet, String note, String amountStr,
+                                Category category, long dateInput) {
         if (!validateInputs(amountStr, category)) return;
-        int defaultId = 0;
         double amount = Double.valueOf(amountStr);
         int categoryId = category.getId();
         long date = dateInput == 0 ? System.currentTimeMillis() : dateInput;
-        Transaction transaction = new Transaction.Builder(defaultId)
+        Transaction transaction = new Transaction.Builder()
                 .setNote(note)
                 .setAmount(amount)
                 .setCategoryId(categoryId)
+                .setWalletId(wallet.getId())
                 .setDate(date)
                 .build();
         // save the transaction
-        mTransactionRepository.saveTransaction(transaction, this);
+        mTransactionRepository.saveTransaction(wallet, transaction, this);
     }
 
     private boolean validateInputs(String amountStr, Category category) {

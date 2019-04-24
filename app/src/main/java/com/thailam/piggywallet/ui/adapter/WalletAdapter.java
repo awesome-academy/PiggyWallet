@@ -47,7 +47,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private int mWalletId;
+        private Wallet mWallet;
         private TextView mTxtTitle;
         private TextView mTxtSubtitle;
         private TextView mTxtAmount;
@@ -68,11 +68,11 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-            mListener.onItemClick(mWalletId);
+            mListener.onItemClick(mWallet);
         }
 
         private void bindView(final Wallet wallet) {
-            mWalletId = wallet.getId();
+            mWallet = wallet;
             mTxtTitle.setText(wallet.getTitle());
             mTxtSubtitle.setText(wallet.getSubtitle());
             displayWalletAmount(wallet.getAmount());
@@ -91,6 +91,6 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int walletId);
+        void onItemClick(Wallet wallet);
     }
 }

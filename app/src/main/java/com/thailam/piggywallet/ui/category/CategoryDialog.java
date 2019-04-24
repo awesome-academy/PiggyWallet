@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Window;
@@ -33,8 +32,7 @@ public class CategoryDialog extends Dialog implements CategoryContract.View {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.category_dialog);
-        ConstraintLayout constraintLayout = findViewById(R.id.dialog_container);
-        constraintLayout.setOnClickListener(v -> { // on click outside -> cancel
+        findViewById(R.id.dialog_container).setOnClickListener(v -> { // on click outside -> cancel
             this.cancel();
         });
         initPresenter();
