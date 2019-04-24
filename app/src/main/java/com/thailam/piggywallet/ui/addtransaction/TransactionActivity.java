@@ -1,5 +1,6 @@
 package com.thailam.piggywallet.ui.addtransaction;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,9 @@ import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
+import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 import com.thailam.piggywallet.ui.category.CategoryDialog;
+import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
 import com.thailam.piggywallet.util.Constants;
 import com.thailam.piggywallet.util.TypeFormatUtils;
 
@@ -79,8 +82,16 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     @Override
     public void showSuccess() {
         String msg = getResources().getString(R.string.add_transaction_success);
-        finish(); // move back to prev screen
+        handleOnSuccess();
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private void handleOnSuccess() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(Constants.EXTRA_EDIT_TEXT_AMOUNT,mEditTextAmount.getText().toString());
+        returnIntent.putExtra(Constants.EXTRA_CATEGORY_TYPE,mCategory.getType());
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 
     @Override

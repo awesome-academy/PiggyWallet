@@ -10,6 +10,7 @@ import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 import java.util.List;
 
 public interface TransactionDataSource {
+
     interface TransactionCallback extends OnDataLoadedCallback<Long> {
     }
 

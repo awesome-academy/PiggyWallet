@@ -89,6 +89,9 @@ public class WalletRepository implements WalletDataSource {
     }
 
     private void refreshWalletsCache(List<Wallet> wallets) {
+        if (wallets == null) {
+            return;
+        }
         if (mCachedWallets == null) {
             mCachedWallets = new ArrayList<>(wallets);
             return;
