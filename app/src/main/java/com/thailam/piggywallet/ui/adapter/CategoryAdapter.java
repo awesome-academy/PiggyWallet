@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Category;
+import com.thailam.piggywallet.util.Constants;
 
 import java.util.List;
 
@@ -65,7 +66,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         private void bindView(Category category) {
             mCategory = category;
-            mTxtViewTitle.setText(category.getName());
+            int drawableId = R.drawable.ic_circle_icons_money;
+            mImageViewIcon.setImageDrawable(itemView.getResources().getDrawable(drawableId));
+            displayBackground();
+            mTxtViewTitle.setText(mCategory.getName());
+        }
+
+        private void displayBackground() {
+            int bgColorId =  mCategory.getType().equals(Constants.CATEGORY_INFLOW) ? R.color.color_positive_balance :
+                    R.color.color_negative_balance;
+            itemView.setBackgroundColor(itemView.getResources().getColor(bgColorId));
         }
     }
 

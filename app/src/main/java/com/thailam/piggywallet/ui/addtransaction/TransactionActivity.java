@@ -102,6 +102,14 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     }
 
     @Override
+    public void showInvalidAmountError(String input) {
+        StringBuilder errMsg = new StringBuilder();
+        errMsg.append(getResources().getString(R.string.invalid_input))
+                .append(input);
+        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {

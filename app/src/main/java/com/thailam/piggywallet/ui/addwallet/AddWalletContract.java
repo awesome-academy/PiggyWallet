@@ -1,6 +1,5 @@
 package com.thailam.piggywallet.ui.addwallet;
 
-import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.ui.base.BaseView;
 
 public interface AddWalletContract {
@@ -8,9 +7,11 @@ public interface AddWalletContract {
         void showAddWalletSuccess();
 
         void showAddWalletFail(Exception e);
+
+        void showMissingTitleError();
     }
 
     interface Presenter {
-        void saveWallet(Wallet wallet);
+        void saveWallet(String title, String subtitle, String balanceStr);
     }
 }

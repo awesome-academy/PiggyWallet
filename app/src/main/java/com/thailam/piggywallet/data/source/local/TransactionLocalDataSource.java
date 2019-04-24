@@ -43,7 +43,7 @@ public class TransactionLocalDataSource implements TransactionDataSource {
     }
 
     @Override
-    public void getInitialTransactions(int walletId, @NonNull GetTransactionCallback callback) {
+    public void getInitialTransactions(boolean force, int walletId, @NonNull GetTransactionCallback callback) {
         LocalAsyncTask<Void, List<TransactionParent>> task = new LocalAsyncTask<>(params -> {
             return mTransactionDAO.getInitialTransactions(walletId);
         }, callback);

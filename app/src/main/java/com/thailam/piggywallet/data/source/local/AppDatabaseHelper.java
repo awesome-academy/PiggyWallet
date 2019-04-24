@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.source.local.entry.CategoryEntry;
 import com.thailam.piggywallet.data.source.local.entry.DatabaseEntry;
 import com.thailam.piggywallet.data.source.local.entry.TransactionEntry;
@@ -22,6 +23,7 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
             + WalletEntry.CREATED_AT + " INTEGER," + WalletEntry.UPDATED_AT + " INTEGER " + ")";
     private static final String CREATE_TBL_CATE = "CREATE TABLE " + CategoryEntry.TBL_NAME_CATE + "("
             + CategoryEntry.ID + " INTEGER PRIMARY KEY, " + CategoryEntry.NAME + " TEXT, "
+            + CategoryEntry.TYPE + " TEXT, "
             + CategoryEntry.CREATED_AT + " INTEGER, " + CategoryEntry.UPDATED_AT + " INTEGER " + ")";
     private static final String CREATE_TBL_TRANS = "CREATE TABLE " + TransactionEntry.TBL_NAME_TRANS + "("
             + TransactionEntry.ID + " INTEGER PRIMARY KEY , " + TransactionEntry.NOTE + " TEXT, "

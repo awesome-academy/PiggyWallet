@@ -5,4 +5,6 @@ public interface Constants {
     String UNKNOWN_ERROR = "UNKNOWN_ERROR";
     String ERROR_UPDATE_FAIL = "UPDATE FAILED";
     String PREF_WALLET = "com.thailam.piggywallet.PREF_WALLET";
+    String CATEGORY_INFLOW = "CATEGORY_INFLOW";
+    String CATEGORY_OUTFLOW = "CATEGORY_OUTFLOW";
 }

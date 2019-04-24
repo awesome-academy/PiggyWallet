@@ -21,8 +21,9 @@ public interface WalletDetailContract {
     }
 
     interface Presenter extends BasePresenter {
-        void getInitialTransactions(int walletId);
 
         void saveWalletToSharedPref(Wallet wallet);
+
+        void getInitialTransactions(boolean force, int walletId);
     }
 }

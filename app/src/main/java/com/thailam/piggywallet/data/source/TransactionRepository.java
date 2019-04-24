@@ -36,13 +36,14 @@ public class TransactionRepository implements TransactionDataSource {
     }
 
     @Override
-    public void getInitialTransactions(int walletId, @NonNull GetTransactionCallback callback) {
-        if (mCachedTransactionParents != null && mCachedWalletId == walletId) {
+    public void getInitialTransactions(boolean force, int walletId,
+                                       @NonNull GetTransactionCallback callback) {
+        if (mCachedTransactionParents != null && mCachedWalletId == walletId && !force) {
             callback.onDataLoaded(mCachedTransactionParents);
             return;
         }
 
-        mTransactionLocalDataSource.getInitialTransactions(walletId, new GetTransactionCallback() {
+        mTransactionLocalDataSource.getInitialTransactions(force, walletId, new GetTransactionCallback() {
             @Override
             public void onDataLoaded(List<TransactionParent> transactionParents) {
                 mCachedWalletId = walletId;

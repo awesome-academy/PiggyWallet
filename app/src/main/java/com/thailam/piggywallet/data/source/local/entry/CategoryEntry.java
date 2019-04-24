@@ -7,4 +7,5 @@ public interface CategoryEntry {
     String NAME = "name";
     String CREATED_AT = "created_at";
     String UPDATED_AT = "updated_at";
+    String TYPE = "type";
 }
