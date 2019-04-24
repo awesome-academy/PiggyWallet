@@ -1,5 +1,6 @@
 package com.thailam.piggywallet.ui.wallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 
 import com.thailam.piggywallet.R;
+import com.thailam.piggywallet.ui.addwallet.AddWalletActivity;
 
 public class WalletActivity extends AppCompatActivity implements WalletFragment.OnFragmentInteractionListener {
     private SearchView mSearchView;
@@ -43,7 +45,8 @@ public class WalletActivity extends AppCompatActivity implements WalletFragment.
 
     private void initFab() {
         findViewById(R.id.fab_add).setOnClickListener(v -> {
-            // TODO: implement in add wallet task
+            Intent intent = new Intent(this, AddWalletActivity.class);
+            startActivity(intent);
         });
     }
 

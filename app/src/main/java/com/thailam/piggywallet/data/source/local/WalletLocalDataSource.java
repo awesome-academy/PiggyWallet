@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletDataSource;
 import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
+import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 import com.thailam.piggywallet.data.source.local.dao.WalletDAO;
 import com.thailam.piggywallet.data.source.local.dao.WalletDAOImpl;
 
@@ -52,15 +53,15 @@ public class WalletLocalDataSource implements WalletDataSource {
     }
 
     @Override
-    public boolean addWallet(Wallet wallet) {
-        // TODO: implement in add wallet task
-        return false;
+    public void saveWallet(Wallet wallet, @NonNull OnDataLoadedCallback<Long> callback) {
+        LocalAsyncTask<Void, Long> task = new LocalAsyncTask<>(params -> {
+            return mWalletDAO.saveWallet(wallet);
+        }, callback);
+        task.execute();
     }
 
     @Override
     public List<Wallet> getCachedWallets() {
         return null;
     }
-
-
 }
