@@ -28,4 +28,6 @@
     <string name="wallet_subtitle_hint">Wallet subtitle...</string>
     <string name="prompt_wallet_created">Wallet Created</string>
     <string name="save_wallet_to_prefs_error">Cannot save wallet to prefs</string>
+    <string name="snack_bar_undo">Undo</string>
+    <string name="snack_bar_text">1 Wallet deleted</string>
 </resources>

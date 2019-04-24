@@ -1,4 +1,3 @@
-
 package com.thailam.piggywallet.ui.addwallet;
 
 import com.thailam.piggywallet.data.model.Wallet;

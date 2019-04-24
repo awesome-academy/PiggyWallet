@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletDataSource;
+import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 
 import java.util.List;
 
@@ -44,6 +45,21 @@ public class WalletPresenter implements WalletContract.Presenter,
     @Override
     public List<Wallet> getCachedWallets() {
         return mWalletRepository.getCachedWallets();
+    }
+
+    @Override
+    public void deleteWallet(Wallet wallet) {
+        mWalletRepository.deleteWallet(wallet, new OnDataLoadedCallback<Integer>() {
+            @Override
+            public void onDataLoaded(Integer data) {
+                // do nothing
+            }
+
+            @Override
+            public void onDataNotAvailable(Exception e) {
+                mView.onGetWalletsError(e);
+            }
+        });
     }
 
     @Override

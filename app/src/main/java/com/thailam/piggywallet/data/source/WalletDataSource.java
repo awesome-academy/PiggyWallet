@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
+import com.thailam.piggywallet.ui.wallet.WalletPresenter;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ import java.util.List;
  */
 public interface WalletDataSource {
 
-    interface GetWalletCallback extends OnDataLoadedCallback<List<Wallet>> { }
+    interface GetWalletCallback extends OnDataLoadedCallback<List<Wallet>> {
+    }
 
     void getInitialWallets(boolean force, @NonNull GetWalletCallback callback);
 
@@ -25,4 +27,6 @@ public interface WalletDataSource {
     boolean putWalletToPrefs(Wallet wallet);
 
     Wallet getWalletFromPrefs();
+
+    void deleteWallet(Wallet wallet, @NonNull OnDataLoadedCallback<Integer> callback);
 }

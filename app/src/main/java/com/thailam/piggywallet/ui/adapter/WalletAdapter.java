@@ -2,7 +2,9 @@ package com.thailam.piggywallet.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
+import com.thailam.piggywallet.data.source.WalletDataSource;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,9 +22,14 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
 
     private OnItemClickListener mListener;
     private List<Wallet> mWallets;
+    private Wallet mRecentlyDeletedWallet;
+    private int mRecentlyDeletedWalletPosition;
+    private View mView;
+    private DeleteWalletCallbacks mDeleteWalletCallbacks;
 
-    public WalletAdapter(OnItemClickListener listener) {
+    public WalletAdapter(OnItemClickListener listener, DeleteWalletCallbacks deleteWalletCallbacks) {
         mListener = listener;
+        mDeleteWalletCallbacks = deleteWalletCallbacks;
     }
 
     @NonNull
@@ -29,7 +37,8 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_wallet_item, parent, false);
-        return new ViewHolder(parent.getContext(), itemView, mListener);
+        mView = parent;
+        return new ViewHolder(itemView, mListener);
     }
 
     @Override
@@ -48,6 +57,33 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public void deleteWallet(int position) {
+        mRecentlyDeletedWallet = mWallets.get(position);
+        mRecentlyDeletedWalletPosition = position;
+        mWallets.remove(position);
+        notifyItemRemoved(position);
+        showUndoSnackBar();
+    }
+
+    private void showUndoSnackBar() {
+        Snackbar snackbar = Snackbar.make(mView, R.string.snack_bar_text, Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.snack_bar_undo, v -> {
+            undoDelete();
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                mDeleteWalletCallbacks.onDeleteWalletCallback(mRecentlyDeletedWallet);
+            }
+        });
+        snackbar.show();
+    }
+
+    private void undoDelete() {
+        mWallets.add(mRecentlyDeletedWalletPosition, mRecentlyDeletedWallet);
+        notifyItemInserted(mRecentlyDeletedWalletPosition);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Wallet mWallet;
         private TextView mTxtTitle;
@@ -56,7 +92,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
         private ImageButton mImgBtnFeatureImg;
         private OnItemClickListener mListener;
 
-        private ViewHolder(Context context, View itemView, OnItemClickListener listener) {
+        private ViewHolder(View itemView, OnItemClickListener listener) {
             super(itemView);
             mListener = listener;
             mTxtTitle = itemView.findViewById(R.id.text_card_title);
@@ -76,6 +112,13 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
             mTxtTitle.setText(wallet.getTitle());
             mTxtSubtitle.setText(wallet.getSubtitle());
             displayWalletAmount(wallet.getAmount());
+            displayFeatureImg();
+        }
+
+        private void displayFeatureImg() {
+            int drawableId = mWallet.getIconUrl() == null ? R.drawable.ic_account_balance_wallet_black_24dp :
+                    Integer.valueOf(mWallet.getIconUrl());
+            mImgBtnFeatureImg.setImageDrawable(itemView.getResources().getDrawable(drawableId));
         }
 
         private void displayWalletAmount(double amount) {
@@ -91,5 +134,13 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
      */
     public interface OnItemClickListener {
         void onItemClick(Wallet wallet);
+    }
+
+    /**
+     * The callback interface used by {@link com.thailam.piggywallet.ui.wallet.WalletFragment}
+     * to perform actions when swipe to delete wallet
+     */
+    public interface DeleteWalletCallbacks {
+        void onDeleteWalletCallback(Wallet wallet);
     }
 }
