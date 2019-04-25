@@ -36,7 +36,7 @@ public class TransactionLocalDataSource implements TransactionDataSource {
     public void saveTransaction(Wallet wallet, Transaction transaction,
                                 @NonNull TransactionCallback callback) {
         LocalAsyncTask<Void, Long> task = new LocalAsyncTask<>(params -> {
-            return mTransactionDAO.saveTransaction(wallet, transaction, callback);
+            return mTransactionDAO.saveTransaction(wallet, transaction);
         }, callback);
         task.execute();
     }
@@ -44,7 +44,7 @@ public class TransactionLocalDataSource implements TransactionDataSource {
     @Override
     public void getInitialTransactions(int walletId, @NonNull GetTransactionCallback callback) {
         LocalAsyncTask<Void, List<Transaction>> task = new LocalAsyncTask<>(params -> {
-            return mTransactionDAO.getInitialTransactions(walletId, callback);
+            return mTransactionDAO.getInitialTransactions(walletId);
         }, callback);
         task.execute();
     }

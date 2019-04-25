@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
-import com.thailam.piggywallet.ui.walletdetail.SwipeDismissTouchListener;
 
 import java.util.List;
 

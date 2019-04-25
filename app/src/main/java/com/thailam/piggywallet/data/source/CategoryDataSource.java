@@ -8,5 +8,8 @@ import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 import java.util.List;
 
 public interface CategoryDataSource {
-    void getCategories(@NonNull OnDataLoadedCallback<List<Category>> callback);
+    interface GetCategoryCallback extends OnDataLoadedCallback<List<Category>> {
+    }
+
+    void getCategories(@NonNull GetCategoryCallback callback);
 }

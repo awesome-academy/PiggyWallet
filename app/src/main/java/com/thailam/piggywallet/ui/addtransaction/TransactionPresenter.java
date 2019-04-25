@@ -1,7 +1,6 @@
 package com.thailam.piggywallet.ui.addtransaction;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.model.Transaction;

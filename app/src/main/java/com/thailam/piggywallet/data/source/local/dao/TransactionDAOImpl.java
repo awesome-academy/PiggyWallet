@@ -3,14 +3,13 @@ package com.thailam.piggywallet.data.source.local.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
-import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.local.AppDatabaseHelper;
 import com.thailam.piggywallet.data.source.local.entry.TransactionEntry;
 import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
+import com.thailam.piggywallet.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +37,7 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
     }
 
     @Override
-    public long saveTransaction(Wallet wallet, Transaction transaction,
-                                @NonNull TransactionDataSource.TransactionCallback callback) throws Exception {
+    public long saveTransaction(Wallet wallet, Transaction transaction) throws Exception {
         initWriteDatabase();
         mDatabase.beginTransaction();
         try {
@@ -50,11 +48,14 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
             values.put(TransactionEntry.FOR_CAT_ID, transaction.getCategoryId());
             values.put(TransactionEntry.FOR_WALLET_ID, transaction.getWalletId());
             long result = mDatabase.insertOrThrow(TransactionEntry.TBL_NAME_TRANS, null, values);
-            updateWalletOnSaveTransaction(wallet, transaction.getAmount());
-            mDatabase.setTransactionSuccessful();
-            return result;
+            if (updateWalletOnSaveTransaction(wallet, transaction.getAmount())) {
+                mDatabase.setTransactionSuccessful();
+                return result;
+            } else {
+                throw new Exception(Constants.ERROR_UPDATE_FAIL);
+            }
         } catch (Exception e) {
-            throw new Exception(e);
+            throw e;
         } finally {
             mDatabase.endTransaction();
             closeDatabase();
@@ -62,8 +63,7 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
     }
 
     @Override
-    public List<Transaction> getInitialTransactions(int walletId,
-                                                    @NonNull TransactionDataSource.GetTransactionCallback callback) {
+    public List<Transaction> getInitialTransactions(int walletId) {
         String whereClause = TransactionEntry.FOR_WALLET_ID + " = ? ";
         String[] whereArgs = new String[]{String.valueOf(walletId)};
         initReadDatabase();
@@ -83,7 +83,7 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
         return transactions;
     }
 
-    private void updateWalletOnSaveTransaction(Wallet wallet, double amount) {
+    private boolean updateWalletOnSaveTransaction(Wallet wallet, double amount) {
         String whereClause = " id = ?";
         String balanceFlowColEntry;
         double addedBalanceFlowAmount;
@@ -99,9 +99,9 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
         ContentValues values = new ContentValues();
         values.put(WalletEntry.AMOUNT, addedAmount);
         values.put(balanceFlowColEntry, addedBalanceFlowAmount);
-        mDatabase.update(WalletEntry.TBL_NAME_WALLET,
-                values,
-                whereClause,
+        int rowAffected = mDatabase.update(WalletEntry.TBL_NAME_WALLET,
+                values, whereClause,
                 new String[]{String.valueOf(wallet.getId())});
+        return rowAffected == 0;
     }
 }

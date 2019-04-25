@@ -1,17 +1,13 @@
 package com.thailam.piggywallet.ui.category;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.source.CategoryDataSource;
-import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
-import com.thailam.piggywallet.data.source.local.CategoryLocalDataSource;
-import com.thailam.piggywallet.util.Constants;
 
 import java.util.List;
 
-public class CategoryPresenter implements CategoryContract.Presenter, OnDataLoadedCallback<List<Category>> {
+public class CategoryPresenter implements CategoryContract.Presenter, CategoryDataSource.GetCategoryCallback {
     @NonNull
     private CategoryContract.View mView;
     @NonNull

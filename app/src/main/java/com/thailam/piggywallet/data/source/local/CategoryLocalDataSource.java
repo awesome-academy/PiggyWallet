@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.source.CategoryDataSource;
 import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
-import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 import com.thailam.piggywallet.data.source.local.dao.CategoryDAO;
 import com.thailam.piggywallet.data.source.local.dao.CategoryDAOImpl;
 
@@ -36,7 +35,7 @@ public class CategoryLocalDataSource implements CategoryDataSource {
     }
 
     @Override
-    public void getCategories(@NonNull OnDataLoadedCallback<List<Category>> callback) {
+    public void getCategories(@NonNull GetCategoryCallback callback) {
         LocalAsyncTask<Void, List<Category>> task = new LocalAsyncTask<>(params -> {
             return mCategoryDAO.getCategories();
         }, callback);

@@ -9,5 +9,5 @@ public interface WalletDAO {
 
     List<Wallet> getSearchedWallets(String input) throws Exception;
 
-    void saveWallet(Wallet wallet)throws Exception;
+    long saveWallet(Wallet wallet)throws Exception;
 }

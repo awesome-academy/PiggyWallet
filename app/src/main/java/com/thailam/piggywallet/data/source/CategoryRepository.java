@@ -3,7 +3,6 @@ package com.thailam.piggywallet.data.source;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Category;
-import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +28,12 @@ public class CategoryRepository implements CategoryDataSource {
     }
 
     @Override
-    public void getCategories(@NonNull OnDataLoadedCallback<List<Category>> callback) {
+    public void getCategories(@NonNull GetCategoryCallback callback) {
         if (mCachedCategories != null) {
             callback.onDataLoaded(mCachedCategories);
             return;
         }
-        mCategoryLocalDataSource.getCategories(new OnDataLoadedCallback<List<Category>>() {
+        mCategoryLocalDataSource.getCategories(new GetCategoryCallback() {
             @Override
             public void onDataLoaded(List<Category> categories) {
                 refreshCategoriesCache(categories);

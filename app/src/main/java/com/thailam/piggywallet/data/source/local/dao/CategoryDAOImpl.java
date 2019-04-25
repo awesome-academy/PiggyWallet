@@ -33,7 +33,7 @@ public class CategoryDAOImpl extends AppDatabaseHelper implements CategoryDAO {
     }
 
     @Override
-    public List<Category> getCategories() throws Exception {
+    public List<Category> getCategories() {
         initReadDatabase();
         Cursor cursor = mDatabase.query(
                 true, CategoryEntry.TBL_NAME_CATE, null,

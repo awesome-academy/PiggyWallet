@@ -5,5 +5,5 @@ import com.thailam.piggywallet.data.model.Category;
 import java.util.List;
 
 public interface CategoryDAO {
-    List<Category> getCategories() throws Exception;
+    List<Category> getCategories();
 }

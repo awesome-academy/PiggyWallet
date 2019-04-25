@@ -55,8 +55,9 @@ public class WalletDAOImpl extends AppDatabaseHelper implements WalletDAO {
     }
 
     @Override
-    public void saveWallet(Wallet wallet) throws Exception {
+    public long saveWallet(Wallet wallet) throws Exception {
         // TODO: implement in add wallet task
+        return 0;
     }
 
     private List<Wallet> retrieveListHelper(Cursor cursor) throws Exception {
