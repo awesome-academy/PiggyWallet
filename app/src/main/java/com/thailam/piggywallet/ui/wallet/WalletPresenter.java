@@ -54,7 +54,7 @@ public class WalletPresenter implements WalletContract.Presenter,
 
     @Override
     public void onDataNotAvailable(Exception e) {
-        mView.showErrorMessage(e);
+        mView.onGetWalletsError(e);
         mView.updateWallets(null);
         mView.hideProgressBar();
     }

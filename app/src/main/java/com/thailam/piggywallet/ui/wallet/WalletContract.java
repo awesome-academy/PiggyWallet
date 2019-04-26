@@ -10,7 +10,7 @@ public interface WalletContract {
     interface View extends BaseView {
         void updateWallets(List<Wallet> wallets);
 
-        void showErrorMessage(Exception e);
+        void onGetWalletsError(Exception e);
 
         void showProgressBar();
 

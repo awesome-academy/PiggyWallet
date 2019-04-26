@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
     }
 
     @Override
-    public void showError(Exception e) {
+    public void onLoadWalletError(Exception e) {
         String errMsg = e == null ? Constants.UNKNOWN_ERROR : e.getMessage();
         Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
     }

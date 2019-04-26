@@ -110,7 +110,7 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     }
 
     @Override
-    public void showErrorMessage(Exception e) {
+    public void onGetWalletsError(Exception e) {
         String errMsg = e == null ? Constants.UNKNOWN_ERROR : e.getMessage();
         Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
     }

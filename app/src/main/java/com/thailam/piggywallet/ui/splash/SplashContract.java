@@ -7,7 +7,7 @@ public interface SplashContract {
     interface View extends BaseView {
         void openWalletDetail();
 
-        void showError(Exception e);
+        void onLoadWalletError(Exception e);
     }
 
     interface Presenter extends BasePresenter {
