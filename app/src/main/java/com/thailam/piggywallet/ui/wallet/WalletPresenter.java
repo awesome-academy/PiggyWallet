@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletDataSource;
-import com.thailam.piggywallet.util.Constants;
 
 import java.util.List;
 
@@ -27,14 +26,14 @@ public class WalletPresenter implements WalletContract.Presenter,
 
     @Override
     public void getWallets() {
-        mView.toggleIsRefreshing();
+        mView.showProgressBar();
         mWalletRepository.getInitialWallets(this);
     }
 
     @Override
     public void searchWallets(String input) {
-        mView.toggleIsRefreshing();
-        mWalletRepository.getSearchedWallets(input,this);
+        mView.showProgressBar();
+        mWalletRepository.getSearchedWallets(input, this);
     }
 
     @Override
@@ -50,14 +49,13 @@ public class WalletPresenter implements WalletContract.Presenter,
     @Override
     public void onDataLoaded(List<Wallet> wallets) {
         mView.updateWallets(wallets);
-        mView.toggleIsRefreshing();
+        mView.hideProgressBar();
     }
 
     @Override
     public void onDataNotAvailable(Exception e) {
-        String errMsg = (e == null) ? Constants.NO_DATA_ERROR : e.getMessage();
-        mView.showErrorMessage(errMsg);
+        mView.onGetWalletsError(e);
         mView.updateWallets(null);
-        mView.toggleIsRefreshing();
+        mView.hideProgressBar();
     }
 }

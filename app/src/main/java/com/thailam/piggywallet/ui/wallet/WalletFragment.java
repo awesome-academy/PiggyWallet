@@ -20,6 +20,7 @@ import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
 import com.thailam.piggywallet.ui.adapter.WalletAdapter;
 import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
+import com.thailam.piggywallet.util.Constants;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,8 +28,6 @@ import java.util.Objects;
 public class WalletFragment extends Fragment implements WalletContract.View,
         SwipeRefreshLayout.OnRefreshListener {
     public static String TAG = "WalletFragment";
-
-    private static boolean isLoading = false;
 
     private WalletContract.Presenter mPresenter;
     private WalletAdapter mWalletAdapter;
@@ -106,24 +105,24 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     }
 
     @Override
-    public void toggleIsRefreshing() {
-        if (isLoading) {
-            mSwipeRefreshLayout.setRefreshing(false);
-            isLoading = false;
-        } else {
-            mSwipeRefreshLayout.setRefreshing(true);
-            isLoading = true;
-        }
-    }
-
-    @Override
     public void updateWallets(List<Wallet> wallets) {
         mWalletAdapter.setWallets(wallets);
     }
 
     @Override
-    public void showErrorMessage(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    public void onGetWalletsError(Exception e) {
+        String errMsg = e == null ? Constants.UNKNOWN_ERROR : e.getMessage();
+        Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    public void showProgressBar() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public WalletContract.Presenter getPresenter() {
@@ -160,6 +159,7 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     }
 
     private void initRecyclerView() {
+        if (getView() == null) return;
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_wallet_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);

@@ -6,6 +6,8 @@ import com.thailam.piggywallet.ui.base.BaseView;
 public interface SplashContract {
     interface View extends BaseView {
         void openWalletDetail();
+
+        void onLoadWalletError(Exception e);
     }
 
     interface Presenter extends BasePresenter {

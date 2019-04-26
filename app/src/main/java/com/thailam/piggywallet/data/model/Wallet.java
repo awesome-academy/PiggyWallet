@@ -158,7 +158,7 @@ public class Wallet implements Parcelable {
             // required empty constructor
         }
 
-        public Builder(Cursor cursor) throws Exception {
+        public Builder(Cursor cursor) {
             int indexId = cursor.getColumnIndex(WalletEntry.ID);
             int indexTitle = cursor.getColumnIndex(WalletEntry.TITLE);
             int indexSubtitle = cursor.getColumnIndex(WalletEntry.SUBTITLE);

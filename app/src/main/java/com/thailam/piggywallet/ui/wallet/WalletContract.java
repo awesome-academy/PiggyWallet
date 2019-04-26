@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface WalletContract {
     interface View extends BaseView {
-        void toggleIsRefreshing();
-
         void updateWallets(List<Wallet> wallets);
 
-        void showErrorMessage(String msg);
+        void onGetWalletsError(Exception e);
+
+        void showProgressBar();
+
+        void hideProgressBar();
     }
 
     interface Presenter extends BasePresenter {

@@ -22,4 +22,5 @@
     <string name="add_transaction_missing_amount">Please fill in amount</string>
     <string name="add_transaction_missing_category">Please choose a category</string>
     <string name="no_transaction">There are no transactions</string>
+    <string name="overview">Overview</string>
 </resources>
