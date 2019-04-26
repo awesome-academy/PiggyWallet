@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.thailam.piggywallet.data.source.CategoryDataSource;
 import com.thailam.piggywallet.data.source.CategoryRepository;
 import com.thailam.piggywallet.data.source.local.CategoryLocalDataSource;
 import com.thailam.piggywallet.ui.adapter.CategoryAdapter;
+import com.thailam.piggywallet.util.Constants;
 
 import java.util.List;
 
@@ -46,13 +48,19 @@ public class CategoryDialog extends Dialog implements CategoryContract.View {
     }
 
     @Override
-    public void showError(String msg) {
-        Toast.makeText(getContext(), "Error: " + msg, Toast.LENGTH_SHORT).show();
+    public void showError(Exception e) {
+        String errMsg = e == null ? Constants.UNKNOWN_ERROR : e.getMessage();
+        Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void toggleRefreshing() {
+    public void showProgressBar() {
+        findViewById(R.id.progress_bar_category_dialog).setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void hideProgressBar() {
+        findViewById(R.id.progress_bar_category_dialog).setVisibility(View.GONE);
     }
 
     public void setCategoryDialogResult(OnCategoryChosen onCategoryChosen) {
@@ -78,7 +86,7 @@ public class CategoryDialog extends Dialog implements CategoryContract.View {
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerView =findViewById(R.id.recycler_view_custom_dialog);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_custom_dialog);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);

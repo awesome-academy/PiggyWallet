@@ -41,17 +41,11 @@ public class TransactionInnerAdapter extends RecyclerView.Adapter<TransactionInn
         return mTransactions == null ? 0 : mTransactions.size();
     }
 
-    public void setTransactions(List<Transaction> transactions) {
-        mTransactions = transactions;
-        notifyDataSetChanged();
-    }
-
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Context mContext;
         private Transaction mTransaction;
         private OnItemClickListener mListener;
         private TextView mTxtViewTitle;
-        private TextView mTxtViewSubtitle;
         private TextView mTxtViewAmount;
         private ImageView mImageViewFeature;
 
@@ -60,7 +54,6 @@ public class TransactionInnerAdapter extends RecyclerView.Adapter<TransactionInn
             mContext = context;
             mListener = listener;
             mTxtViewTitle = itemView.findViewById(R.id.text_view_wallet_detail_inside_title);
-            mTxtViewSubtitle = itemView.findViewById(R.id.text_view_wallet_detail_inside_subtitle);
             mTxtViewAmount = itemView.findViewById(R.id.text_view_wallet_detail_inside_amount);
             mImageViewFeature = itemView.findViewById(R.id.image_view_wallet_detail_inside_icon);
             itemView.setOnClickListener(this);
@@ -74,7 +67,6 @@ public class TransactionInnerAdapter extends RecyclerView.Adapter<TransactionInn
         private void bindData(Transaction transaction) {
             if (transaction == null) return;
             mTransaction = transaction;
-            mTxtViewSubtitle.setText(transaction.getNote());
             displayWalletAmount(transaction.getAmount());
         }
 

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionRepository implements TransactionDataSource {
-
     private static TransactionRepository sInstance;
     private TransactionDataSource mTransactionLocalDataSource;
     private List<Transaction> mCachedTransactions;

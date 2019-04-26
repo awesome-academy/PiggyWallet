@@ -59,11 +59,13 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     @Override
     public void showProgressBar() {
         findViewById(R.id.progress_bar_wallet_detail).setVisibility(View.VISIBLE);
+        findViewById(R.id.image_view_no_transactions_wallet_detail).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressBar() {
         findViewById(R.id.progress_bar_wallet_detail).setVisibility(View.GONE);
+        findViewById(R.id.image_view_no_transactions_wallet_detail).setVisibility(View.GONE);
     }
 
     @Override

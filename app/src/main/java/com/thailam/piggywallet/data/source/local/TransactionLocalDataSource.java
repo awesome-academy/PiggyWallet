@@ -6,19 +6,24 @@ import android.support.annotation.NonNull;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
+import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
+import com.thailam.piggywallet.data.source.local.dao.TransactionDAO;
+import com.thailam.piggywallet.data.source.local.dao.TransactionDAOImpl;
+
+import java.util.List;
 
 public class TransactionLocalDataSource implements TransactionDataSource {
 
     private static TransactionLocalDataSource sInstance;
-    private static DatabaseDAO mDatabaseDAO;
+    private static TransactionDAO mTransactionDAO;
 
-    private TransactionLocalDataSource(DatabaseDAO databaseDAO) {
-        mDatabaseDAO = databaseDAO;
+    private TransactionLocalDataSource(TransactionDAO transactionDAO) {
+        mTransactionDAO = transactionDAO;
     }
 
     public static TransactionLocalDataSource getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new TransactionLocalDataSource(AppDatabaseHelper.getInstance(context));
+            sInstance = new TransactionLocalDataSource(TransactionDAOImpl.getInstance(context));
         }
         return sInstance;
     }
@@ -30,11 +35,17 @@ public class TransactionLocalDataSource implements TransactionDataSource {
     @Override
     public void saveTransaction(Wallet wallet, Transaction transaction,
                                 @NonNull TransactionCallback callback) {
-        mDatabaseDAO.saveTransaction(wallet, transaction, callback);
+        LocalAsyncTask<Void, Long> task = new LocalAsyncTask<>(params -> {
+            return mTransactionDAO.saveTransaction(wallet, transaction);
+        }, callback);
+        task.execute();
     }
 
     @Override
     public void getInitialTransactions(int walletId, @NonNull GetTransactionCallback callback) {
-        mDatabaseDAO.getInitialTransactions(walletId, callback);
+        LocalAsyncTask<Void, List<Transaction>> task = new LocalAsyncTask<>(params -> {
+            return mTransactionDAO.getInitialTransactions(walletId);
+        }, callback);
+        task.execute();
     }
 }

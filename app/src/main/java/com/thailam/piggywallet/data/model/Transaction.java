@@ -93,7 +93,6 @@ public class Transaction {
         private long mDate;
         private int mWalletId;
 
-
         public Builder() {
         }
 

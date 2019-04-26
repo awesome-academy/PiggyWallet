@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryRepository implements CategoryDataSource {
-
     private static CategoryRepository sInstance;
     private CategoryDataSource mCategoryLocalDataSource;
     private List<Category> mCachedCategories;
@@ -27,7 +26,6 @@ public class CategoryRepository implements CategoryDataSource {
     public static void destroyInstance() {
         sInstance = null;
     }
-
 
     @Override
     public void getCategories(@NonNull GetCategoryCallback callback) {

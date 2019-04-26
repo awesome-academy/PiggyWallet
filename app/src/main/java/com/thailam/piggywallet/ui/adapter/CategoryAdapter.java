@@ -69,6 +69,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
+    /**
+     * The callback interface used by {@link com.thailam.piggywallet.ui.addtransaction.TransactionActivity}
+     * to perform on click category item in category dialog
+     */
     public interface OnItemClickListener {
         void onItemClick(Category category);
     }

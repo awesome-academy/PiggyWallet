@@ -7,7 +7,8 @@ import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 
-public class TransactionPresenter implements TransactionContract.Presenter, TransactionDataSource.TransactionCallback {
+public class TransactionPresenter implements TransactionContract.Presenter,
+        TransactionDataSource.TransactionCallback {
     @NonNull
     private TransactionContract.View mView;
     @NonNull

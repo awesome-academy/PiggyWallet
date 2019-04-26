@@ -9,9 +9,11 @@ public interface CategoryContract {
     interface View {
         void updateCategories(List<Category> categories);
 
-        void showError(String msg);
+        void showError(Exception e);
 
-        void toggleRefreshing();
+        void showProgressBar();
+
+        void hideProgressBar();
     }
 
     interface Presenter extends BasePresenter {

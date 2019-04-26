@@ -9,6 +9,7 @@ import android.view.ViewConfiguration;
 
 public class SwipeDismissTouchListener implements View.OnTouchListener {
     private final int ORIGINAL_STAT = 0;
+
     // Cached ViewConfiguration and system-wide constant values
     private int mSlop;
     private int mMinFlingVelocity;
