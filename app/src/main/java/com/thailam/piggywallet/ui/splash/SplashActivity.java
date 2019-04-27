@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletRepository;
-import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
+import com.thailam.piggywallet.data.source.local.AppLocalDataSource;
 import com.thailam.piggywallet.ui.wallet.WalletActivity;
+import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
 import com.thailam.piggywallet.util.Constants;
 
 public class SplashActivity extends AppCompatActivity implements SplashContract.View {
@@ -22,6 +24,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initPresenter();
+        navigateToNextScreen();
     }
 
     @Override
@@ -29,6 +32,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         Intent intent = new Intent(this, WalletActivity.class);
         startActivity(intent);
         finish();
+
     }
 
     @Override
@@ -40,10 +44,20 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
     @Override
     public void initPresenter() {
         if (mPresenter == null) {
-            WalletLocalDataSource source = WalletLocalDataSource.getInstance(getApplicationContext());
+            AppLocalDataSource source = AppLocalDataSource.getInstance(getApplicationContext());
             WalletRepository repo = WalletRepository.getInstance(source);
             mPresenter = new SplashPresenter(this, repo);
         }
-        mPresenter.start();
+    }
+
+    private void navigateToNextScreen() {
+        Wallet lastVisitedWallet = mPresenter.getWalletFromSharedPrefs();
+        if (lastVisitedWallet != null) {
+            Intent intent = WalletDetailActivity.getIntent(this, lastVisitedWallet);
+            startActivity(intent);
+            finish();
+        } else {
+            mPresenter.start();
+        }
     }
 }

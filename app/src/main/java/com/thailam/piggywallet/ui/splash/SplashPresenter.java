@@ -31,6 +31,11 @@ public class SplashPresenter implements SplashContract.Presenter,
     }
 
     @Override
+    public Wallet getWalletFromSharedPrefs() {
+        return mWalletRepository.getWalletFromSharedPref();
+    }
+
+    @Override
     public void onDataLoaded(List<Wallet> wallets) {
         mView.openWalletDetail();
     }

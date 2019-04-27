@@ -1,6 +1,7 @@
 package com.thailam.piggywallet.ui.walletdetail;
 
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.ui.base.BasePresenter;
 import com.thailam.piggywallet.ui.base.BaseView;
 
@@ -19,5 +20,7 @@ public interface WalletDetailContract {
 
     interface Presenter extends BasePresenter {
         void getInitialTransactions(int walletId);
+
+        void saveWalletToSharedPref(Wallet wallet);
     }
 }

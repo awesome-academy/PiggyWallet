@@ -56,6 +56,11 @@ public class TransactionRepository implements TransactionDataSource {
         });
     }
 
+    @Override
+    public void saveWalletToSharedPref(Wallet wallet) {
+        mTransactionLocalDataSource.saveWalletToSharedPref(wallet);
+    }
+
     private void refreshCachedTransactions(List<Transaction> transactions) {
         if (mCachedTransactions == null) {
             mCachedTransactions = new ArrayList<>(transactions);

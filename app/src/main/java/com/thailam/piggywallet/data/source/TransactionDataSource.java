@@ -19,4 +19,6 @@ public interface TransactionDataSource {
                          @NonNull TransactionCallback callback);
 
     void getInitialTransactions(int walletId, @NonNull GetTransactionCallback callback);
+
+    void saveWalletToSharedPref(Wallet wallet);
 }

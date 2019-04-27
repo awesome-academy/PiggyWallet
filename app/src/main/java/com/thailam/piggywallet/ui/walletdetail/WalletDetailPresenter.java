@@ -3,6 +3,7 @@ package com.thailam.piggywallet.ui.walletdetail;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 
 import java.util.List;
@@ -27,6 +28,11 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
     public void getInitialTransactions(int walletId) {
         mView.showProgressBar();
         mTransactionRepository.getInitialTransactions(walletId, this);
+    }
+
+    @Override
+    public void saveWalletToSharedPref(Wallet wallet) {
+        mTransactionRepository.saveWalletToSharedPref(wallet);
     }
 
     @Override

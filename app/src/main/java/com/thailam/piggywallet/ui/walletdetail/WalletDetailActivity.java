@@ -13,10 +13,12 @@ import android.widget.TextView;
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
+import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
-import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
+import com.thailam.piggywallet.data.source.local.AppLocalDataSource;
 import com.thailam.piggywallet.ui.adapter.TransactionOuterAdapter;
 import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
+import com.thailam.piggywallet.ui.wallet.WalletActivity;
 import com.thailam.piggywallet.util.TypeFormatUtils;
 
 import java.util.List;
@@ -48,9 +50,15 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        saveWalletToSharedPreference();
+    }
+
+    @Override
     public void initPresenter() {
         if (mPresenter == null) {
-            TransactionLocalDataSource source = TransactionLocalDataSource.getInstance(this);
+            AppLocalDataSource source = AppLocalDataSource.getInstance(this);
             TransactionRepository repo = TransactionRepository.getInstance(source);
             mPresenter = new WalletDetailPresenter(this, repo);
         }
@@ -92,6 +100,10 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
         }
     }
 
+    private void saveWalletToSharedPreference() {
+        mPresenter.saveWalletToSharedPref(mWallet);
+    }
+
     private void getWalletExtra() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -119,7 +131,15 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> {
+            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+            if (backStackEntryCount == 0) {
+                Intent intent = new Intent(this, WalletActivity.class);
+                startActivity(intent);
+            } else {
+                onBackPressed();
+            }
+        });
     }
 
 
