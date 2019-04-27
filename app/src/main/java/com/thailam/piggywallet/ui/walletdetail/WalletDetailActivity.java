@@ -2,6 +2,7 @@ package com.thailam.piggywallet.ui.walletdetail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +16,11 @@ import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
+import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 import com.thailam.piggywallet.ui.adapter.TransactionOuterAdapter;
 import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
+import com.thailam.piggywallet.ui.wallet.WalletActivity;
+import com.thailam.piggywallet.util.Constants;
 import com.thailam.piggywallet.util.TypeFormatUtils;
 
 import java.util.List;
@@ -45,6 +49,12 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
         initToolbar();
         initAdapter();
         initRecyclerView();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveWalletToSharedPreference();
     }
 
     @Override
@@ -92,6 +102,23 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
         }
     }
 
+    private void saveWalletToSharedPreference() {
+        SharedPreferences pref = getSharedPreferences(Constants.PREF_WALLET, MODE_PRIVATE);
+        if (pref != null) {
+            pref.edit().putInt(WalletEntry.ID, mWallet.getId())
+                    .putString(WalletEntry.TITLE, mWallet.getTitle())
+                    .putString(WalletEntry.SUBTITLE, mWallet.getTitle())
+                    .putFloat(WalletEntry.AMOUNT, (float) mWallet.getAmount())
+                    .putFloat(WalletEntry.INFLOW, (float) mWallet.getInflow())
+                    .putFloat(WalletEntry.OUTFLOW, (float) mWallet.getOutflow())
+                    .putString(WalletEntry.ICON, mWallet.getIconUrl())
+                    .putLong(WalletEntry.CREATED_AT, mWallet.getCreatedAt())
+                    .putLong(WalletEntry.UPDATED_AT, mWallet.getUpdatedAt())
+                    .apply();
+        }
+    }
+
+
     private void getWalletExtra() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -119,7 +146,15 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> {
+            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+            if (backStackEntryCount == 0) {
+                Intent intent = new Intent(this, WalletActivity.class);
+                startActivity(intent);
+            } else {
+                onBackPressed();
+            }
+        });
     }
 
 
