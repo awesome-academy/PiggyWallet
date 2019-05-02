@@ -18,7 +18,7 @@ public interface WalletContract {
     }
 
     interface Presenter extends BasePresenter {
-        void getWallets();
+        void getWallets(boolean force);
 
         void searchWallets(String input);
 

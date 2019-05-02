@@ -18,11 +18,9 @@ import java.util.List;
 
 public class TransactionDAOImpl extends AppDatabaseHelper implements TransactionDAO {
     private static TransactionDAOImpl sInstance;
-    private PreferenceHelper mSharedPreference;
 
     private TransactionDAOImpl(Context context) {
         super(context);
-        mSharedPreference = AppPreferenceHelper.getInstance(context, Constants.PREF_WALLET);
     }
 
     public static TransactionDAOImpl getInstance(Context context) {

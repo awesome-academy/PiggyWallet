@@ -37,7 +37,7 @@ public class WalletLocalDataSource implements WalletDataSource {
     }
 
     @Override
-    public void getInitialWallets(@NonNull final GetWalletCallback callback) {
+    public void getInitialWallets(boolean force, @NonNull final GetWalletCallback callback) {
         LocalAsyncTask<Void, List<Wallet>> task = new LocalAsyncTask<>(params -> {
             return mWalletDAO.getInitialWallets();
         }, callback);
@@ -63,15 +63,5 @@ public class WalletLocalDataSource implements WalletDataSource {
     @Override
     public List<Wallet> getCachedWallets() {
         return null;
-    }
-
-    @Override
-    public Wallet getWalletFromSharedPref() {
-        return mWalletDAO.getWalletFromSharedPref();
-    }
-
-    @Override
-    public boolean saveWalletToSharedPref(Wallet wallet) {
-        return mWalletDAO.saveWalletToSharedPref(wallet);
     }
 }

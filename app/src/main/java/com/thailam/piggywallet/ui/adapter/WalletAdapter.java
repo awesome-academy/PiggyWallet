@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
 
+import java.util.Collections;
 import java.util.List;
 
 public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder> {
@@ -42,6 +43,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
     }
 
     public void setWallets(List<Wallet> wallets) {
+        Collections.reverse(wallets);
         mWallets = wallets;
         notifyDataSetChanged();
     }

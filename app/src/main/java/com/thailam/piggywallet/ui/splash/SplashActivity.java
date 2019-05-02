@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.thailam.piggywallet.data.model.Wallet;
+import com.thailam.piggywallet.data.source.PrefsRepository;
 import com.thailam.piggywallet.data.source.WalletDataSource;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
+import com.thailam.piggywallet.data.source.prefs.AppPreferenceHelper;
+import com.thailam.piggywallet.data.source.prefs.PreferenceHelper;
 import com.thailam.piggywallet.ui.wallet.WalletActivity;
 import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
 import com.thailam.piggywallet.util.Constants;
@@ -47,7 +50,9 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         if (mPresenter == null) {
             WalletDataSource source = WalletLocalDataSource.getInstance(getApplicationContext());
             WalletRepository repo = WalletRepository.getInstance(source);
-            mPresenter = new SplashPresenter(this, repo);
+            PreferenceHelper preferenceHelper = AppPreferenceHelper.getInstance(getApplicationContext(), Constants.PREF_WALLET);
+            PrefsRepository prefsRepository = PrefsRepository.getInstance(preferenceHelper);
+            mPresenter = new SplashPresenter(this, repo, prefsRepository);
         }
     }
 

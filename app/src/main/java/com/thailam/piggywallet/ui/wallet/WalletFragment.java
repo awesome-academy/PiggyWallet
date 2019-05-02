@@ -77,6 +77,14 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (mWalletAdapter != null) {
+            mPresenter.getWallets(true);
+        }
+    }
+
+    @Override
     public void onStop() {
         if (mListener != null) {
             mListener.onStopFragment();
@@ -92,7 +100,7 @@ public class WalletFragment extends Fragment implements WalletContract.View,
 
     @Override
     public void onRefresh() {
-        mPresenter.getWallets();
+        mPresenter.getWallets(true);
     }
 
     @Override
@@ -114,7 +122,7 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         String errMsg = e == null ? Constants.UNKNOWN_ERROR : e.getMessage();
         Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
     }
-    
+
     @Override
     public void showProgressBar() {
         mSwipeRefreshLayout.setRefreshing(true);
