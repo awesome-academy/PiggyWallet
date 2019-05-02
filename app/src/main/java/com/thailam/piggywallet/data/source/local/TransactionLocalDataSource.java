@@ -18,17 +18,14 @@ public class TransactionLocalDataSource implements TransactionDataSource {
 
     private static TransactionLocalDataSource sInstance;
     private TransactionDAO mTransactionDAO;
-    private WalletDAO mWalletDAO;
 
-    private TransactionLocalDataSource(TransactionDAO transactionDAO, WalletDAO walletDAO) {
+    private TransactionLocalDataSource(TransactionDAO transactionDAO) {
         mTransactionDAO = transactionDAO;
-        mWalletDAO = walletDAO;
     }
 
     public static TransactionLocalDataSource getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new TransactionLocalDataSource(TransactionDAOImpl.getInstance(context),
-                    WalletDAOImpl.getInstance(context));
+            sInstance = new TransactionLocalDataSource(TransactionDAOImpl.getInstance(context));
         }
         return sInstance;
     }
@@ -52,10 +49,5 @@ public class TransactionLocalDataSource implements TransactionDataSource {
             return mTransactionDAO.getInitialTransactions(walletId);
         }, callback);
         task.execute();
-    }
-
-    @Override
-    public boolean saveWalletToSharedPref(Wallet wallet) {
-        return mWalletDAO.saveWalletToSharedPref(wallet);
     }
 }

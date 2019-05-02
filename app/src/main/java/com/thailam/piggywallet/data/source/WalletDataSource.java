@@ -18,7 +18,11 @@ public interface WalletDataSource {
 
     void getSearchedWallets(String input, @NonNull GetWalletCallback callback);
 
-    boolean addWallet(Wallet wallet);
+    void saveWallet(Wallet wallet, @NonNull OnDataLoadedCallback<Long> callback);
 
     List<Wallet> getCachedWallets();
+
+    Wallet getWalletFromSharedPref();
+
+    boolean saveWalletToSharedPref(Wallet wallet);
 }

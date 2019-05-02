@@ -16,6 +16,8 @@ public interface WalletDetailContract {
         void updateTransactions(List<Transaction> transactions);
 
         void showNoTransactionData();
+
+        void onSaveWalletToSharedPrefFailed();
     }
 
     interface Presenter extends BasePresenter {

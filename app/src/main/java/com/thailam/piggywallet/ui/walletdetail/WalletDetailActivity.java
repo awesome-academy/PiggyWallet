@@ -9,13 +9,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
-import com.thailam.piggywallet.data.source.local.AppLocalDataSource;
+import com.thailam.piggywallet.data.source.WalletDataSource;
+import com.thailam.piggywallet.data.source.WalletRepository;
+import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
+import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
 import com.thailam.piggywallet.ui.adapter.TransactionOuterAdapter;
 import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
 import com.thailam.piggywallet.ui.wallet.WalletActivity;
@@ -58,9 +62,11 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     @Override
     public void initPresenter() {
         if (mPresenter == null) {
-            AppLocalDataSource source = AppLocalDataSource.getInstance(this);
-            TransactionRepository repo = TransactionRepository.getInstance(source);
-            mPresenter = new WalletDetailPresenter(this, repo);
+            TransactionDataSource transactionDataSource = TransactionLocalDataSource.getInstance(this);
+            TransactionRepository transactionRepo = TransactionRepository.getInstance(transactionDataSource);
+            WalletDataSource walletDataSource = WalletLocalDataSource.getInstance(this);
+            WalletRepository walletRepo = WalletRepository.getInstance(walletDataSource);
+            mPresenter = new WalletDetailPresenter(this, transactionRepo, walletRepo);
         }
     }
 
@@ -84,6 +90,12 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     @Override
     public void showNoTransactionData() {
         findViewById(R.id.text_view_no_transaction).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onSaveWalletToSharedPrefFailed() {
+        String errMsg = getResources().getString(R.string.save_wallet_to_prefs_error);
+        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

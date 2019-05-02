@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
+import com.thailam.piggywallet.data.source.WalletDataSource;
 
 import java.util.List;
 
@@ -13,11 +14,15 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
     private WalletDetailContract.View mView;
     @NonNull
     private TransactionDataSource mTransactionRepository;
+    @NonNull
+    private WalletDataSource mWalletRepository;
 
     WalletDetailPresenter(@NonNull WalletDetailContract.View view,
-                                 @NonNull TransactionDataSource transactionRepository) {
+                          @NonNull TransactionDataSource transactionRepository,
+                          @NonNull WalletDataSource walletRepository) {
         mView = view;
         mTransactionRepository = transactionRepository;
+        mWalletRepository = walletRepository;
     }
 
     @Override
@@ -32,7 +37,9 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
 
     @Override
     public void saveWalletToSharedPref(Wallet wallet) {
-        mTransactionRepository.saveWalletToSharedPref(wallet);
+        if(!mWalletRepository.saveWalletToSharedPref(wallet)) {
+            mView.onSaveWalletToSharedPrefFailed();
+        }
     }
 
     @Override

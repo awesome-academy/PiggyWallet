@@ -69,4 +69,9 @@ public class WalletLocalDataSource implements WalletDataSource {
     public Wallet getWalletFromSharedPref() {
         return mWalletDAO.getWalletFromSharedPref();
     }
+
+    @Override
+    public boolean saveWalletToSharedPref(Wallet wallet) {
+        return mWalletDAO.saveWalletToSharedPref(wallet);
+    }
 }
