@@ -3,7 +3,7 @@ package com.thailam.piggywallet.data.source.prefs;
 import com.thailam.piggywallet.data.model.Wallet;
 
 public interface PreferenceHelper {
-    void saveWalletToSharedPref(Wallet wallet);
+    boolean saveWalletToSharedPref(Wallet wallet);
 
     Wallet getWalletFromSharedPref();
 }

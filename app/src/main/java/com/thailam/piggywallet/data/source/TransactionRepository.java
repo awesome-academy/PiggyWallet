@@ -57,8 +57,8 @@ public class TransactionRepository implements TransactionDataSource {
     }
 
     @Override
-    public void saveWalletToSharedPref(Wallet wallet) {
-        mTransactionLocalDataSource.saveWalletToSharedPref(wallet);
+    public boolean saveWalletToSharedPref(Wallet wallet) {
+        return mTransactionLocalDataSource.saveWalletToSharedPref(wallet);
     }
 
     private void refreshCachedTransactions(List<Transaction> transactions) {

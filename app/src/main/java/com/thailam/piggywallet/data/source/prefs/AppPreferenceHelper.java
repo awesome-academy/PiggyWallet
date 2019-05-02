@@ -26,9 +26,10 @@ public class AppPreferenceHelper implements PreferenceHelper {
     }
 
     @Override
-    public void saveWalletToSharedPref(Wallet wallet) {
-        if (wallet == null || mPreferences == null) return;
-        mPreferences.edit().putInt(WalletEntry.ID, wallet.getId())
+    public boolean saveWalletToSharedPref(Wallet wallet) {
+        if (wallet == null || mPreferences == null) return false;
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putInt(WalletEntry.ID, wallet.getId())
                 .putString(WalletEntry.TITLE, wallet.getTitle())
                 .putString(WalletEntry.SUBTITLE, wallet.getTitle())
                 .putFloat(WalletEntry.AMOUNT, (float) wallet.getAmount())
@@ -36,8 +37,8 @@ public class AppPreferenceHelper implements PreferenceHelper {
                 .putFloat(WalletEntry.OUTFLOW, (float) wallet.getOutflow())
                 .putString(WalletEntry.ICON, wallet.getIconUrl())
                 .putLong(WalletEntry.CREATED_AT, wallet.getCreatedAt())
-                .putLong(WalletEntry.UPDATED_AT, wallet.getUpdatedAt())
-                .apply();
+                .putLong(WalletEntry.UPDATED_AT, wallet.getUpdatedAt());
+        return editor.commit();
     }
 
     @Override
