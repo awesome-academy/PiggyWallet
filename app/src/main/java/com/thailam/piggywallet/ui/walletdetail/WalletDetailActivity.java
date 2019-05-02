@@ -14,15 +14,12 @@ import android.widget.Toast;
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
-import com.thailam.piggywallet.data.source.PrefsRepository;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
-import com.thailam.piggywallet.data.source.WalletDataSource;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
 import com.thailam.piggywallet.data.source.prefs.AppPreferenceHelper;
-import com.thailam.piggywallet.data.source.prefs.PreferenceHelper;
 import com.thailam.piggywallet.ui.adapter.TransactionOuterAdapter;
 import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
 import com.thailam.piggywallet.ui.wallet.WalletActivity;
@@ -68,9 +65,10 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
         if (mPresenter == null) {
             TransactionDataSource transactionDataSource = TransactionLocalDataSource.getInstance(this);
             TransactionRepository transactionRepo = TransactionRepository.getInstance(transactionDataSource);
-            PreferenceHelper preferenceHelper = AppPreferenceHelper.getInstance(getApplicationContext(), Constants.PREF_WALLET);
-            PrefsRepository prefsRepository = PrefsRepository.getInstance(preferenceHelper);
-            mPresenter = new WalletDetailPresenter(this, transactionRepo, prefsRepository);
+            AppPreferenceHelper helper = AppPreferenceHelper.getInstance(this, Constants.PREF_WALLET);
+            WalletLocalDataSource walletDataSource = WalletLocalDataSource.getInstance(this, helper);
+            WalletRepository walletRepository = WalletRepository.getInstance(walletDataSource);
+            mPresenter = new WalletDetailPresenter(this, transactionRepo, walletRepository);
         }
     }
 

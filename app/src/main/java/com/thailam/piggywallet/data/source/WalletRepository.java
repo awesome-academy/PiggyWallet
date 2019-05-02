@@ -63,6 +63,16 @@ public class WalletRepository implements WalletDataSource {
         return mCachedWallets;
     }
 
+    @Override
+    public boolean putWalletToPrefs(Wallet wallet) {
+        return mWalletLocalDataSource.putWalletToPrefs(wallet);
+    }
+
+    @Override
+    public Wallet getWalletFromPrefs() {
+        return mWalletLocalDataSource.getWalletFromPrefs();
+    }
+
     private void refreshWalletsCache(List<Wallet> wallets) {
         if (mCachedWallets == null) {
             mCachedWallets = new ArrayList<>(wallets);

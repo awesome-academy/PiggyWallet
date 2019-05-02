@@ -9,8 +9,6 @@ import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
 import com.thailam.piggywallet.data.source.local.dao.TransactionDAO;
 import com.thailam.piggywallet.data.source.local.dao.TransactionDAOImpl;
-import com.thailam.piggywallet.data.source.local.dao.WalletDAO;
-import com.thailam.piggywallet.data.source.local.dao.WalletDAOImpl;
 
 import java.util.List;
 

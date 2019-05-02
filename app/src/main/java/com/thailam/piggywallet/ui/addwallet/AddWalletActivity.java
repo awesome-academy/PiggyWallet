@@ -10,6 +10,7 @@ import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
+import com.thailam.piggywallet.data.source.prefs.AppPreferenceHelper;
 import com.thailam.piggywallet.util.Constants;
 
 public class AddWalletActivity extends AppCompatActivity implements AddWalletContract.View {
@@ -27,7 +28,8 @@ public class AddWalletActivity extends AppCompatActivity implements AddWalletCon
     @Override
     public void initPresenter() {
         if (mPresenter == null) {
-            WalletLocalDataSource source = WalletLocalDataSource.getInstance(this);
+            AppPreferenceHelper helper = AppPreferenceHelper.getInstance(this, Constants.PREF_WALLET);
+            WalletLocalDataSource source = WalletLocalDataSource.getInstance(this, helper);
             WalletRepository repo = WalletRepository.getInstance(source);
             mPresenter = new AddWalletPresenter(this, repo);
         }

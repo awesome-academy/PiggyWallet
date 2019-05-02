@@ -6,7 +6,6 @@ import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.WalletDataSource;
-import com.thailam.piggywallet.data.source.prefs.PreferenceHelper;
 
 import java.util.List;
 
@@ -16,14 +15,14 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
     @NonNull
     private TransactionDataSource mTransactionRepository;
     @NonNull
-    private PreferenceHelper mPreferenceRepository;
+    private WalletDataSource mWalletRepository;
 
     WalletDetailPresenter(@NonNull WalletDetailContract.View view,
                           @NonNull TransactionDataSource transactionRepository,
-                          @NonNull PreferenceHelper preferenceRepository) {
+                          @NonNull WalletDataSource walletRepository) {
         mView = view;
         mTransactionRepository = transactionRepository;
-        mPreferenceRepository = preferenceRepository;
+        mWalletRepository = walletRepository;
     }
 
     @Override
@@ -38,7 +37,7 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
 
     @Override
     public void saveWalletToSharedPref(Wallet wallet) {
-        if(!mPreferenceRepository.saveWalletToSharedPref(wallet)) {
+        if(!mWalletRepository.putWalletToPrefs(wallet)) {
             mView.onSaveWalletToSharedPrefFailed();
         }
     }

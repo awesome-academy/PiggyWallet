@@ -21,4 +21,8 @@ public interface WalletDataSource {
     void saveWallet(Wallet wallet, @NonNull OnDataLoadedCallback<Long> callback);
 
     List<Wallet> getCachedWallets();
+
+    boolean putWalletToPrefs(Wallet wallet);
+
+    Wallet getWalletFromPrefs();
 }

@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletDataSource;
-import com.thailam.piggywallet.data.source.prefs.AppPreferenceHelper;
-import com.thailam.piggywallet.data.source.prefs.PreferenceHelper;
 
 import java.util.List;
 
@@ -15,15 +13,11 @@ public class SplashPresenter implements SplashContract.Presenter,
     private final SplashContract.View mView;
     @NonNull
     private WalletDataSource mWalletRepository;
-    @NonNull
-    private PreferenceHelper mPreferenceRepository;
 
     SplashPresenter(@NonNull SplashContract.View view,
-                    @NonNull WalletDataSource walletRepository,
-                    @NonNull PreferenceHelper preferenceRepository) {
+                    @NonNull WalletDataSource walletRepository) {
         mView = view;
         mWalletRepository = walletRepository;
-        mPreferenceRepository = preferenceRepository;
     }
 
     @Override
@@ -38,7 +32,7 @@ public class SplashPresenter implements SplashContract.Presenter,
 
     @Override
     public Wallet getWalletFromSharedPrefs() {
-        return mPreferenceRepository.getWalletFromSharedPref();
+        return mWalletRepository.getWalletFromPrefs();
     }
 
     @Override
