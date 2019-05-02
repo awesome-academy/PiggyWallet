@@ -14,7 +14,7 @@ import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.source.CategoryDataSource;
 import com.thailam.piggywallet.data.source.CategoryRepository;
-import com.thailam.piggywallet.data.source.local.AppLocalDataSource;
+import com.thailam.piggywallet.data.source.local.CategoryLocalDataSource;
 import com.thailam.piggywallet.ui.adapter.CategoryAdapter;
 import com.thailam.piggywallet.util.Constants;
 
@@ -69,7 +69,7 @@ public class CategoryDialog extends Dialog implements CategoryContract.View {
 
     private void initPresenter() {
         if (mPresenter == null) {
-            AppLocalDataSource source = AppLocalDataSource.getInstance(getContext());
+            CategoryDataSource source = CategoryLocalDataSource.getInstance(getContext());
             CategoryRepository repo = CategoryRepository.getInstance(source);
             mPresenter = new CategoryPresenter(this, repo);
         }

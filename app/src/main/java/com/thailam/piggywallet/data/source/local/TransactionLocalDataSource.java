@@ -17,8 +17,8 @@ import java.util.List;
 public class TransactionLocalDataSource implements TransactionDataSource {
 
     private static TransactionLocalDataSource sInstance;
-    private static TransactionDAO mTransactionDAO;
-    private static WalletDAO mWalletDAO;
+    private TransactionDAO mTransactionDAO;
+    private WalletDAO mWalletDAO;
 
     private TransactionLocalDataSource(TransactionDAO transactionDAO, WalletDAO walletDAO) {
         mTransactionDAO = transactionDAO;
