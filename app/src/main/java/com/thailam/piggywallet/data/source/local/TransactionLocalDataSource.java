@@ -9,13 +9,15 @@ import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.base.LocalAsyncTask;
 import com.thailam.piggywallet.data.source.local.dao.TransactionDAO;
 import com.thailam.piggywallet.data.source.local.dao.TransactionDAOImpl;
+import com.thailam.piggywallet.data.source.local.dao.WalletDAO;
+import com.thailam.piggywallet.data.source.local.dao.WalletDAOImpl;
 
 import java.util.List;
 
 public class TransactionLocalDataSource implements TransactionDataSource {
 
     private static TransactionLocalDataSource sInstance;
-    private static TransactionDAO mTransactionDAO;
+    private TransactionDAO mTransactionDAO;
 
     private TransactionLocalDataSource(TransactionDAO transactionDAO) {
         mTransactionDAO = transactionDAO;

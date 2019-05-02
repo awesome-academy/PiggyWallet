@@ -1,5 +1,6 @@
 package com.thailam.piggywallet.data.model;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -144,6 +145,8 @@ public class Wallet implements Parcelable {
 
     //Builder class
     public static class Builder {
+        private static final String DEFAULT_STR = null;
+        private static final int DEFAULT_NUM = 0;
         private int mId;
         private String mTitle;
         private String mSubtitle;
@@ -178,6 +181,23 @@ public class Wallet implements Parcelable {
             if (indexOutflow != -1) mOutflow = cursor.getDouble(indexOutflow);
             if (indexCreatedAt != -1) mCreatedAt = cursor.getLong(indexCreatedAt);
             if (indexUpdatedAt != -1) mUpdatedAt = cursor.getLong(indexUpdatedAt);
+        }
+
+        public Builder(SharedPreferences pref) {
+            mId = pref.getInt(WalletEntry.ID, DEFAULT_NUM);
+            mTitle = pref.getString(WalletEntry.TITLE, DEFAULT_STR);
+            mSubtitle = pref.getString(WalletEntry.SUBTITLE, DEFAULT_STR);
+            mAmount = (double) pref.getFloat(WalletEntry.AMOUNT, DEFAULT_NUM);
+            mInflow = (double) pref.getFloat(WalletEntry.INFLOW, DEFAULT_NUM);
+            mOutflow = (double) pref.getFloat(WalletEntry.OUTFLOW, DEFAULT_NUM);
+            mIconUrl = pref.getString(WalletEntry.ICON, DEFAULT_STR);
+            mCreatedAt = pref.getLong(WalletEntry.CREATED_AT, DEFAULT_NUM);
+            mUpdatedAt = pref.getLong(WalletEntry.UPDATED_AT, DEFAULT_NUM);
+        }
+
+        public Builder setId(int id) {
+            mId = id;
+            return this;
         }
 
         public Builder setTitle(String title) {

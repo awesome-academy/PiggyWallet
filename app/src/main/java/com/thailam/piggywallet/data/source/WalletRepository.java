@@ -3,6 +3,7 @@ package com.thailam.piggywallet.data.source;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
+import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +54,23 @@ public class WalletRepository implements WalletDataSource {
     }
 
     @Override
-    public boolean addWallet(Wallet wallet) {
-        // TODO: implement at add wallet task
-        return false;
+    public void saveWallet(Wallet wallet, @NonNull OnDataLoadedCallback<Long> callback) {
+        mWalletLocalDataSource.saveWallet(wallet, callback);
     }
 
     @Override
     public List<Wallet> getCachedWallets() {
         return mCachedWallets;
+    }
+
+    @Override
+    public Wallet getWalletFromSharedPref() {
+        return mWalletLocalDataSource.getWalletFromSharedPref();
+    }
+
+    @Override
+    public boolean saveWalletToSharedPref(Wallet wallet) {
+        return mWalletLocalDataSource.saveWalletToSharedPref(wallet);
     }
 
     private void refreshWalletsCache(List<Wallet> wallets) {

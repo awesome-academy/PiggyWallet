@@ -9,14 +9,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.Wallet;
+import com.thailam.piggywallet.data.source.TransactionDataSource;
 import com.thailam.piggywallet.data.source.TransactionRepository;
+import com.thailam.piggywallet.data.source.WalletDataSource;
+import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
+import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
 import com.thailam.piggywallet.ui.adapter.TransactionOuterAdapter;
 import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
+import com.thailam.piggywallet.ui.wallet.WalletActivity;
 import com.thailam.piggywallet.util.TypeFormatUtils;
 
 import java.util.List;
@@ -48,11 +54,19 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        saveWalletToSharedPreference();
+    }
+
+    @Override
     public void initPresenter() {
         if (mPresenter == null) {
-            TransactionLocalDataSource source = TransactionLocalDataSource.getInstance(this);
-            TransactionRepository repo = TransactionRepository.getInstance(source);
-            mPresenter = new WalletDetailPresenter(this, repo);
+            TransactionDataSource transactionDataSource = TransactionLocalDataSource.getInstance(this);
+            TransactionRepository transactionRepo = TransactionRepository.getInstance(transactionDataSource);
+            WalletDataSource walletDataSource = WalletLocalDataSource.getInstance(this);
+            WalletRepository walletRepo = WalletRepository.getInstance(walletDataSource);
+            mPresenter = new WalletDetailPresenter(this, transactionRepo, walletRepo);
         }
     }
 
@@ -79,6 +93,12 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     }
 
     @Override
+    public void onSaveWalletToSharedPrefFailed() {
+        String errMsg = getResources().getString(R.string.save_wallet_to_prefs_error);
+        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_add_transaction:
@@ -90,6 +110,10 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
                 dialog.show(getSupportFragmentManager(), WalletDetailDialogFragment.TAG);
                 break;
         }
+    }
+
+    private void saveWalletToSharedPreference() {
+        mPresenter.saveWalletToSharedPref(mWallet);
     }
 
     private void getWalletExtra() {
@@ -119,7 +143,15 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> {
+            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+            if (backStackEntryCount == 0) {
+                Intent intent = new Intent(this, WalletActivity.class);
+                startActivity(intent);
+            } else {
+                onBackPressed();
+            }
+        });
     }
 
 
