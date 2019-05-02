@@ -37,7 +37,7 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
 
     @Override
     public void saveWalletToSharedPref(Wallet wallet) {
-        if(!mWalletRepository.saveWalletToSharedPref(wallet)) {
+        if(!mWalletRepository.putWalletToPrefs(wallet)) {
             mView.onSaveWalletToSharedPrefFailed();
         }
     }

@@ -14,7 +14,7 @@ public interface WalletDataSource {
 
     interface GetWalletCallback extends OnDataLoadedCallback<List<Wallet>> { }
 
-    void getInitialWallets(@NonNull GetWalletCallback callback);
+    void getInitialWallets(boolean force, @NonNull GetWalletCallback callback);
 
     void getSearchedWallets(String input, @NonNull GetWalletCallback callback);
 
@@ -22,7 +22,7 @@ public interface WalletDataSource {
 
     List<Wallet> getCachedWallets();
 
-    Wallet getWalletFromSharedPref();
+    boolean putWalletToPrefs(Wallet wallet);
 
-    boolean saveWalletToSharedPref(Wallet wallet);
+    Wallet getWalletFromPrefs();
 }

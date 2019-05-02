@@ -25,9 +25,9 @@ public class WalletPresenter implements WalletContract.Presenter,
     }
 
     @Override
-    public void getWallets() {
+    public void getWallets(boolean force) {
         mView.showProgressBar();
-        mWalletRepository.getInitialWallets(this);
+        mWalletRepository.getInitialWallets(force,this);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class WalletPresenter implements WalletContract.Presenter,
 
     @Override
     public void handleFirstSwipeRefresh() {
-        if (getCachedWallets() == null || getCachedWallets().size() == 0) getWallets();
+        if (getCachedWallets() == null || getCachedWallets().size() == 0) getWallets(false);
     }
 
     @Override

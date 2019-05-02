@@ -29,12 +29,12 @@ public class WalletRepository implements WalletDataSource {
     }
 
     @Override
-    public void getInitialWallets(@NonNull final GetWalletCallback callback) {
-        if (mCachedWallets != null) { // if data is in cache, return immediately w/ that
+    public void getInitialWallets(boolean force, @NonNull final GetWalletCallback callback) {
+        if (mCachedWallets != null && !force) { // if data is in cache, return immediately w/ that
             callback.onDataLoaded(mCachedWallets);
             return;
         }
-        mWalletLocalDataSource.getInitialWallets(new GetWalletCallback() {
+        mWalletLocalDataSource.getInitialWallets(force, new GetWalletCallback() {
             @Override
             public void onDataLoaded(List<Wallet> wallets) {
                 refreshWalletsCache(wallets);
@@ -64,13 +64,13 @@ public class WalletRepository implements WalletDataSource {
     }
 
     @Override
-    public Wallet getWalletFromSharedPref() {
-        return mWalletLocalDataSource.getWalletFromSharedPref();
+    public boolean putWalletToPrefs(Wallet wallet) {
+        return mWalletLocalDataSource.putWalletToPrefs(wallet);
     }
 
     @Override
-    public boolean saveWalletToSharedPref(Wallet wallet) {
-        return mWalletLocalDataSource.saveWalletToSharedPref(wallet);
+    public Wallet getWalletFromPrefs() {
+        return mWalletLocalDataSource.getWalletFromPrefs();
     }
 
     private void refreshWalletsCache(List<Wallet> wallets) {

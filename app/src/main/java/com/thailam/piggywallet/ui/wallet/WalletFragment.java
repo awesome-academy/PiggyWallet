@@ -18,6 +18,7 @@ import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
+import com.thailam.piggywallet.data.source.prefs.AppPreferenceHelper;
 import com.thailam.piggywallet.ui.adapter.WalletAdapter;
 import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
 import com.thailam.piggywallet.util.Constants;
@@ -77,6 +78,14 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (mWalletAdapter != null) {
+            mPresenter.getWallets(true);
+        }
+    }
+
+    @Override
     public void onStop() {
         if (mListener != null) {
             mListener.onStopFragment();
@@ -92,13 +101,14 @@ public class WalletFragment extends Fragment implements WalletContract.View,
 
     @Override
     public void onRefresh() {
-        mPresenter.getWallets();
+        mPresenter.getWallets(true);
     }
 
     @Override
     public void initPresenter() {
         if (mPresenter == null) {
-            WalletLocalDataSource source = WalletLocalDataSource.getInstance(getContext());
+            AppPreferenceHelper helper = AppPreferenceHelper.getInstance(getContext(), Constants.PREF_WALLET);
+            WalletLocalDataSource source = WalletLocalDataSource.getInstance(getContext(), helper);
             WalletRepository repo = WalletRepository.getInstance(source);
             mPresenter = new WalletPresenter(this, repo);
         }
@@ -114,7 +124,7 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         String errMsg = e == null ? Constants.UNKNOWN_ERROR : e.getMessage();
         Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
     }
-    
+
     @Override
     public void showProgressBar() {
         mSwipeRefreshLayout.setRefreshing(true);
