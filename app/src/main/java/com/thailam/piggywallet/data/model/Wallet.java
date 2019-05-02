@@ -145,8 +145,8 @@ public class Wallet implements Parcelable {
 
     //Builder class
     public static class Builder {
-        private static final String defaultStr = null;
-        private static final int defaultNum = 0;
+        private static final String DEFAULT_STR = null;
+        private static final int DEFAULT_NUM = 0;
         private int mId;
         private String mTitle;
         private String mSubtitle;
@@ -184,15 +184,15 @@ public class Wallet implements Parcelable {
         }
 
         public Builder(SharedPreferences pref) {
-            mId = pref.getInt(WalletEntry.ID, defaultNum);
-            mTitle = pref.getString(WalletEntry.TITLE, defaultStr);
-            mSubtitle = pref.getString(WalletEntry.SUBTITLE, defaultStr);
-            mAmount = (double) pref.getFloat(WalletEntry.AMOUNT, defaultNum);
-            mInflow = (double) pref.getFloat(WalletEntry.INFLOW, defaultNum);
-            mOutflow = (double) pref.getFloat(WalletEntry.OUTFLOW, defaultNum);
-            mIconUrl = pref.getString(WalletEntry.ICON, defaultStr);
-            mCreatedAt = pref.getLong(WalletEntry.CREATED_AT, defaultNum);
-            mUpdatedAt = pref.getLong(WalletEntry.UPDATED_AT, defaultNum);
+            mId = pref.getInt(WalletEntry.ID, DEFAULT_NUM);
+            mTitle = pref.getString(WalletEntry.TITLE, DEFAULT_STR);
+            mSubtitle = pref.getString(WalletEntry.SUBTITLE, DEFAULT_STR);
+            mAmount = (double) pref.getFloat(WalletEntry.AMOUNT, DEFAULT_NUM);
+            mInflow = (double) pref.getFloat(WalletEntry.INFLOW, DEFAULT_NUM);
+            mOutflow = (double) pref.getFloat(WalletEntry.OUTFLOW, DEFAULT_NUM);
+            mIconUrl = pref.getString(WalletEntry.ICON, DEFAULT_STR);
+            mCreatedAt = pref.getLong(WalletEntry.CREATED_AT, DEFAULT_NUM);
+            mUpdatedAt = pref.getLong(WalletEntry.UPDATED_AT, DEFAULT_NUM);
         }
 
         public Builder setId(int id) {

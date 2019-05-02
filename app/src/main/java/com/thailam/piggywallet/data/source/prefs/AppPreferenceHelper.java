@@ -25,11 +25,6 @@ public class AppPreferenceHelper implements PreferenceHelper {
         return sInstance;
     }
 
-    public Wallet getWallet() {
-        if (mPreferences == null) return null;
-        return new Wallet.Builder(mPreferences).build();
-    }
-
     @Override
     public void saveWalletToSharedPref(Wallet wallet) {
         if (wallet == null || mPreferences == null) return;
