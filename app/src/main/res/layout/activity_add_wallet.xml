@@ -18,51 +18,41 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/white" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_add_wallet"
-        tools:srcCompat="@tools:sample/avatars[6]" />
-
     <EditText
         android:id="@+id/edit_text_add_wallet_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_24"
         android:hint="@string/wallet_title_hint"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/image_view_add_wallet_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/image_view_add_wallet_title"
+        app:layout_constraintTop_toTopOf="@+id/image_view_add_wallet_title" />
 
     <EditText
         android:id="@+id/edit_text_add_wallet_balance"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
         android:hint="@string/wallet_balance_hint"
         android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/image_view_add_wallet_balance"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_add_wallet_title"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/edit_text_add_wallet_title"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_add_wallet_subtitle" />
+        app:layout_constraintTop_toTopOf="@+id/image_view_add_wallet_balance" />
 
     <EditText
         android:id="@+id/edit_text_add_wallet_subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
         android:hint="@string/wallet_subtitle_hint"
         android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/image_view_add_wallet_subtitle"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_add_wallet_title"
         app:layout_constraintStart_toStartOf="@+id/edit_text_add_wallet_title"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_add_wallet_title" />
+        app:layout_constraintTop_toTopOf="@+id/image_view_add_wallet_subtitle" />
 
     <Button
         android:id="@+id/button_add_wallet_save"
@@ -75,4 +65,34 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_add_wallet"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_add_wallet"
         app:layout_constraintTop_toTopOf="@+id/toolbar_add_wallet" />
+
+    <ImageView
+        android:id="@+id/image_view_add_wallet_title"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_32"
+        android:src="@drawable/ic_account_balance_wallet_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_add_wallet" />
+
+    <ImageView
+        android:id="@+id/image_view_add_wallet_subtitle"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_16"
+        android:src="@drawable/ic_note_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_add_wallet_title" />
+
+    <ImageView
+        android:id="@+id/image_view_add_wallet_balance"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_24"
+        android:src="@drawable/ic_money_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_add_wallet_subtitle" />
 </android.support.constraint.ConstraintLayout>

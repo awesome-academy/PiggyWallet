@@ -73,6 +73,10 @@ public class WalletRepository implements WalletDataSource {
         return mWalletLocalDataSource.getWalletFromPrefs();
     }
 
+    public void deleteWallet(Wallet wallet, @NonNull OnDataLoadedCallback<Integer> callback) {
+        mWalletLocalDataSource.deleteWallet(wallet, callback);
+    }
+
     private void refreshWalletsCache(List<Wallet> wallets) {
         if (mCachedWallets == null) {
             mCachedWallets = new ArrayList<>(wallets);

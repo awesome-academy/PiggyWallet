@@ -76,6 +76,16 @@ public class WalletDAOImpl extends AppDatabaseHelper implements WalletDAO {
         return result;
     }
 
+    @Override
+    public int deleteWallet(Wallet wallet) {
+        initWriteDatabase();
+        String whereClause = WalletEntry.ID + "=?";
+        String[] whereArgs = new String[]{String.valueOf(wallet.getId())};
+        int rowAffected = mDatabase.delete(WalletEntry.TBL_NAME_WALLET, whereClause, whereArgs);
+        closeDatabase();
+        return rowAffected;
+    }
+
     private List<Wallet> retrieveListHelper(Cursor cursor) throws NullPointerException {
         if (cursor.getCount() == 0) {
             throw new NullPointerException(Constants.NO_DATA_ERROR);

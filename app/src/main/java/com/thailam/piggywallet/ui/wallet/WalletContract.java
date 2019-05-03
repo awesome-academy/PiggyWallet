@@ -25,5 +25,7 @@ public interface WalletContract {
         void handleFirstSwipeRefresh();
 
         List<Wallet> getCachedWallets();
+
+        void deleteWallet(Wallet wallet);
     }
 }

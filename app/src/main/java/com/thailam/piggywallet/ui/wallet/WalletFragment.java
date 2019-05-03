@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
 import com.thailam.piggywallet.data.source.prefs.AppPreferenceHelper;
+import com.thailam.piggywallet.ui.adapter.SwipeToDeleteCallback;
 import com.thailam.piggywallet.ui.adapter.WalletAdapter;
 import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;
 import com.thailam.piggywallet.util.Constants;
@@ -27,7 +29,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class WalletFragment extends Fragment implements WalletContract.View,
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener, WalletAdapter.DeleteWalletCallbacks {
     public static String TAG = "WalletFragment";
 
     private WalletContract.Presenter mPresenter;
@@ -135,6 +137,11 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    @Override
+    public void onDeleteWalletCallback(Wallet wallet) {
+        mPresenter.deleteWallet(wallet);
+    }
+
     public WalletContract.Presenter getPresenter() {
         return mPresenter;
     }
@@ -143,7 +150,7 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         mWalletAdapter = new WalletAdapter(wallet -> {
             Intent intent = WalletDetailActivity.getIntent(getContext(), wallet);
             startActivity(intent);
-        });
+        }, this);
         List<Wallet> wallets = mPresenter.getCachedWallets();
         if (wallets != null) {
             mWalletAdapter.setWallets(wallets);
@@ -174,6 +181,9 @@ public class WalletFragment extends Fragment implements WalletContract.View,
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeToDeleteCallback(mWalletAdapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(mWalletAdapter);   // set guide adapter to view
     }
 

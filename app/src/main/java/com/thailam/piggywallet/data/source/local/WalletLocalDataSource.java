@@ -92,4 +92,11 @@ public class WalletLocalDataSource implements WalletDataSource {
         if (mAppPreferenceHelper.getPreferences() == null) return null;
         return new Wallet.Builder(mAppPreferenceHelper.getPreferences()).build();
     }
+
+    public void deleteWallet(Wallet wallet, @NonNull OnDataLoadedCallback<Integer> callback) {
+        LocalAsyncTask<Void, Integer> task = new LocalAsyncTask<>(params -> {
+            return mWalletDAO.deleteWallet(wallet);
+        }, callback);
+        task.execute();
+    }
 }
