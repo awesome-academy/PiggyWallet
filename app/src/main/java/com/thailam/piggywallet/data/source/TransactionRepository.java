@@ -3,6 +3,7 @@ package com.thailam.piggywallet.data.source;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.TransactionParent;
 import com.thailam.piggywallet.data.model.Wallet;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 public class TransactionRepository implements TransactionDataSource {
     private static TransactionRepository sInstance;
     private TransactionDataSource mTransactionLocalDataSource;
-    private List<Transaction> mCachedTransactions;
+    private List<TransactionParent> mCachedTransactionParents;
     private int mCachedWalletId;
 
     private TransactionRepository(@NonNull TransactionDataSource localDataSource) {
@@ -36,17 +37,17 @@ public class TransactionRepository implements TransactionDataSource {
 
     @Override
     public void getInitialTransactions(int walletId, @NonNull GetTransactionCallback callback) {
-        if (mCachedTransactions != null && mCachedWalletId == walletId) {
-            callback.onDataLoaded(mCachedTransactions);
+        if (mCachedTransactionParents != null && mCachedWalletId == walletId) {
+            callback.onDataLoaded(mCachedTransactionParents);
             return;
         }
 
         mTransactionLocalDataSource.getInitialTransactions(walletId, new GetTransactionCallback() {
             @Override
-            public void onDataLoaded(List<Transaction> transactions) {
+            public void onDataLoaded(List<TransactionParent> transactionParents) {
                 mCachedWalletId = walletId;
-                refreshCachedTransactions(transactions);
-                callback.onDataLoaded(mCachedTransactions);
+                refreshCachedTransactions(transactionParents);
+                callback.onDataLoaded(mCachedTransactionParents);
             }
 
             @Override
@@ -56,12 +57,12 @@ public class TransactionRepository implements TransactionDataSource {
         });
     }
 
-    private void refreshCachedTransactions(List<Transaction> transactions) {
-        if (mCachedTransactions == null) {
-            mCachedTransactions = new ArrayList<>(transactions);
+    private void refreshCachedTransactions(List<TransactionParent> transactionParents) {
+        if (mCachedTransactionParents == null) {
+            mCachedTransactionParents = new ArrayList<>(transactionParents);
             return;
         }
-        mCachedTransactions.clear();
-        mCachedTransactions.addAll(transactions);
+        mCachedTransactionParents.clear();
+        mCachedTransactionParents.addAll(transactionParents);
     }
 }

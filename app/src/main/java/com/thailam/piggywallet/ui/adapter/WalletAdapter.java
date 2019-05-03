@@ -1,19 +1,16 @@
 package com.thailam.piggywallet.ui.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.thailam.piggywallet.R;
 import com.thailam.piggywallet.data.model.Wallet;
-import com.thailam.piggywallet.data.source.WalletDataSource;
 
 import java.util.Collections;
 import java.util.List;
@@ -89,7 +86,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
         private TextView mTxtTitle;
         private TextView mTxtSubtitle;
         private TextView mTxtAmount;
-        private ImageButton mImgBtnFeatureImg;
+        private ImageView mImgBtnFeatureImg;
         private OnItemClickListener mListener;
 
         private ViewHolder(View itemView, OnItemClickListener listener) {
@@ -116,7 +113,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
         }
 
         private void displayFeatureImg() {
-            int drawableId = mWallet.getIconUrl() == null ? R.drawable.ic_account_balance_wallet_black_24dp :
+            int drawableId = mWallet.getIconUrl() == null ? R.drawable.ic_circle_icons_money :
                     Integer.valueOf(mWallet.getIconUrl());
             mImgBtnFeatureImg.setImageDrawable(itemView.getResources().getDrawable(drawableId));
         }

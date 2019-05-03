@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
-import com.thailam.piggywallet.ui.wallet.WalletPresenter;
 
 import java.util.List;
 

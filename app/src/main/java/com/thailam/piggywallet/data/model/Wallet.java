@@ -49,6 +49,8 @@ public class Wallet implements Parcelable {
         mSubtitle = source.readString();
         mIconUrl = source.readString();
         mAmount = source.readDouble();
+        mInflow = source.readDouble();
+        mOutflow = source.readDouble();
         mCreatedAt = source.readLong();
         mUpdatedAt = source.readLong();
     }

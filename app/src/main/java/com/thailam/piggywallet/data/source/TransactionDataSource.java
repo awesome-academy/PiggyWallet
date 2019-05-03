@@ -3,6 +3,7 @@ package com.thailam.piggywallet.data.source;
 import android.support.annotation.NonNull;
 
 import com.thailam.piggywallet.data.model.Transaction;
+import com.thailam.piggywallet.data.model.TransactionParent;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.base.OnDataLoadedCallback;
 
@@ -12,7 +13,7 @@ public interface TransactionDataSource {
     interface TransactionCallback extends OnDataLoadedCallback<Long> {
     }
 
-    interface GetTransactionCallback extends OnDataLoadedCallback<List<Transaction>> {
+    interface GetTransactionCallback extends OnDataLoadedCallback<List<TransactionParent>> {
     }
 
     void saveTransaction(Wallet wallet, Transaction transaction,

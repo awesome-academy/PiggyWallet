@@ -27,19 +27,20 @@
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/wallet_detail_transactions"
-            android:layout_marginTop="@dimen/dp_70"
+        <include
+            layout="@layout/wallet_detail_transactions"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_70" />
 
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_transaction"
-        android:src="@drawable/ic_add_white_24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginBottom="@dimen/dp_16"
-        android:layout_gravity="bottom|end"/>
+        android:src="@drawable/ic_add_white_24dp" />
 </android.support.design.widget.CoordinatorLayout>

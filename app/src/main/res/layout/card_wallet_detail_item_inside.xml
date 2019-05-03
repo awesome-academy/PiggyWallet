@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/image_view_wallet_detail_inside_icon"
-            android:layout_width="@dimen/dp_32"
-            android:layout_height="@dimen/dp_32"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
             android:contentDescription="@string/app_name"
             app:layout_constraintBottom_toTopOf="@+id/text_view_wallet_detail_inside_title"
             app:layout_constraintEnd_toEndOf="parent"
