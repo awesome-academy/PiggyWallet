@@ -3,7 +3,6 @@ package com.thailam.piggywallet.data.source.local.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.TransactionParent;

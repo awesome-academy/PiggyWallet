@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 
-import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.local.AppDatabaseHelper;
-import com.thailam.piggywallet.data.source.local.entry.CategoryEntry;
 import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 import com.thailam.piggywallet.util.Constants;
 

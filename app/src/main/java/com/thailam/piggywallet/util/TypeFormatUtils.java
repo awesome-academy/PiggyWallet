@@ -40,6 +40,8 @@ public class TypeFormatUtils {
             result = amount / MILLION_THRESHOLD + MILLION_SUBFIX;
         } else if (formattedAmount > THOUSAND_THRESHOLD) {
             result = formattedAmount / THOUSAND_THRESHOLD + THOUSAND_SUBFIX;
+        } else {
+            result = String.valueOf(formattedAmount);
         }
         return result;
     }

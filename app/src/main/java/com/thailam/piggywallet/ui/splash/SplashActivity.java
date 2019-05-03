@@ -1,7 +1,6 @@
 package com.thailam.piggywallet.ui.splash;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -9,7 +8,6 @@ import android.widget.Toast;
 import com.thailam.piggywallet.data.model.Wallet;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
-import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 import com.thailam.piggywallet.data.source.prefs.AppPreferenceHelper;
 import com.thailam.piggywallet.ui.wallet.WalletActivity;
 import com.thailam.piggywallet.ui.walletdetail.WalletDetailActivity;

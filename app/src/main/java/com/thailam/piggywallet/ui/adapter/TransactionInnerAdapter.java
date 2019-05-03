@@ -18,7 +18,7 @@ public class TransactionInnerAdapter extends RecyclerView.Adapter<TransactionInn
     private OnItemClickListener mListener;
     private List<Transaction> mTransactions;
 
-    public TransactionInnerAdapter(List<Transaction> transactions, OnItemClickListener listener) {
+    TransactionInnerAdapter(List<Transaction> transactions, OnItemClickListener listener) {
         mListener = listener;
         mTransactions = transactions;
     }
