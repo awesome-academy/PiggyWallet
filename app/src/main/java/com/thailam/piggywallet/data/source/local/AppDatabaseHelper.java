@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.thailam.piggywallet.data.model.Category;
 import com.thailam.piggywallet.data.source.local.entry.CategoryEntry;
 import com.thailam.piggywallet.data.source.local.entry.DatabaseEntry;
 import com.thailam.piggywallet.data.source.local.entry.TransactionEntry;

@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ import com.thailam.piggywallet.data.source.TransactionRepository;
 import com.thailam.piggywallet.data.source.WalletRepository;
 import com.thailam.piggywallet.data.source.local.TransactionLocalDataSource;
 import com.thailam.piggywallet.data.source.local.WalletLocalDataSource;
-import com.thailam.piggywallet.data.source.local.entry.WalletEntry;
 import com.thailam.piggywallet.data.source.prefs.AppPreferenceHelper;
 import com.thailam.piggywallet.ui.adapter.TransactionOuterAdapter;
 import com.thailam.piggywallet.ui.addtransaction.TransactionActivity;
@@ -35,6 +33,7 @@ import java.util.List;
 public class WalletDetailActivity extends AppCompatActivity implements WalletDetailContract.View,
         View.OnClickListener {
     private static final String EXTRA_WALLET = "com.thailam.piggywallet.extras.EXTRA_WALLET";
+    private static final int REQUEST_CODE_ADD_TRANSACTION = 1;
     private Wallet mWallet;
 
     private WalletDetailContract.Presenter mPresenter;
@@ -116,8 +115,8 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_add_transaction:
-                startActivityForResult(TransactionActivity.getIntent(getApplicationContext(), mWallet), 321);
-                // startActivity(TransactionActivity.getIntent(getApplicationContext(), mWallet));
+                startActivityForResult(TransactionActivity.getIntent(getApplicationContext(), mWallet),
+                        REQUEST_CODE_ADD_TRANSACTION);
                 break;
             case R.id.button_overview_staticstic:
                 WalletDetailDialogFragment dialog =
@@ -130,7 +129,7 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 321) {
+        if (requestCode == REQUEST_CODE_ADD_TRANSACTION) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data == null) {
                     Toast.makeText(this, Constants.UNKNOWN_ERROR, Toast.LENGTH_SHORT).show();

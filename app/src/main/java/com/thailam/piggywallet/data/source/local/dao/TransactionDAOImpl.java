@@ -3,7 +3,6 @@ package com.thailam.piggywallet.data.source.local.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.TransactionParent;
@@ -134,21 +133,5 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
                 values, whereClause,
                 new String[]{String.valueOf(wallet.getId())});
         return rowAffected != 0;
-    }
-
-    @Override
-    public long getWalletCategories(Wallet wallet) {
-        initReadDatabase();
-        final String newColName = "Total";
-        String sumQuery = String.format("SELECT SUM(%s) as %s FROM %s WHERE %s = %s",
-                TransactionEntry.AMOUNT, newColName, TransactionEntry.TBL_NAME_TRANS,
-                TransactionEntry.FOR_WALLET_ID, wallet.getId());
-        Cursor cursor = mDatabase.rawQuery(sumQuery, null);
-        if (cursor.moveToFirst()) {
-            double ans = cursor.getDouble(cursor.getColumnIndex(newColName));
-        }
-        cursor.close();
-        closeDatabase();
-        return 0;
     }
 }
