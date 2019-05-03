@@ -55,9 +55,15 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mPresenter != null) mPresenter.getInitialTransactions(true, mWallet.getId());
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        saveWalletToSharedPreference();
+        if (mPresenter != null) mPresenter.saveWalletToSharedPref(mWallet);
     }
 
     @Override
@@ -90,7 +96,6 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
     @Override
     public void showNoTransactionData() {
         findViewById(R.id.text_view_no_transaction).setVisibility(View.VISIBLE);
-        findViewById(R.id.image_view_no_transactions_wallet_detail).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -111,10 +116,6 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
                 dialog.show(getSupportFragmentManager(), WalletDetailDialogFragment.TAG);
                 break;
         }
-    }
-
-    private void saveWalletToSharedPreference() {
-        mPresenter.saveWalletToSharedPref(mWallet);
     }
 
     private void getWalletExtra() {
@@ -159,7 +160,7 @@ public class WalletDetailActivity extends AppCompatActivity implements WalletDet
         mTransactionOuterAdapter = new TransactionOuterAdapter(this, transaction -> {
             // TODO: implement later
         });
-        mPresenter.getInitialTransactions(mWallet.getId());
+        mPresenter.getInitialTransactions(false, mWallet.getId());
     }
 
     private void initRecyclerView() {

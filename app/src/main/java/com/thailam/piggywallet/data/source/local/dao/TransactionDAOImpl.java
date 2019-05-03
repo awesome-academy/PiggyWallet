@@ -3,6 +3,7 @@ package com.thailam.piggywallet.data.source.local.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.thailam.piggywallet.data.model.Transaction;
 import com.thailam.piggywallet.data.model.TransactionParent;
@@ -100,12 +101,14 @@ public class TransactionDAOImpl extends AppDatabaseHelper implements Transaction
                 if (newDate.equals(oldDate)) {
                     tempList.add(transaction);
                 } else {
+                    Collections.reverse(tempList);
                     transactionParents.add(new TransactionParent(tempList, tempList.get(0).getDate()));
                     tempList = new ArrayList<>();
                     tempList.add(transaction);
                 }
             }
         }
+        Collections.reverse(tempList);
         transactionParents.add(new TransactionParent(tempList, tempList.get(0).getDate()));
         Collections.reverse(transactionParents);
         return transactionParents;

@@ -19,5 +19,5 @@ public interface TransactionDataSource {
     void saveTransaction(Wallet wallet, Transaction transaction,
                          @NonNull TransactionCallback callback);
 
-    void getInitialTransactions(int walletId, @NonNull GetTransactionCallback callback);
+    void getInitialTransactions(boolean force, int walletId, @NonNull GetTransactionCallback callback);
 }

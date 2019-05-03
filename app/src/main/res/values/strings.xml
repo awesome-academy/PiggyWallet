@@ -30,4 +30,6 @@
     <string name="save_wallet_to_prefs_error">Cannot save wallet to prefs</string>
     <string name="snack_bar_undo">Undo</string>
     <string name="snack_bar_text">1 Wallet deleted</string>
+    <string name="add_wallet_missing_title">Wallet must have a name</string>
+    <string name="invalid_input">Invalid Input :</string>
 </resources>

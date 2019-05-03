@@ -37,8 +37,8 @@ public class CategoryDialog extends Dialog implements CategoryContract.View {
         findViewById(R.id.dialog_container).setOnClickListener(v -> { // on click outside -> cancel
             this.cancel();
         });
-        initPresenter();
         initAdapter();
+        initPresenter();
         initRecyclerView();
     }
 

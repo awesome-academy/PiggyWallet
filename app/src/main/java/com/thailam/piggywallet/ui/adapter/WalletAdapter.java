@@ -49,6 +49,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
     }
 
     public void setWallets(List<Wallet> wallets) {
+        if (wallets == null) return;
         Collections.reverse(wallets);
         mWallets = wallets;
         notifyDataSetChanged();

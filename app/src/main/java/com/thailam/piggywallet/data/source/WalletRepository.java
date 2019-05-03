@@ -55,7 +55,18 @@ public class WalletRepository implements WalletDataSource {
 
     @Override
     public void saveWallet(Wallet wallet, @NonNull OnDataLoadedCallback<Long> callback) {
-        mWalletLocalDataSource.saveWallet(wallet, callback);
+        mWalletLocalDataSource.saveWallet(wallet, new OnDataLoadedCallback<Long>() {
+            @Override
+            public void onDataLoaded(Long data) {
+                refreshWalletsCache(null);
+                callback.onDataLoaded(data);
+            }
+
+            @Override
+            public void onDataNotAvailable(Exception e) {
+                callback.onDataNotAvailable(e);
+            }
+        });
     }
 
     @Override

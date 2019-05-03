@@ -14,6 +14,8 @@ public interface TransactionContract {
         void showMissingAmountError();
 
         void showMissingCategoryError();
+
+        void showInvalidAmountError(String input);
     }
 
     interface Presenter extends BasePresenter {

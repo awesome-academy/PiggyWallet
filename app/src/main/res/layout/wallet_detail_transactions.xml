@@ -19,24 +19,12 @@
         android:layout_height="wrap_content"
         android:text="@string/no_transaction"
         android:textColor="@android:color/holo_red_dark"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/text_transaction_histories"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view_no_transactions_wallet_detail" />
+        app:layout_constraintTop_toTopOf="@+id/progress_bar_wallet_detail" />
 
-    <ImageView
-        android:id="@+id/image_view_no_transactions_wallet_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_account_balance_wallet_black_24dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/text_view_no_transaction"
-        app:layout_constraintEnd_toEndOf="@+id/text_view_no_transaction"
-        app:layout_constraintStart_toStartOf="@+id/text_view_no_transaction"
-        app:layout_constraintTop_toTopOf="@+id/progress_bar_wallet_detail"
-        app:layout_constraintVertical_bias="0.75" />
 
     <TextView
         android:id="@+id/text_transaction_histories"

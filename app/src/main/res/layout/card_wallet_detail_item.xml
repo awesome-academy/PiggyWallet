@@ -46,7 +46,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_wallet_detail_inside"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

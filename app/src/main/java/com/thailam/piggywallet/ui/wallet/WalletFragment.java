@@ -72,7 +72,6 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //
         initPresenter();
         initAdapter();
         initSwipeRefresh();
@@ -82,9 +81,7 @@ public class WalletFragment extends Fragment implements WalletContract.View,
     @Override
     public void onResume() {
         super.onResume();
-        if (mWalletAdapter != null) {
-            mPresenter.getWallets(true);
-        }
+        if (mPresenter != null) mPresenter.getWallets(true);
     }
 
     @Override

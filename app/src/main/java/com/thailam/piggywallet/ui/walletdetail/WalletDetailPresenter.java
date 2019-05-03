@@ -30,14 +30,14 @@ public class WalletDetailPresenter implements WalletDetailContract.Presenter, Tr
     }
 
     @Override
-    public void getInitialTransactions(int walletId) {
+    public void getInitialTransactions(boolean force, int walletId) {
         mView.showProgressBar();
-        mTransactionRepository.getInitialTransactions(walletId, this);
+        mTransactionRepository.getInitialTransactions(force, walletId, this);
     }
 
     @Override
     public void saveWalletToSharedPref(Wallet wallet) {
-        if(!mWalletRepository.putWalletToPrefs(wallet)) {
+        if (!mWalletRepository.putWalletToPrefs(wallet)) {
             mView.onSaveWalletToSharedPrefFailed();
         }
     }

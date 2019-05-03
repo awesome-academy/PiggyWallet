@@ -19,7 +19,16 @@ public class AddWalletPresenter implements AddWalletContract.Presenter, OnDataLo
     }
 
     @Override
-    public void saveWallet(Wallet wallet) {
+    public void saveWallet(String title, String subtitle, String amountStr) {
+        if (title.isEmpty()) {
+            mView.showMissingTitleError();
+            return;
+        }
+        Double amount = amountStr.isEmpty() ? 0 : Double.parseDouble(amountStr);
+        Wallet wallet = new Wallet.Builder()
+                .setTitle(title)
+                .setSubtitle(subtitle)
+                .setAmount(amount).build();
         mWalletRepository.saveWallet(wallet, this);
     }
 
